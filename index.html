@@ -10147,6 +10147,66 @@ p.nominalBounds = new cjs.Rectangle(-180,0,180,1080);
 		var Page3 = new lib.page3_mc();
 		var page3Loaded = false;
 		var page3Visible = false;
+		//page4 variables
+		var Page4 = new lib.page4_mc();
+		var page4Loaded = false;
+		var page4Visible = false;
+		//page5 variables
+		var Page5 = new lib.page5_mc();
+		var page5Loaded = false;
+		var page5Visible = false;
+		//page6 variables
+		var Page6 = new lib.page6_mc();
+		var page6Loaded = false;
+		var page6Visible = false;
+		//page7 variables
+		var Page7 = new lib.page7_mc();
+		var page7Loaded = false;
+		var page7Visible = false;
+		//page8 variables
+		var Page8 = new lib.page8_mc();
+		var page8Loaded = false;
+		var page8Visible = false;
+		//page9 variables
+		var Page9 = new lib.page9_mc();
+		var page9Loaded = false;
+		var page9Visible = false;
+		//page10 variables
+		var Page10 = new lib.page10_mc();
+		var page10Loaded = false;
+		var page10Visible = false;
+		//page11 variables
+		var Page11 = new lib.page11_mc();
+		var page11Loaded = false;
+		var page11Visible = false;
+		//page12 variables
+		var Page12 = new lib.page12_mc();
+		var page12Loaded = false;
+		var page12Visible = false;
+		//page13 variables
+		var Page13 = new lib.page13_mc();
+		var page13Loaded = false;
+		var page13Visible = false;
+		//page14 variables
+		var Page14 = new lib.page14_mc();
+		var page14Loaded = false;
+		var page14Visible = false;
+		//page15 variables
+		var Page15 = new lib.page15_mc();
+		var page15Loaded = false;
+		var page15Visible = false;
+		//page16 variables
+		var Page16 = new lib.page16_mc();
+		var page16Loaded = false;
+		var page16Visible = false;
+		//page17 variables
+		var Page17 = new lib.page17_mc();
+		var page17Loaded = false;
+		var page17Visible = false;
+		//page18 variables
+		var Page18 = new lib.page18_mc();
+		var page18Loaded = false;
+		var page18Visible = false;
 		createjs.Ticker.on("tick", track);
 		function track(e) {
 			console.log(pageNumber);
@@ -10448,7 +10508,67 @@ p.nominalBounds = new cjs.Rectangle(-180,0,180,1080);
 				killPage2();
 				createjs.Ticker.addEventListener("tick", goToPage3);
 			}
-			if (pageNumber < 3) {
+			if (pageNumber == 3) {
+				killPage3();
+				createjs.Ticker.addEventListener("tick", goToPage4);
+			}
+			if (pageNumber == 4) {
+				killPage4();
+				createjs.Ticker.addEventListener("tick", goToPage5);
+			}
+			if (pageNumber == 5) {
+				killPage5();
+				createjs.Ticker.addEventListener("tick", goToPage6);
+			}
+			if (pageNumber == 6) {
+				killPage6();
+				createjs.Ticker.addEventListener("tick", goToPage7);
+			}
+			if (pageNumber == 7) {
+				killPage7();
+				createjs.Ticker.addEventListener("tick", goToPage8);
+			}
+			if (pageNumber == 8) {
+				killPage8();
+				createjs.Ticker.addEventListener("tick", goToPage9);
+			}
+			if (pageNumber == 9) {
+				killPage9();
+				createjs.Ticker.addEventListener("tick", goToPage10);
+			}
+			if (pageNumber == 10) {
+				killPage10();
+				createjs.Ticker.addEventListener("tick", goToPage11);
+			}
+			if (pageNumber == 11) {
+				killPage11();
+				createjs.Ticker.addEventListener("tick", goToPage12);
+			}
+			if (pageNumber == 12) {
+				killPage12();
+				createjs.Ticker.addEventListener("tick", goToPage13);
+			}
+			if (pageNumber == 13) {
+				killPage13();
+				createjs.Ticker.addEventListener("tick", goToPage14);
+			}
+			if (pageNumber == 14) {
+				killPage14();
+				createjs.Ticker.addEventListener("tick", goToPage15);
+			}
+			if (pageNumber == 15) {
+				killPage15();
+				createjs.Ticker.addEventListener("tick", goToPage16);
+			}
+			if (pageNumber == 16) {
+				killPage16();
+				createjs.Ticker.addEventListener("tick", goToPage17);
+			}
+			if (pageNumber == 17) {
+				killPage17();
+				createjs.Ticker.addEventListener("tick", goToPage18);
+			}
+			if (pageNumber < 18) {
 				pageNumber++;
 			}
 		}
@@ -10466,6 +10586,66 @@ p.nominalBounds = new cjs.Rectangle(-180,0,180,1080);
 			if (pageNumber == 3) {
 				killPage3();
 				createjs.Ticker.addEventListener("tick", goToPage2);
+			}
+			if (pageNumber == 4) {
+				killPage4();
+				createjs.Ticker.addEventListener("tick", goToPage3);
+			}
+			if (pageNumber == 5) {
+				killPage5();
+				createjs.Ticker.addEventListener("tick", goToPage4);
+			}
+			if (pageNumber == 6) {
+				killPage6();
+				createjs.Ticker.addEventListener("tick", goToPage5);
+			}
+			if (pageNumber == 7) {
+				killPage7();
+				createjs.Ticker.addEventListener("tick", goToPage6);
+			}
+			if (pageNumber == 8) {
+				killPage8();
+				createjs.Ticker.addEventListener("tick", goToPage7);
+			}
+			if (pageNumber == 9) {
+				killPage9();
+				createjs.Ticker.addEventListener("tick", goToPage8);
+			}
+			if (pageNumber == 10) {
+				killPage10();
+				createjs.Ticker.addEventListener("tick", goToPage9);
+			}
+			if (pageNumber == 11) {
+				killPage11();
+				createjs.Ticker.addEventListener("tick", goToPage10);
+			}
+			if (pageNumber == 12) {
+				killPage12();
+				createjs.Ticker.addEventListener("tick", goToPage11);
+			}
+			if (pageNumber == 13) {
+				killPage13();
+				createjs.Ticker.addEventListener("tick", goToPage12);
+			}
+			if (pageNumber == 14) {
+				killPage14();
+				createjs.Ticker.addEventListener("tick", goToPage13);
+			}
+			if (pageNumber == 15) {
+				killPage15();
+				createjs.Ticker.addEventListener("tick", goToPage14);
+			}
+			if (pageNumber == 16) {
+				killPage16();
+				createjs.Ticker.addEventListener("tick", goToPage15);
+			}
+			if (pageNumber == 17) {
+				killPage17();
+				createjs.Ticker.addEventListener("tick", goToPage16);
+			}
+			if (pageNumber == 18) {
+				killPage18();
+				createjs.Ticker.addEventListener("tick", goToPage17);
 			}
 			if (pageNumber > 0) {
 				pageNumber--;
@@ -10495,6 +10675,96 @@ p.nominalBounds = new cjs.Rectangle(-180,0,180,1080);
 			if (pageFaded == true) {
 				addPage3();
 				createjs.Ticker.removeEventListener("tick", goToPage3);
+			}
+		}
+		function goToPage4(e) {
+			if (pageFaded == true) {
+				addPage4();
+				createjs.Ticker.removeEventListener("tick", goToPage4);
+			}
+		}
+		function goToPage5(e) {
+			if (pageFaded == true) {
+				addPage5();
+				createjs.Ticker.removeEventListener("tick", goToPage5);
+			}
+		}
+		function goToPage6(e) {
+			if (pageFaded == true) {
+				addPage6();
+				createjs.Ticker.removeEventListener("tick", goToPage6);
+			}
+		}
+		function goToPage7(e) {
+			if (pageFaded == true) {
+				addPage7();
+				createjs.Ticker.removeEventListener("tick", goToPage7);
+			}
+		}
+		function goToPage8(e) {
+			if (pageFaded == true) {
+				addPage8();
+				createjs.Ticker.removeEventListener("tick", goToPage8);
+			}
+		}
+		function goToPage9(e) {
+			if (pageFaded == true) {
+				addPage9();
+				createjs.Ticker.removeEventListener("tick", goToPage9);
+			}
+		}
+		function goToPage10(e) {
+			if (pageFaded == true) {
+				addPage10();
+				createjs.Ticker.removeEventListener("tick", goToPage10);
+			}
+		}
+		function goToPage11(e) {
+			if (pageFaded == true) {
+				addPage11();
+				createjs.Ticker.removeEventListener("tick", goToPage11);
+			}
+		}
+		function goToPage12(e) {
+			if (pageFaded == true) {
+				addPage12();
+				createjs.Ticker.removeEventListener("tick", goToPage12);
+			}
+		}
+		function goToPage13(e) {
+			if (pageFaded == true) {
+				addPage13();
+				createjs.Ticker.removeEventListener("tick", goToPage13);
+			}
+		}
+		function goToPage14(e) {
+			if (pageFaded == true) {
+				addPage14();
+				createjs.Ticker.removeEventListener("tick", goToPage14);
+			}
+		}
+		function goToPage15(e) {
+			if (pageFaded == true) {
+				addPage15();
+				createjs.Ticker.removeEventListener("tick", goToPage15);
+			}
+		}
+		function goToPage16(e) {
+			if (pageFaded == true) {
+				addPage16();
+				createjs.Ticker.removeEventListener("tick", goToPage16);
+			}
+		}
+		function goToPage17(e) {
+			if (pageFaded == true) {
+				addPage17();
+				createjs.Ticker.removeEventListener("tick", goToPage17);
+			}
+		}
+		function goToPage18(e) {
+			if (pageFaded == true) {
+				addPage18();
+				createjs.Ticker.removeEventListener("tick", goToPage18);
 			}
 		}
 		function nextWaitTime() {
@@ -11070,6 +11340,561 @@ p.nominalBounds = new cjs.Rectangle(-180,0,180,1080);
 		function killPage3() {
 			createjs.Ticker.addEventListener("tick", fadeDownPage3);
 			page3Loaded = false;
+		}
+		// ***PAGE 4***
+		function addPage4() {
+			_this.addChildAt(Page4, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage4);
+			page4Loaded = true;
+		}
+		//fade page 4 up and down
+		function fadeUpPage4(e) {
+			if (Page4.fade_mc.alpha >= 0) {
+				Page4.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page4.fade_mc.alpha <= 0) {
+				if (!page4Visible) {
+					page4Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage4);
+				}
+			}
+		}
+		function fadeDownPage4(e) {
+			if (Page4.fade_mc.alpha <= 1) {
+				Page4.fade_mc.alpha += fadeAmount;
+			}
+			if (Page4.fade_mc.alpha >= 1) {
+				if (page4Visible == true) {
+					page4Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page4);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage4);
+				}
+			}
+		}
+		// remove page 4
+		function killPage4() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage4);
+			page4Loaded = false;
+		}
+		// ***PAGE 5***
+		function addPage5() {
+			_this.addChildAt(Page5, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage5);
+			page5Loaded = true;
+		}
+		//fade page 5 up and down
+		function fadeUpPage5(e) {
+			if (Page5.fade_mc.alpha >= 0) {
+				Page5.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page5.fade_mc.alpha <= 0) {
+				if (!page5Visible) {
+					page5Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage5);
+				}
+			}
+		}
+		function fadeDownPage5(e) {
+			if (Page5.fade_mc.alpha <= 1) {
+				Page5.fade_mc.alpha += fadeAmount;
+			}
+			if (Page5.fade_mc.alpha >= 1) {
+				if (page5Visible == true) {
+					page5Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page5);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage5);
+				}
+			}
+		}
+		// remove page 5
+		function killPage5() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage5);
+			page5Loaded = false;
+		}
+		// ***PAGE 6***
+		function addPage6() {
+			_this.addChildAt(Page6, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage6);
+			page6Loaded = true;
+		}
+		//fade page 5 up and down
+		function fadeUpPage6(e) {
+			if (Page6.fade_mc.alpha >= 0) {
+				Page6.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page6.fade_mc.alpha <= 0) {
+				if (!page6Visible) {
+					page6Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage6);
+				}
+			}
+		}
+		function fadeDownPage6(e) {
+			if (Page6.fade_mc.alpha <= 1) {
+				Page6.fade_mc.alpha += fadeAmount;
+			}
+			if (Page6.fade_mc.alpha >= 1) {
+				if (page6Visible == true) {
+					page6Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page6);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage6);
+				}
+			}
+		}
+		// remove page 6
+		function killPage6() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage6);
+			page6Loaded = false;
+		}
+		// ***PAGE 7***
+		function addPage7() {
+			_this.addChildAt(Page7, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage7);
+			page7Loaded = true;
+		}
+		//fade page 7 up and down
+		function fadeUpPage7(e) {
+			if (Page7.fade_mc.alpha >= 0) {
+				Page7.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page7.fade_mc.alpha <= 0) {
+				if (!page7Visible) {
+					page7Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage7);
+				}
+			}
+		}
+		function fadeDownPage7(e) {
+			if (Page7.fade_mc.alpha <= 1) {
+				Page7.fade_mc.alpha += fadeAmount;
+			}
+			if (Page7.fade_mc.alpha >= 1) {
+				if (page7Visible == true) {
+					page7Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page7);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage7);
+				}
+			}
+		}
+		// remove page 7
+		function killPage7() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage7);
+			page7Loaded = false;
+		}
+		// ***PAGE 8***
+		function addPage8() {
+			_this.addChildAt(Page8, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage8);
+			page8Loaded = true;
+		}
+		//fade page 8 up and down
+		function fadeUpPage8(e) {
+			if (Page8.fade_mc.alpha >= 0) {
+				Page8.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page8.fade_mc.alpha <= 0) {
+				if (!page8Visible) {
+					page8Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage8);
+				}
+			}
+		}
+		function fadeDownPage8(e) {
+			if (Page8.fade_mc.alpha <= 1) {
+				Page8.fade_mc.alpha += fadeAmount;
+			}
+			if (Page8.fade_mc.alpha >= 1) {
+				if (page8Visible == true) {
+					page8Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page8);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage8);
+				}
+			}
+		}
+		// remove page 8
+		function killPage8() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage8);
+			page8Loaded = false;
+		}
+		// ***PAGE 9***
+		function addPage9() {
+			_this.addChildAt(Page9, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage9);
+			page9Loaded = true;
+		}
+		//fade page 9 up and down
+		function fadeUpPage9(e) {
+			if (Page9.fade_mc.alpha >= 0) {
+				Page9.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page9.fade_mc.alpha <= 0) {
+				if (!page9Visible) {
+					page9Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage9);
+				}
+			}
+		}
+		function fadeDownPage9(e) {
+			if (Page9.fade_mc.alpha <= 1) {
+				Page9.fade_mc.alpha += fadeAmount;
+			}
+			if (Page9.fade_mc.alpha >= 1) {
+				if (page9Visible == true) {
+					page9Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page9);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage9);
+				}
+			}
+		}
+		// remove page 9
+		function killPage9() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage9);
+			page9Loaded = false;
+		}
+		// ***PAGE 10***
+		function addPage10() {
+			_this.addChildAt(Page10, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage10);
+			page10Loaded = true;
+		}
+		//fade page 10 up and down
+		function fadeUpPage10(e) {
+			if (Page10.fade_mc.alpha >= 0) {
+				Page10.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page10.fade_mc.alpha <= 0) {
+				if (!page10Visible) {
+					page10Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage10);
+				}
+			}
+		}
+		function fadeDownPage10(e) {
+			if (Page10.fade_mc.alpha <= 1) {
+				Page10.fade_mc.alpha += fadeAmount;
+			}
+			if (Page10.fade_mc.alpha >= 1) {
+				if (page10Visible == true) {
+					page10Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page10);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage10);
+				}
+			}
+		}
+		// remove page 10
+		function killPage10() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage10);
+			page10Loaded = false;
+		}
+		// ***PAGE 11***
+		function addPage11() {
+			_this.addChildAt(Page11, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage11);
+			page11Loaded = true;
+		}
+		//fade page 11 up and down
+		function fadeUpPage11(e) {
+			if (Page11.fade_mc.alpha >= 0) {
+				Page11.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page11.fade_mc.alpha <= 0) {
+				if (!page11Visible) {
+					page11Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage11);
+				}
+			}
+		}
+		function fadeDownPage11(e) {
+			if (Page11.fade_mc.alpha <= 1) {
+				Page11.fade_mc.alpha += fadeAmount;
+			}
+			if (Page11.fade_mc.alpha >= 1) {
+				if (page11Visible == true) {
+					page11Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page11);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage11);
+				}
+			}
+		}
+		// remove page 11
+		function killPage11() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage11);
+			page11Loaded = false;
+		}
+		// ***PAGE 12***
+		function addPage12() {
+			_this.addChildAt(Page12, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage12);
+			page12Loaded = true;
+		}
+		//fade page 12 up and down
+		function fadeUpPage12(e) {
+			if (Page12.fade_mc.alpha >= 0) {
+				Page12.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page12.fade_mc.alpha <= 0) {
+				if (!page12Visible) {
+					page12Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage12);
+				}
+			}
+		}
+		function fadeDownPage12(e) {
+			if (Page12.fade_mc.alpha <= 1) {
+				Page12.fade_mc.alpha += fadeAmount;
+			}
+			if (Page12.fade_mc.alpha >= 1) {
+				if (page12Visible == true) {
+					page12Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page12);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage12);
+				}
+			}
+		}
+		// remove page 12
+		function killPage12() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage12);
+			page12Loaded = false;
+		}
+		// ***PAGE 13***
+		function addPage13() {
+			_this.addChildAt(Page13, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage13);
+			page13Loaded = true;
+		}
+		//fade page 13 up and down
+		function fadeUpPage13(e) {
+			if (Page13.fade_mc.alpha >= 0) {
+				Page13.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page13.fade_mc.alpha <= 0) {
+				if (!page13Visible) {
+					page13Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage13);
+				}
+			}
+		}
+		function fadeDownPage13(e) {
+			if (Page13.fade_mc.alpha <= 1) {
+				Page13.fade_mc.alpha += fadeAmount;
+			}
+			if (Page13.fade_mc.alpha >= 1) {
+				if (page13Visible == true) {
+					page13Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page13);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage13);
+				}
+			}
+		}
+		// remove page 13
+		function killPage13() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage13);
+			page13Loaded = false;
+		}
+		// ***PAGE 14***
+		function addPage14() {
+			_this.addChildAt(Page14, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage14);
+			page14Loaded = true;
+		}
+		//fade page 14 up and down
+		function fadeUpPage14(e) {
+			if (Page14.fade_mc.alpha >= 0) {
+				Page14.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page14.fade_mc.alpha <= 0) {
+				if (!page14Visible) {
+					page14Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage14);
+				}
+			}
+		}
+		function fadeDownPage14(e) {
+			if (Page14.fade_mc.alpha <= 1) {
+				Page14.fade_mc.alpha += fadeAmount;
+			}
+			if (Page14.fade_mc.alpha >= 1) {
+				if (page14Visible == true) {
+					page14Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page14);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage14);
+				}
+			}
+		}
+		// remove page 14
+		function killPage14() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage14);
+			page14Loaded = false;
+		}
+		// ***PAGE 15***
+		function addPage15() {
+			_this.addChildAt(Page15, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage15);
+			page15Loaded = true;
+		}
+		//fade page 15 up and down
+		function fadeUpPage15(e) {
+			if (Page15.fade_mc.alpha >= 0) {
+				Page15.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page15.fade_mc.alpha <= 0) {
+				if (!page15Visible) {
+					page15Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage15);
+				}
+			}
+		}
+		function fadeDownPage15(e) {
+			if (Page15.fade_mc.alpha <= 1) {
+				Page15.fade_mc.alpha += fadeAmount;
+			}
+			if (Page15.fade_mc.alpha >= 1) {
+				if (page15Visible == true) {
+					page15Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page15);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage15);
+				}
+			}
+		}
+		// remove page 15
+		function killPage15() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage15);
+			page15Loaded = false;
+		}
+		// ***PAGE 16***
+		function addPage16() {
+			_this.addChildAt(Page16, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage16);
+			page16Loaded = true;
+		}
+		//fade page 16 up and down
+		function fadeUpPage16(e) {
+			if (Page16.fade_mc.alpha >= 0) {
+				Page16.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page16.fade_mc.alpha <= 0) {
+				if (!page16Visible) {
+					page16Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage16);
+				}
+			}
+		}
+		function fadeDownPage16(e) {
+			if (Page16.fade_mc.alpha <= 1) {
+				Page16.fade_mc.alpha += fadeAmount;
+			}
+			if (Page16.fade_mc.alpha >= 1) {
+				if (page16Visible == true) {
+					page16Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page16);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage16);
+				}
+			}
+		}
+		// remove page 16
+		function killPage16() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage16);
+			page16Loaded = false;
+		}
+		// ***PAGE 17***
+		function addPage17() {
+			_this.addChildAt(Page17, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage17);
+			page17Loaded = true;
+		}
+		//fade page 17 up and down
+		function fadeUpPage17(e) {
+			if (Page17.fade_mc.alpha >= 0) {
+				Page17.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page17.fade_mc.alpha <= 0) {
+				if (!page17Visible) {
+					page17Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage17);
+				}
+			}
+		}
+		function fadeDownPage17(e) {
+			if (Page17.fade_mc.alpha <= 1) {
+				Page17.fade_mc.alpha += fadeAmount;
+			}
+			if (Page17.fade_mc.alpha >= 1) {
+				if (page17Visible == true) {
+					page17Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page17);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage17);
+				}
+			}
+		}
+		// remove page 17
+		function killPage17() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage17);
+			page17Loaded = false;
+		}
+		// ***PAGE 18***
+		function addPage18() {
+			_this.addChildAt(Page18, 1);
+			createjs.Ticker.addEventListener("tick", fadeUpPage18);
+			page18Loaded = true;
+		}
+		//fade page 18 up and down
+		function fadeUpPage18(e) {
+			if (Page18.fade_mc.alpha >= 0) {
+				Page18.fade_mc.alpha -= fadeAmount;
+			}
+			if (Page18.fade_mc.alpha <= 0) {
+				if (!page18Visible) {
+					page18Visible = true;
+					pageFaded = false;
+					createjs.Ticker.removeEventListener("tick", fadeUpPage18);
+				}
+			}
+		}
+		function fadeDownPage18(e) {
+			if (Page18.fade_mc.alpha <= 1) {
+				Page18.fade_mc.alpha += fadeAmount;
+			}
+			if (Page18.fade_mc.alpha >= 1) {
+				if (page18Visible == true) {
+					page18Visible = false;
+					pageFaded = true;
+					_this.removeChild(Page18);
+					createjs.Ticker.removeEventListener("tick", fadeDownPage18);
+				}
+			}
+		}
+		// remove page 18
+		function killPage18() {
+			createjs.Ticker.addEventListener("tick", fadeDownPage18);
+			page18Loaded = false;
 		}
 	}
 	// actions tween:
