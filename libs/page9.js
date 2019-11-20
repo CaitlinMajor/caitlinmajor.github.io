@@ -65,6 +65,7 @@ function page9(){
 
 	function checkYeti(){
 		if (page.page9_yeti_mc.currentLabel == "endAnim"){
+			console.log ("check yeti running");
 			page.page9_yeti_mc.gotoAndStop("endAnim");
 			page.page9_eyes_mc.alpha = 1;
 			eyes.Play();
@@ -130,6 +131,7 @@ function page9(){
 		createjs.Sound.stop();
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		createjs.Ticker.removeEventListener("tick", stopYeti);
+		createjs.Ticker.removeEventListener("tick", checkYeti);
 		page.page9_fish_mc.removeEventListener("click", playFish);
 		page.page9_bee1_mc.removeEventListener("click", playBee1);
 		page.page9_bee2_mc.removeEventListener("click", playBee2);

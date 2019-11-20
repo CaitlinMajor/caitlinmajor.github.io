@@ -102,7 +102,7 @@ function RegisterSounds() {
 		createjs.Sound.registerSound("sounds/page15_audio_yeti_line1.mp3", "page15_audio_yeti_line1");
 		
 		//page16 sounds
-		createjs.Sound.registerSound("sounds/page16_audio_yeti_line1.mp3", "page16_audio_yeti_line1");
+		createjs.Sound.registerSound("sounds/page16_audio_line1.mp3", "page16_audio_line1");
 		
 		//page17 sounds
 		createjs.Sound.registerSound("sounds/page17_audio_line1.mp3", "page17_audio_line1");
@@ -212,7 +212,7 @@ function RegisterSounds() {
 		page15YetiLine1 = createjs.Sound.createInstance("page15_audio_yeti_line1");
 		
 		//page 16
-		page16YetiLine1 = createjs.Sound.createInstance("page16_audio_yeti_line1");
+		page16Line1 = createjs.Sound.createInstance("page16_audio_line1");
 		
 		//page 17
 		page17Line1 = createjs.Sound.createInstance("page17_audio_line1");

@@ -28,7 +28,7 @@ function page16(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page16YetiLine1;
+		audio = page16Line1;
 		audio.play();
 
 		if (!audioComplete){
