@@ -114,6 +114,7 @@ function page7(){
 		grumble.Loop();
 		stumble.Loop();
 		yeti.Loop();
+		yetiOL.Loop();
 		fishy.Loop();
 	}
 

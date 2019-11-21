@@ -1,9 +1,8 @@
 class Animations{
-
-	playing = false;
 	
 	constructor(target, endLoop, startLoop, endAnim, startAnim){
 
+		this.playing = false;
 		this.target = target;
 		this.endLoop = endLoop;
 		this.startLoop = startLoop;
@@ -38,12 +37,10 @@ class Animations{
 
 class Fade{
 
-	faded = false;
-	fadeAmount = 0.075;
-
-
 	constructor(target){
 		this.target = target;
+		this.faded = false;
+		this.fadeAmount = 0.075;
 	}
 
 	FadeUp(){
