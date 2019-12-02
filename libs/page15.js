@@ -62,7 +62,7 @@ function page15(){
 
 		if (!audioComplete){
 			createjs.Ticker.addEventListener("tick", fadeUpText);
-			audio.on("complete", playYeti, null, true);
+			audio.on("complete", playYetiAudio, null, true);
 		}
 
 		function fadeUpText() {
@@ -74,7 +74,7 @@ function page15(){
 		
 	}
 
-	function playYeti() {
+	function playYetiAudio() {
 		createjs.Sound.stop();
 		audio = page15YetiLine1;
 		audio.play();
@@ -108,10 +108,10 @@ function page15(){
 			audioComplete = true;
 			page.page15_text1_mc.addEventListener("click", playGrumble);
 			page.page15_text2_mc.addEventListener("click", playLine2);
-			page.page15_text3_mc.addEventListener("click", playYeti);
+			page.page15_text3_mc.addEventListener("click", playYetiAudio);
 			page.page15_text4_mc.addEventListener("click", playLine4);
 			page.page15_grumble_mc.addEventListener("click", playGrumble2);
-			page.page15_yeti_mc.addEventListener("click", playYeti2);
+			page.page15_yeti_mc.addEventListener("click", playYeti);
 		}
 
 		function fadeUpText() {
@@ -128,37 +128,43 @@ function page15(){
 	let stumble = new Animations(page.page15_stumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let humble = new Animations(page.page15_humble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let grumble = new Animations(page.page15_grumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
-	let yeti = new Animations(page.page15_yeti_mc, "endLoop1", "startLoop1");
-	let yeti2 = new Animations(page.page15_yeti_mc, "endLoop2", "startLoop2", "endAnim2", "startAnim2");
+	let yeti = new Animations(page.page15_yeti_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 
 	function loopAnimations(){
 		stumble.Loop();
 		humble.Loop();
 		grumble.Loop();
 		yeti.Loop();
-		yeti2.Loop();
 	}
 
 	//page interactions //
 
 	function playStumble(){
 		stumble.Play();
-		stumbleScared07.play();
+		if(audioComplete){
+			stumbleScared07.play();
+		}
 	}
 
 	function playHumble(){
 		humble.Play();
-		humbleScared01.play();
+		if(audioComplete){
+			humbleScared01.play();
+		}
 	}
 
-	function playYeti2(){
-		yeti2.Play();
-		yetiArgh.play();
+	function playYeti(){
+		yeti.Play();
+		if(audioComplete){
+			yetiArgh.play();
+		}
 	}
 
 	function playGrumble2(){
 		page.page15_grumble_mc.gotoAndPlay("startAnim2");
-		grumbleAffirmative06.play();
+		if(audioComplete){
+			grumbleAffirmative06.play();
+		}
 	}
 
 	//Navigation//
@@ -182,10 +188,10 @@ function page15(){
 		createjs.Sound.stop();
 		page.page15_text1_mc.removeEventListener("click", playGrumble);
 		page.page15_text2_mc.removeEventListener("click", playLine2);
-		page.page15_text3_mc.removeEventListener("click", playYeti);
+		page.page15_text3_mc.removeEventListener("click", playYetiAudio);
 		page.page15_text4_mc.removeEventListener("click", playLine4);
 		page.page15_grumble_mc.removeEventListener("click", playGrumble2);
-		page.page15_yeti_mc.removeEventListener("click", playYeti2);
+		page.page15_yeti_mc.removeEventListener("click", playYeti);
 		page.page15_humble_mc.removeEventListener("click", playHumble);
 		page.page15_stumble_mc.removeEventListener("click", playStumble);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);

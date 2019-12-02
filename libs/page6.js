@@ -25,19 +25,19 @@ function page6(){
 			createjs.Ticker.removeEventListener("tick", fadeUp);
 			nextButton.addEventListener("click", gotoNextPage);
 			previousButton.addEventListener("click", gotoPreviousPage);
-			playYeti();
+			playYetiAudio();
 		}
 
 	}
 
 	//* Handle The Audio *//
-	function playYeti() {
+	function playYetiAudio() {
 		createjs.Sound.stop();
 		audio = page6YetiLine1;
 		audio.play();
-		page.page6_yeti_mc.gotoAndPlay("startAnim");
 
 		if (!audioComplete){
+			page.page6_yeti_mc.gotoAndPlay("startAnim");
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 			audio.on("complete", playLine2, null, true);
 		}
@@ -63,7 +63,7 @@ function page6(){
 
 		function done(){
 			audioComplete = true;
-			page.page6_text1_mc.addEventListener("click", playYeti);
+			page.page6_text1_mc.addEventListener("click", playYetiAudio);
 			page.page6_text2_mc.addEventListener("click", playLine2);
 			page.page6_yeti_mc.addEventListener("click", playYeti);
 		}
@@ -79,11 +79,11 @@ function page6(){
 
 	// Loop animations //
 	createjs.Ticker.addEventListener("tick", loopAnimations);
-	let yeti = new Animations(page.page6_yeti_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let yetiClick = new Animations(page.page6_yeti_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 	let stumble = new Animations(page.page6_stumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 
 	function loopAnimations(){
-		yeti.Loop();
+		yetiClick.Loop();
 		stumble.Loop();
 	}
 
@@ -91,7 +91,17 @@ function page6(){
 
 	function playStumble(){
 		stumble.Play();
-		stumbleScared07.play();
+		if(audioComplete){
+			stumbleScared07.play();
+		}
+	}
+
+	function playYeti(){
+		yetiClick.Play();
+		if(audioComplete){
+			yetiArgh.play();
+		}
+
 	}
 
 	//Navigation//
@@ -115,7 +125,7 @@ function page6(){
 		createjs.Sound.stop();
 		page.page6_yeti_mc.removeEventListener("click", playYeti);
 		page.page6_stumble_mc.removeEventListener("click", playStumble);
-		page.page6_text1_mc.removeEventListener("click", playYeti);
+		page.page6_text1_mc.removeEventListener("click", playYetiAudio);
 		page.page6_text2_mc.removeEventListener("click", playLine2);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);

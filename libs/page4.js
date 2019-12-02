@@ -89,7 +89,6 @@ function page4(){
 	function loopAnimations(){
 
 		if (page.page4_apple_mc.currentLabel == "endAnim"){
-			console.log("apple ended");
 			page.page4_apple_mc.stop();
 			page.page4_apple_mc.removeEventListener("click", playApple);
 		}
@@ -105,7 +104,9 @@ function page4(){
 	//page interactions //
 	function playStumble() {
 		stumble.Play();
-		stumbleHappy01.play();
+		if(audioComplete){
+			stumbleHappy01.play();
+		}
 	}
 
 	function playApple() {

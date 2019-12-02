@@ -7,7 +7,10 @@ function page3(){
 	next = false;
 	previous = false;
 	audioComplete = false;
-	walking = true;
+	start = true;
+	walking = false;
+	standing = false;
+
 	
 	//*Add the page*//
 	stage.addChildAt(page, 1);
@@ -26,6 +29,11 @@ function page3(){
 	function fadeUp() {
 		pageFader.FadeDown();
 		if (!pageFader.faded){
+				start = false;
+				walking = true;
+				page.page3_grumble_mc.gotoAndPlay("startWalkingLoop");
+				page.page3_humble_mc.gotoAndPlay("startWalkingLoop");
+				page.page3_stumble_mc.gotoAndPlay("startWalkingLoop");
 				page.gotoAndPlay("startAnim");
 				createjs.Ticker.removeEventListener("tick", fadeUp);
 				nextButton.addEventListener("click", gotoNextPage);
@@ -87,6 +95,11 @@ function page3(){
 			page.page3_grumble_mc.gotoAndPlay("startAnim");
 			page.page3_stumble_mc.gotoAndPlay("startAnim");
 			page.page3_humble_mc.gotoAndPlay("startAnim");
+			standing = true;
+			page.page3_grumble_mc.addEventListener("click", playGrumble);
+			page.page3_humble_mc.addEventListener("click", playHumble);
+			page.page3_stumble_mc.addEventListener("click", playStumble);
+			page.page3_eyes_mc.addEventListener("click", playEyes);
 			createjs.Ticker.removeEventListener("tick", pageAnimation);
 		}
 
@@ -94,25 +107,63 @@ function page3(){
 
 	createjs.Ticker.addEventListener("tick", loopAnimations);
 
+	let eyes = new Animations(page.page3_eyes_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+
+	let grumbleStart = new Animations(page.page3_grumble_mc, "endLoop", "startLoop");
+	let humbleStart = new Animations(page.page3_humble_mc, "endLoop", "startLoop");
+	let stumbleStart = new Animations(page.page3_stumble_mc, "endLoop", "startLoop");
+
 	let grumbleWalking = new Animations(page.page3_grumble_mc, "endWalkingLoop", "startWalkingLoop");
-	let grumbleStanding = new Animations(page.page3_grumble_mc, "endLoop", "startLoop");
 	let stumbleWalking = new Animations(page.page3_stumble_mc, "endWalkingLoop", "startWalkingLoop");
-	let stumbleStanding = new Animations(page.page3_stumble_mc, "endLoop", "startLoop");
 	let humbleWalking = new Animations(page.page3_humble_mc, "endWalkingLoop", "startWalkingLoop");
-	let humbleStanding = new Animations(page.page3_humble_mc, "endLoop", "startLoop");
+	
+	let grumbleStanding = new Animations(page.page3_grumble_mc, "endStandingLoop", "startStandingLoop", "endStandingAnim", "startStandingAnim");
+	let stumbleStanding = new Animations(page.page3_stumble_mc, "endStandingLoop", "startStandingLoop", "endStandingAnim", "startStandingAnim");
+	let humbleStanding = new Animations(page.page3_humble_mc, "endStandingLoop", "startStandingLoop", "endStandingAnim", "startStandingAnim");
 
 	function loopAnimations(){
 
-		grumbleWalking.Loop();
-		stumbleWalking.Loop();
-		humbleWalking.Loop();
+		eyes.Loop();
 
-		grumbleStanding.Loop();
-		stumbleStanding.Loop();
-		humbleStanding.Loop();
+		if(start){
+			grumbleStart.Loop();
+			stumbleStart.Loop();
+			humbleStart.Loop();
+		}
+		if (walking){	
+			grumbleWalking.Loop();
+			stumbleWalking.Loop();
+			humbleWalking.Loop();
+		}
+		if (standing){
+			grumbleStanding.Loop();
+			stumbleStanding.Loop();
+			humbleStanding.Loop();
+		}
+		
 	}
 
 	//page interactions //
+
+	function playGrumble(){
+		grumbleStanding.Play();
+		grumbleScared07.play();
+	}
+
+	function playHumble(){
+		humbleStanding.Play();
+		humbleScared01.play();
+	}
+
+	function playStumble(){
+		stumbleStanding.Play();
+		stumbleWow01.play();
+	}
+
+	function playEyes(){
+		eyes.Play();
+	}
+
 
 	//Navigation//
 	function gotoNextPage(){
@@ -135,6 +186,10 @@ function page3(){
 		createjs.Sound.stop();
 		page.page3_text1_mc.removeEventListener("click", playLine1);
 		page.page3_text2_mc.removeEventListener("click", playLine2);
+		page.page3_eyes_mc.removeEventListener("click", playEyes);
+		page.page3_grumble_mc.removeEventListener("click", playGrumble);
+		page.page3_humble_mc.removeEventListener("click", playHumble);
+		page.page3_stumble_mc.removeEventListener("click", playStumble);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);
 		previousButton.removeEventListener("click", gotoPreviousPage);

@@ -31,21 +31,21 @@ function page8(){
 			createjs.Ticker.removeEventListener("tick", fadeUp);
 			nextButton.addEventListener("click", gotoNextPage);
 			previousButton.addEventListener("click", gotoPreviousPage);
-			playYeti1();
+			playYetiAudio1();
 		}
 
 	}
 
 	//* Handle The Audio *//
-	function playYeti1() {
+	function playYetiAudio1() {
 		createjs.Sound.stop();
 		audio = page8YetiLine1;
-		yeti1.Play();
 		audio.play();
 
 		if (!audioComplete){
+			page.page8_yeti_mc.gotoAndPlay("startAnim1");
 			createjs.Ticker.addEventListener("tick", fadeUpText);
-			audio.on("complete", playYeti2, null, true);
+			audio.on("complete", playYetiAudio2, null, true);
 		}
 
 		function fadeUpText() {
@@ -56,14 +56,13 @@ function page8(){
 		}
 	}
 
-	function playYeti2() {
+	function playYetiAudio2() {
 		createjs.Sound.stop();
 		audio = page8YetiLine2;
-		page.page8_yeti_mc.gotoAndPlay("startAnim2");
-		yeti2.Play();
 		audio.play();
 
 		if (!audioComplete){
+			page.page8_yeti_mc.gotoAndPlay("startAnim2");
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 			audio.on("complete", playLine1, null, true);
 		}
@@ -89,9 +88,10 @@ function page8(){
 
 		function done(){
 			audioComplete = true;
-			page.page8_text1_mc.addEventListener("click", playYeti1);
-			page.page8_text2_mc.addEventListener("click", playYeti2);
+			page.page8_text1_mc.addEventListener("click", playYetiAudio1);
+			page.page8_text2_mc.addEventListener("click", playYetiAudio2);
 			page.page8_text3_mc.addEventListener("click", playLine1);
+			page.page8_yeti_mc.addEventListener("click", playYeti);
 		}
 
 		function fadeUpText() {
@@ -110,23 +110,30 @@ function page8(){
 	let dragonfly = new Animations(page.page8_dragonfly_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let fish1 = new Animations(page.page8_fish1_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let fish2 = new Animations(page.page8_fish2_mc, "endLoop", "startLoop", "endAnim", "startAnim");
-	let yeti1 = new Animations(page.page8_yeti_mc, "endLoop", "startLoop", "endAnim1", "startAnim1");
-	let yeti2 = new Animations(page.page8_yeti_mc, "endLoop", "startLoop", "endAnim2", "startAnim2");
+	let yeti = new Animations(page.page8_yeti_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 
 	function loopAnimations(){
 		stumble.Loop();
 		dragonfly.Loop();
 		fish1.Loop();
 		fish2.Loop();
-		yeti1.Loop();
-		yeti2.Loop();
+		yeti.Loop();
 	}
 
 	//page interactions //
 
 	function playStumble(){
 		stumble.Play();
-		stumbleScared07.play();
+		if(audioComplete){
+			stumbleScared07.play();
+		}
+	}
+
+	function playYeti(){
+		yeti.Play();
+		if(audioComplete){
+			yetiHmm.play();
+		}
 	}
 
 	function playDragonfly(){
@@ -163,8 +170,9 @@ function page8(){
 		page.page8_fish1_mc.removeEventListener("click", playFish1);
 		page.page8_fish2_mc.removeEventListener("click", playFish2);
 		page.page8_dragonfly_mc.removeEventListener("click", playDragonfly);
-		page.page8_text1_mc.removeEventListener("click", playYeti1);
-		page.page8_text2_mc.removeEventListener("click", playYeti2);
+		page.page8_text1_mc.removeEventListener("click", playYetiAudio1);
+		page.page8_text2_mc.removeEventListener("click", playYetiAudio2);
+		page.page8_yeti_mc.removeEventListener("click", playYeti);
 		page.page8_text3_mc.removeEventListener("click", playLine1);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);

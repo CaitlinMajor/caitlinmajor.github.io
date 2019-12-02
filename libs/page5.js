@@ -22,7 +22,6 @@ function page5(){
 	page.page5_dragonfly1_mc.addEventListener("click", playDragonfly1);
 	page.page5_dragonfly2_mc.addEventListener("click", playDragonfly2);
 	page.page5_stumble_mc.addEventListener("click", playStumble);
-	//page.page5_yeti_mc.addEventListener("click", playYeti);
 
 	function fadeUp() {
 		pageFader.FadeDown();
@@ -42,7 +41,7 @@ function page5(){
 
 		if (!audioComplete){
 			createjs.Ticker.addEventListener("tick", fadeUpText);
-			audio.on("complete", playYeti, null, true);
+			audio.on("complete", playYetiAudio, null, true);
 		}
 		
 		function fadeUpText() {
@@ -53,14 +52,15 @@ function page5(){
 		}
 	}
 
-	function playYeti() {
+	function playYetiAudio() {
 		createjs.Sound.stop();
 		audio = page5YetiLine1;
-		page.page5_yeti_mc.gotoAndPlay("startAnim");
 		audio.play();
 
 		if (!audioComplete){
+			page.page5_yeti_mc.gotoAndPlay("startAnim");
 			audio.on("complete", playLine3, null, true);
+			page.page5_yeti_mc.addEventListener("click", playYeti);
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 		}
 		
@@ -85,7 +85,7 @@ function page5(){
 		function done(){
 			audioComplete = true;
 			page.page5_text1_mc.addEventListener("click", playLine1);
-			page.page5_text2_mc.addEventListener("click", playYeti);
+			page.page5_text2_mc.addEventListener("click", playYetiAudio);
 			page.page5_text3_mc.addEventListener("click", playLine3);
 		}
 
@@ -104,7 +104,7 @@ function page5(){
 	let dragonfly2 = new Animations(page.page5_dragonfly2_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let stumble = new Animations(page.page5_stumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let yetiDown = new Animations(page.page5_yeti_mc, "endLoop", "startLoop");
-	let yetiUp = new Animations(page.page5_yeti_mc, "endUpLoop", "startUpLoop");
+	let yetiUp = new Animations(page.page5_yeti_mc, "endUpLoop", "startUpLoop", "endUpAnim", "startUpAnim");
 
 	function loopAnimations(){
 		dragonfly1.Loop();
@@ -126,7 +126,16 @@ function page5(){
 
 	function playStumble(){
 		stumble.Play();
-		stumbleScared04.play();
+		if(audioComplete){
+			stumbleScared04.play();
+		}
+	}
+
+	function playYeti(){
+		yetiUp.Play();
+		if(audioComplete){
+			yetiHmm.play();
+		}
 	}
 
 	//Navigation//
@@ -151,7 +160,7 @@ function page5(){
 		page.page5_dragonfly2_mc.removeEventListener("click", playDragonfly2);
 		page.page5_stumble_mc.removeEventListener("click", playStumble);
 		page.page5_text1_mc.removeEventListener("click", playLine1);
-		page.page5_text2_mc.removeEventListener("click", playYeti);
+		page.page5_text2_mc.removeEventListener("click", playYetiAudio);
 		page.page5_text3_mc.removeEventListener("click", playLine3);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);

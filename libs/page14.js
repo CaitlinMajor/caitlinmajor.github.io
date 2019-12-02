@@ -96,13 +96,17 @@ function page14(){
 
 	function playGrumble(){
 		grumble.Play();
-		grumbleAffirmative06.play();
+		if(audioComplete){
+			grumbleAffirmative06.play();
+		}
 	}
 
 	function playYetiUp(){
 		yetiUp.Play();
 		yetiOLUp.Play();
-		yetiArgh.play();
+		if(audioComplete){
+			yetiGrr.play();
+		}
 	}
 
 	//Navigation//

@@ -7,6 +7,9 @@ function page16(){
 	next = false;
 	previous = false;
 	audioComplete = false;
+	left = false;
+	right = false;
+	animPlaying = false;
 	
 	//*Add the page*//
 	stage.addChildAt(page, 1);
@@ -40,6 +43,7 @@ function page16(){
 		function done(){
 			audioComplete = true;
 			page.page16_text1_mc.addEventListener("click", playLine1);
+			page.page16_animation_mc.addEventListener("click", playAnimation);
 		}
 
 		function fadeUpText() {
@@ -53,16 +57,56 @@ function page16(){
 
 	// Loop animations //
 	createjs.Ticker.addEventListener("tick", loopAnimations);
-	let animation1 = new Animations(page.page16_animation_mc, "endLoop", "startLoop");
-	let animation2 = new Animations(page.page16_animation_mc, "endLoop2", "startLoop2");
 
 	function loopAnimations(){
-		animation1.Loop();
-		animation2.Loop();
+
+
+
+		if (page.page16_animation_mc.currentLabel == "endLoop1"){
+			page.page16_animation_mc.gotoAndPlay("startLoop1");
+		}
+
+		if(page.page16_animation_mc.currentLabel == "endLoop2"){
+			page.page16_animation_mc.gotoAndPlay("startLoop2");
+		}
+
+		if (page.page16_animation_mc.currentLabel == "endAnim2"){
+			page.page16_animation_mc.gotoAndPlay("startLoop1");
+			right = true;
+			left = false;
+			animPlaying = false;
+		}
+
+		if (page.page16_animation_mc.currentLabel == "endAnim1"){
+			right = false;
+			left = true;
+			animPlaying = false;
+		}
+
+		if (page.page16_animation_mc.currentLabel == "endAnim"){
+			right = true;
+			left = false;
+			animPlaying = false;
+		}
+
 	}
 
-
 	//page interactions //
+
+	function playAnimation(){
+
+		if(right && !animPlaying){
+			page.page16_animation_mc.gotoAndPlay("startAnim1");
+			animPlaying = true;
+			grumbleAffirmative06.play();
+		}
+
+		else if(left && !animPlaying){
+			page.page16_animation_mc.gotoAndPlay("startAnim2");
+			animPlaying = true;
+			grumbleAffirmative06.play();
+		}
+	}
 
 	//Navigation//
 	function gotoNextPage(){
@@ -84,6 +128,7 @@ function page16(){
 		//removes all the interactions from the page
 		createjs.Sound.stop();
 		page.page16_text1_mc.removeEventListener("click", playLine1);
+		page.page16_animation_mc.removeEventListener("click", playAnimation);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);
 		previousButton.removeEventListener("click", gotoPreviousPage);

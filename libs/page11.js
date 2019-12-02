@@ -26,20 +26,20 @@ function page11(){
 			createjs.Ticker.removeEventListener("tick", fadeUp);
 			nextButton.addEventListener("click", gotoNextPage);
 			previousButton.addEventListener("click", gotoPreviousPage);
-			playYeti();
+			playYetiAudio();
 		}
 
 	}
 
 	//* Handle The Audio *//
-	function playYeti() {
+	function playYetiAudio() {
 		createjs.Sound.stop();
 		audio = page11YetiLine1;
 		audio.play();
-		yeti.Play();
-		yetiOL.Play();
 
 		if (!audioComplete){
+			page.page11_yeti_mc.gotoAndPlay("startAnim");
+			page.page11_yetiOL_mc.gotoAndPlay("startAnim");
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 			audio.on("complete", playLine2, null, true);
 		}
@@ -65,8 +65,9 @@ function page11(){
 
 		function done(){
 			audioComplete = true;
-			page.page11_text1_mc.addEventListener("click", playYeti);
+			page.page11_text1_mc.addEventListener("click", playYetiAudio);
 			page.page11_text2_mc.addEventListener("click", playLine2);
+			page.page11_yeti_mc.addEventListener("click", playYeti);
 		}
 
 		function fadeUpText() {
@@ -81,8 +82,8 @@ function page11(){
 	// Loop animations //
 	createjs.Ticker.addEventListener("tick", loopAnimations);
 	let humble = new Animations(page.page11_humble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
-	let yeti = new Animations(page.page11_yeti_mc, "endLoop", "startLoop", "endAnim", "startAnim");
-	let yetiOL = new Animations(page.page11_yetiOL_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let yeti = new Animations(page.page11_yeti_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let yetiOL = new Animations(page.page11_yetiOL_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 
 	function loopAnimations(){
 		humble.Loop();
@@ -94,7 +95,17 @@ function page11(){
 
 	function playHumble(){
 		humble.Play();
-		humbleScared02.play();
+		if(audioComplete){
+			humbleScared02.play();
+		}
+	}
+
+	function playYeti(){
+		yeti.Play();
+		yetiOL.Play();
+		if(audioComplete){
+			yetiArgh.play();
+		}
 	}
 
 	//Navigation//
@@ -106,7 +117,7 @@ function page11(){
 	}
 
 	function gotoPreviousPage(){
-			previousButton.removeEventListener("click", gotoPreviousPage);
+		previousButton.removeEventListener("click", gotoPreviousPage);
 		console.log("go to previous page");
 		previous = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
@@ -117,7 +128,7 @@ function page11(){
 		createjs.Sound.stop();
 		page.page11_humble_mc.removeEventListener("click", playHumble);
 		page.page11_yeti_mc.removeEventListener("click", playYeti);
-		page.page11_text1_mc.removeEventListener("click", playYeti);
+		page.page11_text1_mc.removeEventListener("click", playYetiAudio);
 		page.page11_text2_mc.removeEventListener("click", playLine2);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);

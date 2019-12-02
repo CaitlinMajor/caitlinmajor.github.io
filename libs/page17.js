@@ -62,10 +62,10 @@ function page17(){
 	function playYeti() {
 		createjs.Sound.stop();
 		audio = page17YetiLine1;
-		page.page17_yetiGrumble_mc.gotoAndPlay("startAnim2");
 		audio.play();
 
 		if (!audioComplete){
+			page.page17_yetiGrumble_mc.gotoAndPlay("startAnim");
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 			audio.on("complete", playLine3, null, true);
 		}
@@ -94,7 +94,7 @@ function page17(){
 			page.page17_text1_mc.addEventListener("click", playLine1);
 			page.page17_text2_mc.addEventListener("click", playYeti);
 			page.page17_text3_mc.addEventListener("click", playLine3);
-			page.page17_yetiGrumble_mc.addEventListener("click", playYeti);
+			page.page17_yetiGrumble_mc.addEventListener("click", playAnimation);
 		}
 
 		function fadeUpText() {
@@ -111,7 +111,7 @@ function page17(){
 	let humble = new Animations(page.page17_humble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let stumble = new Animations(page.page17_stumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let tickle1 = new Animations(page.page17_yetiGrumble_mc, "endLoop", "startLoop");
-	let tickle2 = new Animations(page.page17_yetiGrumble_mc, "endLoop2", "startLoop2");
+	let tickle2 = new Animations(page.page17_yetiGrumble_mc, "endLoop2", "startLoop2", "endAnim2", "startAnim2");
 
 	function loopAnimations(){
 		humble.Loop();
@@ -124,12 +124,24 @@ function page17(){
 
 	function playHumble(){
 		humble.Play();
-		humbleHappy02.play();
+		if(audioComplete){
+			humbleHappy02.play();
+		}
 	}
 
 	function playStumble(){
 		stumble.Play();
-		stumbleHappy01.play();
+		if(audioComplete){
+			stumbleHappy01.play();
+		}
+	}
+
+	function playAnimation(){
+		tickle2.Play();
+		if(audioComplete){
+			grumbleHappy03.play();
+		}
+
 	}
 
 	//Navigation//
@@ -158,6 +170,7 @@ function page17(){
 		page.page17_yetiGrumble_mc.removeEventListener("click", playYeti);
 		page.page17_humble_mc.removeEventListener("click", playHumble);
 		page.page17_stumble_mc.removeEventListener("click", playStumble);
+		page.page17_yetiGrumble_mc.removeEventListener("click", playAnimation);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);
 		previousButton.removeEventListener("click", gotoPreviousPage);

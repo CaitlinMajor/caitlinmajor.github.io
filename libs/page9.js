@@ -15,11 +15,6 @@ function page9(){
 	let textfade = new Fade(page.page9_text_mc);
 	let pageFader = new Fade(page.fade_mc);
 	createjs.Ticker.addEventListener("tick", fadeUp);
-	createjs.Ticker.addEventListener("tick", stopYeti);
-
-	function stopYeti(){
-		page.page9_yeti_mc.gotoAndStop(0);
-	}
 
 	page.page9_fish_mc.addEventListener("click", playFish);
 	page.page9_bee1_mc.addEventListener("click", playBee1);
@@ -49,7 +44,6 @@ function page9(){
 
 		function done(){
 			audioComplete = true;
-			createjs.Ticker.removeEventListener("tick", stopYeti);
 			page.page9_text_mc.addEventListener("click", playLine1);
 			page.page9_yeti_mc.gotoAndPlay("startAnim");
 			createjs.Ticker.addEventListener("tick", checkYeti);
@@ -81,6 +75,7 @@ function page9(){
 	let bee1 = new Animations(page.page9_bee1_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let bee2 = new Animations(page.page9_bee2_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let stumble = new Animations(page.page9_stumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let yeti = new Animations(page.page9_yeti_mc, "endLoop", "startLoop");
 
 	function loopAnimations(){
 
@@ -89,6 +84,7 @@ function page9(){
 		bee1.Loop();
 		bee2.Loop();
 		stumble.Loop();
+		yeti.Loop();
 	}
 
 	//page interactions //
@@ -107,7 +103,9 @@ function page9(){
 
 	function playStumble(){
 		stumble.Play();
-		stumblePhew05.play();
+		if(audioComplete){
+			stumblePhew05.play();
+		}
 	}
 
 	//Navigation//
@@ -130,7 +128,6 @@ function page9(){
 		//removes all the interactions from the page
 		createjs.Sound.stop();
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
-		createjs.Ticker.removeEventListener("tick", stopYeti);
 		createjs.Ticker.removeEventListener("tick", checkYeti);
 		page.page9_fish_mc.removeEventListener("click", playFish);
 		page.page9_bee1_mc.removeEventListener("click", playBee1);

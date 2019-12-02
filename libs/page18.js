@@ -14,7 +14,9 @@ function page18(){
 	//*Add the page*//
 	stage.addChildAt(page, 1);
 	page.page18_text1_mc.alpha = 0;
+	page.page18_theend_mc.alpha = 0;
 	let text1fade = new Fade(page.page18_text1_mc);
+	let theEndFade = new Fade(page.page18_theend_mc);
 	let pageFader = new Fade(page.fade_mc);
 	createjs.Ticker.addEventListener("tick", fadeUp);
 
@@ -45,17 +47,36 @@ function page18(){
 
 		if (!audioComplete){
 			createjs.Ticker.addEventListener("tick", fadeUpText);
-			audio.on("complete", done, null, true);
-		}
-
-		function done(){
-			audioComplete = true;
-			page.page18_text1_mc.addEventListener("click", playLine1);
+			audio.on("complete", playTheEnd, null, true);
 		}
 
 		function fadeUpText() {
 			text1fade.FadeUp();
 			if (text1fade.faded){
+				createjs.Ticker.removeEventListener("tick", fadeUpText);
+			}
+		}
+	}
+
+	function playTheEnd(){
+		createjs.Sound.stop();
+		audio = theEnd;
+		audio.play();
+
+		if (!audioComplete){
+			createjs.Ticker.addEventListener("tick", fadeUpText);
+			audio.on("complete", done, null, true);
+		}
+
+		function done(){
+			audioComplete = true;
+			page.page18_theend_mc.addEventListener("click", playTheEnd);
+			page.page18_text1_mc.addEventListener("click", playLine1);
+		}
+
+		function fadeUpText() {
+			theEndFade.FadeUp();
+			if (theEndFade.faded){
 				createjs.Ticker.removeEventListener("tick", fadeUpText);
 			}
 		}
@@ -182,6 +203,7 @@ function page18(){
 		page.page18_humble_mc.removeEventListener("click", playHumble);
 		page.page18_yeti_mc.removeEventListener("click", playYeti);
 		page.page18_text1_mc.removeEventListener("click", playLine1);
+		page.page18_theend_mc.removeEventListener("click", playTheEnd);
 		previousButton.removeEventListener("click", gotoPreviousPage);
 		stage.removeChild(page);
 	}

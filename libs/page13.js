@@ -20,6 +20,7 @@ function page13(){
 	page.page13_bee1_mc.addEventListener("click", playBee1);
 	page.page13_bee2_mc.addEventListener("click", playBee2);
 	page.page13_butterfly_mc.addEventListener("click", playButterfly);
+	page.page13_ant_mc.addEventListener("click", playAnt);
 
 	function fadeUp() {
 		pageFader.FadeDown();
@@ -68,6 +69,7 @@ function page13(){
 	let bee1 = new Animations(page.page13_bee1_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let bee2 = new Animations(page.page13_bee2_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 	let butterfly = new Animations(page.page13_butterfly_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let ant = new Animations(page.page13_ant_mc, "endLoop", "startLoop", "endAnim", "startAnim");
 
 	function loopAnimations(){
 		yetiUp.Loop();
@@ -77,18 +79,23 @@ function page13(){
 		bee1.Loop();
 		bee2.Loop();
 		butterfly.Loop();
+		ant.Loop();
 	}
 
 	//page interactions //
 
 	function playHumble(){
 		humble.Play();
-		humbleHappy02.play();
+		if(audioComplete){
+			humbleHappy02.play();
+		}
 	}
 
 	function playStumble(){
 		stumble.Play();
-		stumbleHappy01.play();
+		if(audioComplete){
+			stumbleHappyDistant.play();
+		}
 	}
 
 	function playBee2(){
@@ -100,7 +107,11 @@ function page13(){
 	}
 
 	function playButterfly(){
-		butterfly.Play()
+		butterfly.Play();
+	}
+
+	function playAnt(){
+		ant.Play();
 	}
 
 	//Navigation//
@@ -122,6 +133,7 @@ function page13(){
 	function killPage(){
 		//removes all the interactions from the page
 		createjs.Sound.stop();
+		page.page13_ant_mc.removeEventListener("click", playAnt);
 		page.page13_humble_mc.removeEventListener("click", playHumble);
 		page.page13_stumble_mc.removeEventListener("click", playStumble);
 		page.page13_bee1_mc.removeEventListener("click", playBee1);

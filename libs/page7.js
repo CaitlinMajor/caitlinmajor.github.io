@@ -122,18 +122,24 @@ function page7(){
 
 	function playHumble(){
 		humble.Play();
-		humbleScared01.play();
+		if(audioComplete){
+			humbleScared01.play();
+		}
 	}
 
 	function playGrumble(){
 		grumble.Play();
-		grumbleScared07.play();
+		if(audioComplete){
+			grumbleScared07.play();
+		}
 	}
 
 	function playYeti(){
 		yeti.Play();
 		yetiOL.Play();
-		yetiHmm.play();
+		if(audioComplete){
+			yetiHmm.play();
+		}
 	}
 
 	function playFishy(){

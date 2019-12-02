@@ -12,6 +12,9 @@ function page1(){
 
 	//*Add the page*//
 	stage.addChildAt(page, 1);
+
+	// createCookie("page", "1", 1);
+	// console.log(document.cookie);
 	page.page1_text1_mc.alpha = 0;
 	page.page1_text2_mc.alpha = 0;
 	page.page1_text3_mc.alpha = 0;

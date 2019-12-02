@@ -27,19 +27,19 @@ function page12(){
 			createjs.Ticker.removeEventListener("tick", fadeUp);
 			nextButton.addEventListener("click", gotoNextPage);
 			previousButton.addEventListener("click", gotoPreviousPage);
-			playHumble();
+			playHumbleAudio();
 		}
 
 	}
 
 	//* Handle The Audio *//
-	function playHumble() {
+	function playHumbleAudio() {
 		createjs.Sound.stop();
 		audio = page12Humble;
-		page.page12_humble_mc.gotoAndPlay("startAnim");
 		audio.play();
 
 		if (!audioComplete){
+			page.page12_humble_mc.gotoAndPlay("startAnim");
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 			audio.on("complete", playLine2, null, true);
 		}
@@ -60,7 +60,7 @@ function page12(){
 
 		if (!audioComplete){
 			createjs.Ticker.addEventListener("tick", fadeUpText);
-			audio.on("complete", playYeti, null, true);
+			audio.on("complete", playYetiAudio, null, true);
 		}
 
 		function fadeUpText() {
@@ -72,14 +72,14 @@ function page12(){
 		
 	}
 
-	function playYeti() {
+	function playYetiAudio() {
 		createjs.Sound.stop();
 		audio = page12YetiLine1;
-		yeti.Play();
-		yetiOL.Play();
 		audio.play();
 
 		if (!audioComplete){
+			page.page12_yeti_mc.gotoAndPlay("startAnim");
+			page.page12_yetiOL_mc.gotoAndPlay("startAnim");
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 			audio.on("complete", playLine4, null, true);
 		}
@@ -106,10 +106,10 @@ function page12(){
 		function done(){
 			audioComplete = true;
 			page.page12_yeti_mc.addEventListener("click", playYeti);
-			page.page12_humble_mc.addEventListener("click", playHumble2);
-			page.page12_text1_mc.addEventListener("click", playHumble);
+			page.page12_humble_mc.addEventListener("click", playHumble);
+			page.page12_text1_mc.addEventListener("click", playHumbleAudio);
 			page.page12_text2_mc.addEventListener("click", playLine2);
-			page.page12_text3_mc.addEventListener("click", playYeti);
+			page.page12_text3_mc.addEventListener("click", playYetiAudio);
 			page.page12_text4_mc.addEventListener("click", playLine4);
 		}
 
@@ -126,8 +126,8 @@ function page12(){
 	createjs.Ticker.addEventListener("tick", loopAnimations);
 	let humble = new Animations(page.page12_humble_mc, "endLoop", "startLoop");
 	let humble2 = new Animations(page.page12_humble_mc, "endLoop2", "startLoop2", "endAnim2", "startAnim2");
-	let yeti = new Animations(page.page12_yeti_mc, "endLoop", "startLoop", "endAnim", "startAnim");
-	let yetiOL = new Animations(page.page12_yetiOL_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let yeti = new Animations(page.page12_yeti_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let yetiOL = new Animations(page.page12_yetiOL_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 
 	function loopAnimations(){
 		humble.Loop();
@@ -138,9 +138,19 @@ function page12(){
 
 	//page interactions //
 
-	function playHumble2(){
+	function playHumble(){
 		humble2.Play();
-		humbleScared01.play();
+		if(audioComplete){
+			humbleScared01.play();
+		}
+	}
+
+	function playYeti(){
+		yeti.Play();
+		yetiOL.Play();
+		if(audioComplete){
+			yetiHmm.play();
+		}
 	}
 
 	//Navigation//
@@ -162,11 +172,11 @@ function page12(){
 	function killPage(){
 		//removes all the interactions from the page
 		createjs.Sound.stop();
-		page.page12_text1_mc.removeEventListener("click", playHumble);
+		page.page12_text1_mc.removeEventListener("click", playHumbleAudio);
 		page.page12_text2_mc.removeEventListener("click", playLine2);
 		page.page12_text3_mc.removeEventListener("click", playYeti);
 		page.page12_text4_mc.removeEventListener("click", playLine4);
-		page.page12_humble_mc.removeEventListener("click", playHumble2);
+		page.page12_humble_mc.removeEventListener("click", playHumble);
 		page.page12_yeti_mc.removeEventListener("click", playYeti);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);
@@ -175,7 +185,7 @@ function page12(){
 	}
 
 	function fadeDown() {
-pageFader.FadeUp();
+		pageFader.FadeUp();
 		if (pageFader.faded){
 			killPage();
 				if (next) {
