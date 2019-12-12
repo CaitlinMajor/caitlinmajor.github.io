@@ -198,7 +198,7 @@ function page3(){
 			}
 			if (previous && C<=1){
 				killPage();
-				page1();
+				page2();
 			}
 			else if (C<=1){
 				page.page3_C1_mc.alpha = 1;
