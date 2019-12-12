@@ -3,34 +3,141 @@ var firstTime = true;
 var nextButtonAdded = false;
 
 function getStarted(){
-	registerSounds();
-	page0();
+
+	//* Pre load all the audio *//
+	var queue = new createjs.LoadQueue();
+	queue.installPlugin(createjs.Sound);
+	queue.on("complete", handleComplete);
+
+	queue.loadManifest([
+		{id:"page0Audio1", src:"sounds/page0_audio1.mp3"},
+		{id:"A", src:"sounds/a.mp3"},
+		{id:"Ant", src:"sounds/ant.mp3"},
+		{id:"Apple", src:"sounds/apple.mp3"},
+		{id:"B", src:"sounds/b.mp3"},
+		{id:"Bowl", src:"sounds/bowl.mp3"},
+		{id:"Broccoli", src:"sounds/broccoli_1.mp3"},
+		{id:"C", src:"sounds/c.mp3"},
+		{id:"Cat", src:"sounds/cat.mp3"},
+		{id:"catMeow", src:"sounds/catmeow.mp3"},
+		{id:"catPurr", src:"sounds/catpurr.mp3"},
+		{id:"Cuddles", src:"sounds/cuddles.mp3"},
+		{id:"D", src:"sounds/d.mp3"},
+		{id:"Dance", src:"sounds/dance.mp3"},
+		{id:"Drum", src:"sounds/drum.mp3"},
+		{id:"Drums", src:"sounds/drums.mp3"},
+		{id:"E", src:"sounds/e.mp3"},
+		{id:"Eat", src:"sounds/eat.mp3"},
+		{id:"Egg", src:"sounds/egg_1.mp3"},
+		{id:"F", src:"sounds/f.mp3"},
+		{id:"Fish", src:"sounds/fish.mp3"},
+		{id:"Frog", src:"sounds/frog.mp3"},
+		{id:"G", src:"sounds/g.mp3"},
+		{id:"Goat", src:"sounds/goat.mp3"},
+		{id:"Grapes", src:"sounds/grapes_1.mp3"},
+		{id:"H", src:"sounds/h.mp3"},
+		{id:"Hat", src:"sounds/hat_2.mp3"},
+		{id:"HulaHoop", src:"sounds/hulahoop_1.mp3"},
+		{id:"I", src:"sounds/i.mp3"},
+		{id:"Ice", src:"sounds/ice_1.mp3"},
+		{id:"IceCream", src:"sounds/icecream_1.mp3"},
+		{id:"J", src:"sounds/j.mp3"},
+		{id:"Jelly", src:"sounds/jelly_1.mp3"},
+		{id:"Jumping", src:"sounds/jumping.mp3"},
+		{id:"page1Audio1", src:"sounds/page1_audio1.mp3"},
+		{id:"page1Audio2", src:"sounds/page1_audio2.mp3"},
+		{id:"page2Audio1", src:"sounds/page2_audio1.mp3"},
+		{id:"page2Audio2", src:"sounds/page2_audio2.mp3"},
+		{id:"page3Audio1", src:"sounds/page3_audio1.mp3"},
+		{id:"page3Audio2", src:"sounds/page3_audio2.mp3"}
+	]);
+
+	function handleComplete(){
+		page0Audio1 = createjs.Sound.createInstance("page0Audio1");
+		aAudio = createjs.Sound.createInstance("A");
+		antAudio = createjs.Sound.createInstance("Ant");
+		appleAudio = createjs.Sound.createInstance("Apple");
+		bAudio = createjs.Sound.createInstance("B");
+		bowlAudio = createjs.Sound.createInstance("Bowl");
+		broccoliAudio = createjs.Sound.createInstance("Broccoli");
+		cAudio = createjs.Sound.createInstance("C");
+		catAudio = createjs.Sound.createInstance("Cat");
+		catMeow = createjs.Sound.createInstance("catMeow");
+		catPurr = createjs.Sound.createInstance("catPurr");
+		cuddlesAudio = createjs.Sound.createInstance("Cuddles");
+		D = createjs.Sound.createInstance("D");
+		Dance = createjs.Sound.createInstance("Dance");
+		Drum = createjs.Sound.createInstance("Drum");
+		Drums = createjs.Sound.createInstance("Drums");
+		E = createjs.Sound.createInstance("E");
+		Eat = createjs.Sound.createInstance("Eat");
+		Egg = createjs.Sound.createInstance("Egg");
+		F = createjs.Sound.createInstance("F");
+		Fish = createjs.Sound.createInstance("Fish");
+		Frog = createjs.Sound.createInstance("Frog");
+		G = createjs.Sound.createInstance("G");
+		Goat = createjs.Sound.createInstance("Goat");
+		Grapes = createjs.Sound.createInstance("Grapes");
+		H = createjs.Sound.createInstance("H");
+		Hat = createjs.Sound.createInstance("Hat");
+		HulaHoop = createjs.Sound.createInstance("HulaHoop");
+		I = createjs.Sound.createInstance("I");
+		Ice = createjs.Sound.createInstance("Ice");
+		IceCream = createjs.Sound.createInstance("IceCream");
+		J = createjs.Sound.createInstance("J");
+		Jelly = createjs.Sound.createInstance("Jelly");
+		Jumping = createjs.Sound.createInstance("Jumping");
+		page1Audio1 = createjs.Sound.createInstance("page1Audio1");
+		page1Audio2 = createjs.Sound.createInstance("page1Audio2");
+		page2Audio1 = createjs.Sound.createInstance("page2Audio1");
+		page2Audio2 = createjs.Sound.createInstance("page2Audio2");
+		page3Audio1 = createjs.Sound.createInstance("page3Audio1");
+		page3Audio2 = createjs.Sound.createInstance("page3Audio2");
+
+		soundsLoaded = true;
+		console.log("sounds loaded " + soundsLoaded);
+
+		// load page according to cookie number
+		var pageIndex = getCookie("page");
+		var PageArray = [page0, page1, page2, page3];
+		if(pageIndex >=1){
+			PageArray[pageIndex]();
+		} else {
+			page0();
+		}
+	}
 }
 
-// function createCookie(name,value,days) {
-// 	if (days) {
-// 		var date = new Date();
-// 		date.setTime(date.getTime()+(days*24*60*60*1000));
-// 		var expires = "; expires="+date.toGMTString();
-// 	}
-// 	else var expires = "";
-// 	document.cookie = name+"="+value+expires+"; path=/";
-// }
+//* Cookie Logic *//
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
 
-// function readCookie(name) {
-// 	var nameEQ = name + "=";
-// 	var ca = document.cookie.split(';');
-// 	for(var i=0;i < ca.length;i++) {
-// 		var c = ca[i];
-// 		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-// 		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-// 	}
-// 	return null;
-// }
+function getCookie(name) {
+  var cname = name + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(cname) == 0) {
+      return c.substring(cname.length, c.length);
+    }
+  }
+  return "";
+}
 
-// function eraseCookie(name) {
-// 	createCookie(name,"",-1);
-// }
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
 
 class Animations{
 	
@@ -186,159 +293,3 @@ function removePreviousButton(){
 
 }
 
-function registerSounds() {
-
-	audioPath = "sounds/"
-	sounds = [
-		{id:"grumbleAffirmative06", src:"grumble_affirmative_06.mp3"},
-		{id:"grumbleChattering04", src:"grumble_chattering_04.mp3"},
-		{id:"grumbleEating02", src:"grumble_eating_02.mp3"},
-		{id:"grumbleHappy03", src:"grumble_happy_03.mp3"},
-		{id:"grumbleScared07", src:"grumble_scared_07.mp3"},
-		{id:"humbleAffirmative03", src:"humble_affirmative_03.mp3"},
-		{id:"humbleEating01", src:"humble_eating_01.mp3"},
-		{id:"humbleEnthusiastic12", src:"humble_enthusiastic_12.mp3"},
-		{id:"humbleHappy02", src:"humble_happy_02.mp3"},
-		{id:"humbleScared01", src:"humble_scared_01.mp3"},
-		{id:"humbleScared02", src:"humble_scared_02.mp3"},
-		{id:"stumbleAffirmative07", src:"stumble_affirmative_07.mp3"},
-		{id:"stumbleEating01", src:"stumble_eating_01.mp3"},
-		{id:"stumbleEnthusiastic01", src:"stumble_enthusiastic_01.mp3"},
-		{id:"stumbleExcited06", src:"stumble_excited_06.mp3"},
-		{id:"stumbleHappyDistant", src:"stumble_happy_distant.mp3"},
-		{id:"stumbleHappy01", src:"stumble_happy_01.mp3"},
-		{id:"stumblePhew05", src:"stumble_phew_05.mp3"},
-		{id:"stumbleScared04", src:"stumble_scared_04.mp3"},
-		{id:"stumbleScared07", src:"stumble_scared_07.mp3"},
-		{id:"stumbleWow01", src:"stumble_wow_01.mp3"},
-		{id:"yetiHmm", src:"yeti_hmm.mp3"},
-		{id:"yetiArgh", src:"yeti_argh.mp3"},
-		{id:"yetiGrr", src:"yeti_grr.mp3"},
-		{id:"coverNarrator", src:"cover_audio.mp3"},
-		{id:"page1Line1", src:"page1_audio_line1.mp3"},
-		{id:"page1Line2", src:"page1_audio_line2.mp3"},
-		{id:"page1Line3", src:"page1_audio_line3.mp3"},
-		{id:"page1Line4", src:"page1_audio_line4.mp3"},
-		{id:"page2Line1", src:"page2_audio_line1.mp3"},
-		{id:"page3Line1", src:"page3_audio_line1.mp3"},
-		{id:"page3Line2", src:"page3_audio_line2.mp3"},
-		{id:"page4Line1", src:"page4_audio_line1.mp3"},
-		{id:"page4Line2", src:"page4_audio_line2.mp3"},
-		{id:"page5Line1", src:"page5_audio_line1.mp3"},
-		{id:"page5Line2", src:"page5_audio_line2.mp3"},
-		{id:"page5YetiLine1", src:"page5_audio_yeti_line1.mp3"},
-		{id:"page6Line1", src:"page6_audio_line1.mp3"},
-		{id:"page6YetiLine1", src:"page6_audio_yeti_line1.mp3"},
-		{id:"page7Line1", src:"page7_audio_line1.mp3"},
-		{id:"page7Line2", src:"page7_audio_line2.mp3"},
-		{id:"page8Line1", src:"page8_audio_line1.mp3"},
-		{id:"page8YetiLine1", src:"page8_audio_yeti_line1.mp3"},
-		{id:"page8YetiLine2", src:"page8_audio_yeti_line2.mp3"},
-		{id:"page9Line1", src:"page9_audio_line1.mp3"},
-		{id:"page10Line1", src:"page10_audio_line1.mp3"},
-		{id:"page10Line2", src:"page10_audio_line2.mp3"},
-		{id:"page10YetiLine1", src:"page10_audio_yeti_line1.mp3"},
-		{id:"page11Line1", src:"page11_audio_line1.mp3"},
-		{id:"page11YetiLine1", src:"page11_audio_yeti_line1.mp3"},
-		{id:"page12Humble", src:"page12_audio_humble.mp3"},
-		{id:"page12Line1", src:"page12_audio_line1.mp3"},
-		{id:"page12Line2", src:"page12_audio_line2.mp3"},
-		{id:"page12YetiLine1", src:"page12_audio_yeti_line1.mp3"},
-		{id:"page13Line1", src:"page13_audio_line1.mp3"},
-		{id:"page14Line1", src:"page14_audio_line1.mp3"},
-		{id:"page14YetiLine1", src:"page14_audio_yeti_line1.mp3"},
-		{id:"page15Grumble", src:"page15_audio_grumble.mp3"},
-		{id:"page15Line1", src:"page15_audio_line1.mp3"},
-		{id:"page15Line2", src:"page15_audio_line2.mp3"},
-		{id:"page15YetiLine1", src:"page15_audio_yeti_line1.mp3"},
-		{id:"page16Line1", src:"page16_audio_line1.mp3"},
-		{id:"page17Line1", src:"page17_audio_line1.mp3"},
-		{id:"page17Line2", src:"page17_audio_line2.mp3"},
-		{id:"page17YetiLine1", src:"page17_audio_yeti_line1.mp3"},
-		{id:"page18Line1", src:"page18_audio_line1.mp3"},
-		{id:"page18YetiLine1", src:"page18_audio_yeti_line1.mp3"},
-		{id:"theEnd", src:"page18_audio_theend.mp3"}
-	]
-
-	soundsCount = 0;
-	soundsLength = sounds.length;
-
-	createjs.Sound.addEventListener("fileload", handleLoad);
-	createjs.Sound.registerSounds(sounds, audioPath);
-}
-
-function handleLoad(){
-	soundsCount++;
-	if(soundsCount == soundsLength){
-		grumbleAffirmative06 = createjs.Sound.createInstance("grumbleAffirmative06");
-		grumbleChattering04 = createjs.Sound.createInstance("grumbleChattering04");
-		grumbleEating02 = createjs.Sound.createInstance("grumbleEating02");
-		grumbleHappy03 = createjs.Sound.createInstance("grumbleHappy03");
-		grumbleScared07 = createjs.Sound.createInstance("grumbleScared07");
-		humbleAffirmative03 = createjs.Sound.createInstance("humbleAffirmative03");
-		humbleEating01 = createjs.Sound.createInstance("humbleEating01");
-		humbleEnthusiastic12 = createjs.Sound.createInstance("humbleEnthusiastic12");
-		humbleHappy02 = createjs.Sound.createInstance("humbleHappy02");
-		humbleScared01 = createjs.Sound.createInstance("humbleScared01");
-		humbleScared02 = createjs.Sound.createInstance("humbleScared02");
-		stumbleAffirmative07 = createjs.Sound.createInstance("stumbleAffirmative07");
-		stumbleEating01 = createjs.Sound.createInstance("stumbleEating01");
-		stumbleEnthusiastic01 = createjs.Sound.createInstance("stumbleEnthusiastic01");
-		stumbleExcited06 = createjs.Sound.createInstance("stumbleExcited06");
-		stumbleHappyDistant = createjs.Sound.createInstance("stumbleHappyDistant");
-		stumbleHappy01 = createjs.Sound.createInstance("stumbleHappy01");
-		stumblePhew05 = createjs.Sound.createInstance("stumblePhew05");
-		stumbleScared04 = createjs.Sound.createInstance("stumbleScared04");
-		stumbleScared07 = createjs.Sound.createInstance("stumbleScared07");
-		stumbleWow01 = createjs.Sound.createInstance("stumbleWow01");
-		yetiHmm = createjs.Sound.createInstance("yetiHmm");
-		yetiArgh = createjs.Sound.createInstance("yetiArgh");
-		yetiGrr = createjs.Sound.createInstance("yetiGrr");
-		coverNarrator = createjs.Sound.createInstance("coverNarrator");
-		page1Line1 = createjs.Sound.createInstance("page1Line1");
-		page1Line2 = createjs.Sound.createInstance("page1Line2");
-		page1Line3 = createjs.Sound.createInstance("page1Line3");
-		page1Line4 = createjs.Sound.createInstance("page1Line4");
-		page2Line1 = createjs.Sound.createInstance("page2Line1");
-		page3Line1 = createjs.Sound.createInstance("page3Line1");
-		page3Line2 = createjs.Sound.createInstance("page3Line2");
-		page4Line1 = createjs.Sound.createInstance("page4Line1");
-		page4Line2 = createjs.Sound.createInstance("page4Line2");
-		page5Line1 = createjs.Sound.createInstance("page5Line1");
-		page5Line2 = createjs.Sound.createInstance("page5Line2");
-		page5YetiLine1 = createjs.Sound.createInstance("page5YetiLine1");
-		page6Line1 = createjs.Sound.createInstance("page6Line1");
-		page6YetiLine1 = createjs.Sound.createInstance("page6YetiLine1");
-		page7Line1 = createjs.Sound.createInstance("page7Line1");
-		page7Line2 = createjs.Sound.createInstance("page7Line2");
-		page8Line1 = createjs.Sound.createInstance("page8Line1");
-		page8YetiLine1 = createjs.Sound.createInstance("page8YetiLine1");
-		page8YetiLine2 = createjs.Sound.createInstance("page8YetiLine2");
-		page9Line1 = createjs.Sound.createInstance("page9Line1");
-		page10Line1 = createjs.Sound.createInstance("page10Line1");
-		page10Line2 = createjs.Sound.createInstance("page10Line2");
-		page10YetiLine1 = createjs.Sound.createInstance("page10YetiLine1");
-		page11Line1 = createjs.Sound.createInstance("page11Line1");
-		page11YetiLine1 = createjs.Sound.createInstance("page11YetiLine1");
-		page12Humble = createjs.Sound.createInstance("page12Humble");
-		page12Line1 = createjs.Sound.createInstance("page12Line1");
-		page12Line2 = createjs.Sound.createInstance("page12Line2");
-		page12YetiLine1 = createjs.Sound.createInstance("page12YetiLine1");
-		page13Line1 = createjs.Sound.createInstance("page13Line1");
-		page14Line1 = createjs.Sound.createInstance("page14Line1");
-		page14YetiLine1 = createjs.Sound.createInstance("page14YetiLine1");
-		page15Grumble = createjs.Sound.createInstance("page15Grumble");
-		page15Line1 = createjs.Sound.createInstance("page15Line1");
-		page15Line2 = createjs.Sound.createInstance("page15Line2");
-		page15YetiLine1 = createjs.Sound.createInstance("page15YetiLine1");
-		page16Line1 = createjs.Sound.createInstance("page16Line1");
-		page17Line1 = createjs.Sound.createInstance("page17Line1");
-		page17Line2 = createjs.Sound.createInstance("page17Line2");
-		page17YetiLine1 = createjs.Sound.createInstance("page17YetiLine1");
-		page18Line1 = createjs.Sound.createInstance("page18Line1");
-		page18YetiLine1 = createjs.Sound.createInstance("page18YetiLine1");
-		theEnd = createjs.Sound.createInstance("theEnd");
-		soundsLoaded = true;
-		console.log("sounds loaded " + soundsLoaded);
-	}
-}
