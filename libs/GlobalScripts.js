@@ -225,6 +225,7 @@ function addNextButton(){
 	stage.addChild(nextButton);
 	pageSize = page.fade_mc.nominalBounds;
 	nextButton.x = pageSize.width;
+	nextButton.y = pageSize.height;
 	nextButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton)
 	let nextUp = new Fade(nextButton);
@@ -262,6 +263,8 @@ function addPreviousButton(){
 	previousButton = new lib.previousbutton_mc();
 
 	stage.addChild(previousButton);
+	pageSize = page.fade_mc.nominalBounds;
+	previousButton.y = pageSize.height;
 	previousButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let previousUp = new Fade(previousButton);

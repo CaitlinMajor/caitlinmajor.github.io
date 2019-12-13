@@ -118,8 +118,12 @@ function page1(){
 		createjs.Ticker.addEventListener("tick", checkAnim);
 
 		function checkAnim(){
+			nextButton.removeEventListener("click", gotoNextPage);
+			previousButton.removeEventListener("click", gotoPreviousPage);
 			if (page.page1_A2_mc.currentLabel == "startAnt"){
 				playLine2();
+				nextButton.addEventListener("click", gotoNextPage);
+				previousButton.addEventListener("click", gotoPreviousPage);
 				createjs.Ticker.removeEventListener("tick", checkAnim);
 			}
 		}

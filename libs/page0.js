@@ -5,6 +5,7 @@ function page0(){
 	audioComplete = false;
 
 	stage.addChildAt(page, 1);
+	page.page0_text_mc.gotoAndStop(0);
 
 	let fader = new Fade(page.fade_mc);
 
@@ -31,14 +32,10 @@ function page0(){
 
 	//* Handle the audio *//
 	function playTitle(){
-		page.preload_mc.alpha = 0;
-		page.page0_text_mc.gotoAndPlay("start");
+		page.page0_text_mc.gotoAndPlay("startAnim");
 		page0Audio1.play();
 
 		if(!audioComplete){
-			page.page0_noodle_mc.gotoAndPlay("start");
-			page.page0_broccoli_mc.gotoAndPlay("start");
-			page.page0_cheesy_mc.gotoAndPlay("start");
 			page0Audio1.on("complete", done, null, true);
 		}
 	}
