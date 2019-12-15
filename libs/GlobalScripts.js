@@ -286,6 +286,8 @@ function addNextButton(){
 	stage.addChild(nextButton);
 	width = document.documentElement.clientWidth;
 	height = document.documentElement.clientHeight;
+	console.log("width " + width);
+	console.log("height " + height);
 	nextButton.x = width;
 	nextButton.y = height
 	nextButton.alpha = 0;
