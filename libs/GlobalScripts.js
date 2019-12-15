@@ -284,8 +284,8 @@ function addNextButton(){
 	nextButton = new lib.nextbutton_mc();
 
 	stage.addChild(nextButton);
-	width = document.documentElement.clientWidth;
-	height = document.documentElement.clientHeight;
+	width = window.devicePixelRatio * document.documentElement.clientWidth;
+	height = window.devicePixelRatio * document.documentElement.clientHeight;
 	console.log("width " + width);
 	console.log("height " + height);
 	nextButton.x = width;
@@ -328,7 +328,7 @@ function addPreviousButton(){
 
 	stage.addChild(previousButton);
 	width = document.documentElement.clientWidth - document.documentElement.clientWidth;
-	height = document.documentElement.clientHeight;
+	height = window.devicePixelRatio * document.documentElement.clientHeight;
 	previousButton.x = width;
 	previousButton.y = height
 	previousButton.alpha = 0;
