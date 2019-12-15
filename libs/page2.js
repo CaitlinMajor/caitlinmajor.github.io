@@ -1,44 +1,38 @@
 function page2(){
 
-	//* Define page variables *//
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page2_mc();
-	audioComplete = false;
+
+	//define page variables //
 	next = false;
 	previous = false;
-	B = 1;
+	audioComplete = false;
 
 	createCookie("page", "2", 1);
 	
 	//* Add the page *//
 	stage.addChildAt(page, 1);
-	page.page2_B1_mc.gotoAndStop(0);
-	page.page2_B2_mc.gotoAndStop(0);
-	page.page2_B1_mc.alpha = 0;
-	page.page2_B2_mc.alpha = 0;
 
-	page.page2_text1_mc.alpha = 0;
-	page.page2_text2_mc.alpha = 0;
-	page.page2_text3_mc.alpha = 0;
+	//text//
+	page.page2_text_mc.alpha = 0;
+	let textFade = new Fade(page.page2_text_mc);
+	
+	//interactive elements//
+	page.page2_bird_mc.addEventListener("click", playBird);
+	page.page2_mouse_mc.addEventListener("click", playMouse);
+	page.page2_grumble_mc.addEventListener("click", playGrumbleAnimation);
+	page.page2_humble_mc.addEventListener("click", playHumbleAnimation);
+	page.page2_stumble_mc.addEventListener("click", playStumbleAnimation);
 
-	let text1fade = new Fade(page.page2_text1_mc);
-	let text2fade = new Fade(page.page2_text2_mc);
-	let text3fade = new Fade(page.page2_text3_mc);
-	let fader = new Fade(page.fade_mc);
+	//page fader//
+	let pageFader = new Fade(page.fade_mc);
 	createjs.Ticker.addEventListener("tick", fadeUp);
 
 	function fadeUp() {
-		fader.FadeDown();
-		if (!fader.faded){
+		pageFader.FadeDown();
+		if (!pageFader.faded){
 			createjs.Ticker.removeEventListener("tick", fadeUp);
-
-			if (B == 1){
-				B1();
-			} 
-			else if (B == 2){
-				B2();
-			}
-
+			
 			if(!nextButtonAdded){
 				addNextButton();
 				nextButtonAdded = true;
@@ -47,164 +41,137 @@ function page2(){
 			if(!previousButtonAdded){
 				addPreviousButton();
 				previousButtonAdded = true;
-				previousButton.addEventListener("click", gotoPreviousPage);
 			}
 			previousButton.addEventListener("click", gotoPreviousPage);
+
+			playText();
+			}
+
+		}
+
+	//* Handle The Audio *//
+	function playText() {
+		createjs.Sound.stop();
+		audio = page2Line1;
+		audio.play();
+
+		if (!audioComplete){
+			createjs.Ticker.addEventListener("tick", fadeUpText);
+			audio.on("complete", done, null, true);
+		}
+
+		function done(){
+				audioComplete = true;
+				page.page2_text_mc.addEventListener("click", playText);
+			}
+		
+		function fadeUpText() {
+			textFade.FadeUp();
+			if (textFade.faded){
+				createjs.Ticker.removeEventListener("tick", fadeUpText);
+			}
 		}
 	}
 
 	//* Loop animations *//
 	createjs.Ticker.addEventListener("tick", loopAnimations);
-	let anim1 = new Animations(page.page2_B1_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let anim2 = new Animations(page.page2_B2_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	
+
+	let bird = new Animations(page.page2_bird_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let mouse = new Animations(page.page2_mouse_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let stumble = new Animations(page.page2_stumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let grumble = new Animations(page.page2_grumble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+	let humble = new Animations(page.page2_humble_mc, "endLoop", "startLoop", "endAnim", "startAnim");
+
 	function loopAnimations(){
-		anim1.Loop();
-		anim2.Loop();
+		bird.Loop();
+		mouse.Loop();
+		stumble.Loop();
+		grumble.Loop();
+		humble.Loop();
 	}
 
-	function B1(){
-		page.page2_B1_mc.alpha = 1;
-		playLine1();
+	//page interactions //
 
-		function playLine1(){
-			createjs.Sound.stop();
+	function playBird(){
+		bird.Play();
 
-			if (!audioComplete){
-				page2Audio1.play();
-				page.page2_B1_mc.gotoAndPlay("start");
-				createjs.Ticker.addEventListener("tick", fadeUpText);
-				page2Audio1.on("complete", done, null, true);
-			} 
-			else if (audioComplete){
-				bAudio.play();
-			}
-
-			function fadeUpText() {
-				text1fade.FadeUp();
-				text2fade.FadeUp();
-				if (text1fade.faded){
-					createjs.Ticker.removeEventListener("tick", fadeUpText);
-				}
-			}
-		}
-
-		function done(){
-			audioComplete = true;
-			page.page2_B1_mc.addEventListener("click", playAnim1);
-			page.page2_text1_mc.addEventListener("click", playLine1);
-			page.page2_text2_mc.addEventListener("click", playBroccoli);
-		}
-
-		function playAnim1(){
-			anim1.Play();
-		}
-
-		function playBroccoli(){
-			broccoliAudio.play();
-			anim1.Play();
-		}
 	}
 
-	function B2(){
-		page.page2_B2_mc.alpha = 1;
-		playLine2();
+	function playMouse(){
+		mouse.Play();
 
-		function playLine2(){
-			createjs.Sound.stop();
-			
-			if (!audioComplete){
-				page2Audio2.play();
-				page.page2_B2_mc.gotoAndPlay("startAnim");
-				createjs.Ticker.addEventListener("tick", fadeUpText);
-				page2Audio2.on("complete", done, null, true);
-			} 
+	}
 
-			function fadeUpText() {
-				text3fade.FadeUp();
-				if (text3fade.faded){
-					createjs.Ticker.removeEventListener("tick", fadeUpText);
-				}
-			}
+	function playStumbleAnimation(){
+		if (audioComplete){
+			stumbleAffirmative07.play();
 		}
+		stumble.Play();
 
-		function done(){
-			audioComplete = true;
-			page.page2_B2_mc.addEventListener("click", playAnim2);
-			page.page2_text3_mc.addEventListener("click", playBowl);
+	}
+
+	function playGrumbleAnimation(){
+		grumble.Play();
+		if (audioComplete){
+			grumbleAffirmative06.play();
 		}
+		
 
-		function playAnim2(){
-			anim2.Play();
+	}
+
+	function playHumbleAnimation(){
+		humble.Play();
+		if (audioComplete){
+			humbleAffirmative03.play();
 		}
+		
 
-		function playBowl(){
-			bowlAudio.play();
-			anim2.Play();
-		}
+	}
 
+	//* End Of Page*//
+
+
+	function gotoNextPage(){
+		console.log("go to next page");
+		nextButton.removeEventListener("click", gotoNextPage);
+		next = true;
+		createjs.Ticker.addEventListener("tick", fadeDown);
+	}
+
+	function gotoPreviousPage(){
+		previousButton.removeEventListener("click", gotoPreviousPage);
+		console.log("go to previous page");
+		previous = true;
+		createjs.Ticker.addEventListener("tick", fadeDown);
 	}
 
 	function killPage(){
 		//removes all the interactions from the page
 		createjs.Sound.stop();
-		stage.removeChild(page);
+		page.page2_bird_mc.removeEventListener("click", playBird);
+		page.page2_mouse_mc.removeEventListener("click", playMouse);
+		page.page2_grumble_mc.removeEventListener("click", playGrumbleAnimation);
+		page.page2_humble_mc.removeEventListener("click", playHumbleAnimation);
+		page.page2_stumble_mc.removeEventListener("click", playStumbleAnimation);
+		page.page2_text_mc.removeEventListener("click", playText);
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		nextButton.removeEventListener("click", gotoNextPage);
 		previousButton.removeEventListener("click", gotoPreviousPage);
-	}
-
-	//Go to the next page//
-	function gotoNextPage(){
-		createjs.Sound.stop();
-		audioComplete = false;
-		if (B >= 2){
-			nextButton.removeEventListener("click", gotoNextPage);
-			next = true;
-		} else {
-			B = 2;
-		};
-		createjs.Ticker.addEventListener("tick", fadeDown);
-	}
-
-	function gotoPreviousPage(){
-		createjs.Sound.stop();
-		audioComplete = false;
-		if (B <= 1){
-			previousButton.removeEventListener("click", gotoPreviousPage);
-			previous = true;
-		} else {
-			B = 1;
-		};
-		createjs.Ticker.addEventListener("tick", fadeDown);
+		stage.removeChild(page);
 	}
 
 	function fadeDown() {
-		fader.FadeUp();
-		if (fader.faded){
-			page.page2_B1_mc.gotoAndStop(0);
-			page.page2_B2_mc.gotoAndStop(0);
-			page.page2_B1_mc.alpha = 0;
-			page.page2_B2_mc.alpha = 0;
-
-			if (next && B>=2) {
-				killPage();
-				page3();
-			} else if (B>=2) {
-				page.page2_B2_mc.alpha = 1;
-				createjs.Ticker.addEventListener("tick", fadeUp);
-			}
-			if (previous && B<=1){
-				killPage();
-				page1();
-			}
-			else if (B<=1){
-				page.page2_B1_mc.alpha = 1;
-				createjs.Ticker.addEventListener("tick", fadeUp);
-			}
+		pageFader.FadeUp();
+		if (pageFader.faded){
+			killPage();
+				if (next) {
+					setTimeout(page3, 200);
+				}
+				else if (previous){
+					setTimeout(page1, 200);
+				}
 			createjs.Ticker.removeEventListener("tick", fadeDown);
 		}
 
 	}
-
 }
