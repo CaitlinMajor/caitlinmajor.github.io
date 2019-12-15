@@ -156,7 +156,6 @@ function getStarted(){
 		theEnd = createjs.Sound.createInstance("theEnd");
 
 		soundsLoaded = true;
-		console.log("sounds loaded " + soundsLoaded);
 
 		// load page according to cookie number
 		var pageIndex = getCookie("page");
@@ -285,8 +284,8 @@ function addNextButton(){
 	nextButton = new lib.nextbutton_mc();
 
 	stage.addChild(nextButton);
-	width = window.outerWidth;
-	height = window.outerHeight;
+	width = window.screen.width * 2;
+	height = window.screen.height * 2;
 	nextButton.x = width;
 	nextButton.y = height
 	nextButton.alpha = 0;
@@ -326,8 +325,8 @@ function addPreviousButton(){
 	previousButton = new lib.previousbutton_mc();
 
 	stage.addChild(previousButton);
-	width = window.outerWidth - window.outerWidth;
-	height = window.outerHeight;
+	width = window.screen.width - window.screen.width;
+	height = window.screen.height * 2;
 	previousButton.x = width;
 	previousButton.y = height
 	previousButton.alpha = 0;
