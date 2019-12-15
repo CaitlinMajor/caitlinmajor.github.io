@@ -284,7 +284,7 @@ function addNextButton(){
 	nextButton = new lib.nextbutton_mc();
 
 	stage.addChild(nextButton);
-	width = window.screen.width;
+	width = window.screen.width + window.screen.width;
 	height = window.screen.height;
 	nextButton.x = width;
 	nextButton.y = height
