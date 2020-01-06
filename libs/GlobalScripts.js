@@ -248,10 +248,10 @@ function addNextButton(){
 	nextButton = new lib.nextbutton_mc();
 
 	stage.addChild(nextButton);
-	height = stage.canvas.height / 2 + (window.screen.width * devicePixelRatio) / 2;
-	width = stage.canvas.width / 2 + (window.screen.height * devicePixelRatio) / 2;
-	//height = stage.canvas.height;
-	//width = stage.canvas.width;
+	//height = stage.canvas.height / 2 + (window.screen.width * devicePixelRatio) / 2;
+	//width = stage.canvas.width / 2 + (window.screen.height * devicePixelRatio) / 2;
+	height = stage.canvas.height;
+	width = stage.canvas.width;
 	nextButton.y = height;
 	nextButton.x = width;
 	nextButton.alpha = 0;
@@ -289,11 +289,11 @@ function addPreviousButton(){
 	previousButton = new lib.previousbutton_mc();
 
 	stage.addChild(previousButton);
-	height = stage.canvas.height / 2 + (window.screen.width * devicePixelRatio) / 2;
-	width = stage.canvas.width / 2 - (window.screen.height * devicePixelRatio) / 2;
-	//height = stage.canvas.height;
+	//height = stage.canvas.height / 2 + (window.screen.width * devicePixelRatio) / 2;
+	//width = stage.canvas.width / 2 - (window.screen.height * devicePixelRatio) / 2;
+	height = stage.canvas.height;
 	previousButton.y = height;
-	previousButton.x = width
+	//previousButton.x = width
 	previousButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let previousUp = new Fade(previousButton);
