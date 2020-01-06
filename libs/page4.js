@@ -51,7 +51,7 @@ function page4(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page4Line1;
+		audio = sounds.getInstance("page4Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -70,7 +70,7 @@ function page4(){
 
 	function playLine2() {
 		createjs.Sound.stop();
-		audio = page4Line2;
+		audio = sounds.getInstance("page4Line2");
 		audio.play();
 
 		if (!audioComplete){
@@ -117,7 +117,7 @@ function page4(){
 	function playStumble() {
 		stumble.Play();
 		if(audioComplete){
-			stumbleHappy01.play();
+			sounds.getInstance("stumbleHappy01").play();
 		}
 	}
 

@@ -2,19 +2,29 @@ var soundsLoaded = false;
 var firstTime = true;
 var nextButtonAdded = false;
 
-function getStarted(){
-	//* Pre load all the audio *//
-
-	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
-	preload = new lib.preloader();
-
-	stage.addChild(preload);
-
-	var queue = new createjs.LoadQueue();
-	queue.installPlugin(createjs.Sound);
-	queue.on("complete", handleComplete);
-
-	queue.loadManifest([
+var sounds = {
+	preloadFiles: function(){
+		var audioFile;
+		var l = [];
+		for (var i = sounds.library.length - 1; i >= 0; i--) {
+			audioFile = sounds.library[i];
+			audioFile.instance = createjs.Sound.createInstance(audioFile.id);
+			l.push(audioFile);
+		};
+		sounds.library = l;
+	},
+	getInstance: function(id){
+		var audioFile;
+		for (var i = sounds.library.length - 1; i >= 0; i--) {
+			audioFile = sounds.library[i];
+			if(id == audioFile.id){
+				return audioFile.instance;
+			}
+		};
+		console.log("Couldn't find audio file with id: "+id);
+		return false;
+	},
+	library:[
 		{id:"grumbleAffirmative06", src:"sounds/grumble_affirmative_06.mp3"},
 		{id:"grumbleChattering04", src:"sounds/grumble_chattering_04.mp3"},
 		{id:"grumbleEating02", src:"sounds/grumble_eating_02.mp3"},
@@ -83,78 +93,25 @@ function getStarted(){
 		{id:"page18Line1", src:"sounds/page18_audio_line1.mp3"},
 		{id:"page18YetiLine1", src:"sounds/page18_audio_yeti_line1.mp3"},
 		{id:"theEnd", src:"sounds/page18_audio_theend.mp3"}
-	]);
+	]
+}
+
+function getStarted(){
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	preload = new lib.preloader();
+	clicker = new lib.click();
+
+	stage.addChild(preload);
+
+	//* Pre load all the audio *//
+	var queue = new createjs.LoadQueue();
+	queue.installPlugin(createjs.Sound);
+	queue.on("complete", handleComplete);
+
+	queue.loadManifest(sounds.library);
 
 	function handleComplete(){
-		grumbleAffirmative06 = createjs.Sound.createInstance("grumbleAffirmative06");
-		grumbleChattering04 = createjs.Sound.createInstance("grumbleChattering04");
-		grumbleEating02 = createjs.Sound.createInstance("grumbleEating02");
-		grumbleHappy03 = createjs.Sound.createInstance("grumbleHappy03");
-		grumbleScared07 = createjs.Sound.createInstance("grumbleScared07");
-		humbleAffirmative03 = createjs.Sound.createInstance("humbleAffirmative03");
-		humbleEating01 = createjs.Sound.createInstance("humbleEating01");
-		humbleEnthusiastic12 = createjs.Sound.createInstance("humbleEnthusiastic12");
-		humbleHappy02 = createjs.Sound.createInstance("humbleHappy02");
-		humbleScared01 = createjs.Sound.createInstance("humbleScared01");
-		humbleScared02 = createjs.Sound.createInstance("humbleScared02");
-		stumbleAffirmative07 = createjs.Sound.createInstance("stumbleAffirmative07");
-		stumbleEating01 = createjs.Sound.createInstance("stumbleEating01");
-		stumbleEnthusiastic01 = createjs.Sound.createInstance("stumbleEnthusiastic01");
-		stumbleExcited06 = createjs.Sound.createInstance("stumbleExcited06");
-		stumbleHappyDistant = createjs.Sound.createInstance("stumbleHappyDistant");
-		stumbleHappy01 = createjs.Sound.createInstance("stumbleHappy01");
-		stumblePhew05 = createjs.Sound.createInstance("stumblePhew05");
-		stumbleScared04 = createjs.Sound.createInstance("stumbleScared04");
-		stumbleScared07 = createjs.Sound.createInstance("stumbleScared07");
-		stumbleWow01 = createjs.Sound.createInstance("stumbleWow01");
-		yetiHmm = createjs.Sound.createInstance("yetiHmm");
-		yetiArgh = createjs.Sound.createInstance("yetiArgh");
-		yetiGrr = createjs.Sound.createInstance("yetiGrr");
-		coverNarrator = createjs.Sound.createInstance("coverNarrator");
-		page1Line1 = createjs.Sound.createInstance("page1Line1");
-		page1Line2 = createjs.Sound.createInstance("page1Line2");
-		page1Line3 = createjs.Sound.createInstance("page1Line3");
-		page1Line4 = createjs.Sound.createInstance("page1Line4");
-		page2Line1 = createjs.Sound.createInstance("page2Line1");
-		page3Line1 = createjs.Sound.createInstance("page3Line1");
-		page3Line2 = createjs.Sound.createInstance("page3Line2");
-		page4Line1 = createjs.Sound.createInstance("page4Line1");
-		page4Line2 = createjs.Sound.createInstance("page4Line2");
-		page5Line1 = createjs.Sound.createInstance("page5Line1");
-		page5Line2 = createjs.Sound.createInstance("page5Line2");
-		page5YetiLine1 = createjs.Sound.createInstance("page5YetiLine1");
-		page6Line1 = createjs.Sound.createInstance("page6Line1");
-		page6YetiLine1 = createjs.Sound.createInstance("page6YetiLine1");
-		page7Line1 = createjs.Sound.createInstance("page7Line1");
-		page7Line2 = createjs.Sound.createInstance("page7Line2");
-		page8Line1 = createjs.Sound.createInstance("page8Line1");
-		page8YetiLine1 = createjs.Sound.createInstance("page8YetiLine1");
-		page8YetiLine2 = createjs.Sound.createInstance("page8YetiLine2");
-		page9Line1 = createjs.Sound.createInstance("page9Line1");
-		page10Line1 = createjs.Sound.createInstance("page10Line1");
-		page10Line2 = createjs.Sound.createInstance("page10Line2");
-		page10YetiLine1 = createjs.Sound.createInstance("page10YetiLine1");
-		page11Line1 = createjs.Sound.createInstance("page11Line1");
-		page11YetiLine1 = createjs.Sound.createInstance("page11YetiLine1");
-		page12Humble = createjs.Sound.createInstance("page12Humble");
-		page12Line1 = createjs.Sound.createInstance("page12Line1");
-		page12Line2 = createjs.Sound.createInstance("page12Line2");
-		page12YetiLine1 = createjs.Sound.createInstance("page12YetiLine1");
-		page13Line1 = createjs.Sound.createInstance("page13Line1");
-		page14Line1 = createjs.Sound.createInstance("page14Line1");
-		page14YetiLine1 = createjs.Sound.createInstance("page14YetiLine1");
-		page15Grumble = createjs.Sound.createInstance("page15Grumble");
-		page15Line1 = createjs.Sound.createInstance("page15Line1");
-		page15Line2 = createjs.Sound.createInstance("page15Line2");
-		page15YetiLine1 = createjs.Sound.createInstance("page15YetiLine1");
-		page16Line1 = createjs.Sound.createInstance("page16Line1");
-		page17Line1 = createjs.Sound.createInstance("page17Line1");
-		page17Line2 = createjs.Sound.createInstance("page17Line2");
-		page17YetiLine1 = createjs.Sound.createInstance("page17YetiLine1");
-		page18Line1 = createjs.Sound.createInstance("page18Line1");
-		page18YetiLine1 = createjs.Sound.createInstance("page18YetiLine1");
-		theEnd = createjs.Sound.createInstance("theEnd");
-
+		if (!soundsLoaded) sounds.preloadFiles();
 		soundsLoaded = true;
 
 		// load page according to cookie number
@@ -165,6 +122,21 @@ function getStarted(){
 			PageArray[pageIndex]();
 		} else {
 			page0();
+		}
+	}
+
+	stage.on("stagemousedown", function(event){
+		stage.addChild(clicker);
+		var p = this.globalToLocal(event.stageX, event.stageY);
+		clicker.x = p.x;
+		clicker.y = p.y;
+		createjs.Ticker.addEventListener("tick", removeClicker);
+	});
+
+	function removeClicker(){
+		if(clicker.currentFrame == 5){
+			stage.removeChild(clicker);
+			createjs.Ticker.removeEventListener("tick", removeClicker);
 		}
 	}
 }
@@ -201,7 +173,7 @@ function eraseCookie(name) {
 }
 
 class Animations{
-	
+
 	constructor(target, endLoop, startLoop, endAnim, startAnim){
 
 		this.playing = false;
@@ -214,17 +186,13 @@ class Animations{
 
 	Loop(){
 		if (this.target.currentLabel == this.endLoop) {
-
 			this.target.gotoAndPlay(this.startLoop);
 		}
 
 		if (this.target.currentLabel == this.endAnim) {
-
 			this.target.gotoAndPlay(this.startLoop)
-
 			this.playing = false;
 		}
-
 	}
 
 	Play(){
@@ -232,9 +200,7 @@ class Animations{
 			this.target.gotoAndPlay(this.startAnim);
 			this.playing = true;
 		}
-
 	}
-
 }
 
 class Fade{
@@ -257,7 +223,6 @@ class Fade{
 			if (!this.faded) {
 				this.faded = true;
 			}
-
 		}
 	}
 
@@ -273,7 +238,6 @@ class Fade{
 			if (this.faded) {
 				this.faded = false;
 			}
-
 		}
 	}
 }
@@ -284,10 +248,12 @@ function addNextButton(){
 	nextButton = new lib.nextbutton_mc();
 
 	stage.addChild(nextButton);
-	width = window.devicePixelRatio * document.documentElement.clientWidth;
-	height = window.devicePixelRatio * document.documentElement.clientHeight;
+	//height = stage.canvas.height / 2 + (window.screen.width * devicePixelRatio) / 2;
+	//width = stage.canvas.width / 2 + (window.screen.height * devicePixelRatio) / 2;
+	height = stage.canvas.height;
+	width = stage.canvas.width;
+	nextButton.y = height;
 	nextButton.x = width;
-	nextButton.y = height
 	nextButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton)
 	let nextUp = new Fade(nextButton);
@@ -297,7 +263,6 @@ function addNextButton(){
 		if(nextUp.faded){
 			createjs.Ticker.removeEventListener("tick", fadeUpButton);
 		}
-
 	}
 }
 
@@ -314,7 +279,6 @@ function removeNextButton(){
 		if(!nextDown.faded){
 			createjs.Ticker.removeEventListener("tick", fadeDownButton);
 		}
-
 	}
 }
 
@@ -325,10 +289,11 @@ function addPreviousButton(){
 	previousButton = new lib.previousbutton_mc();
 
 	stage.addChild(previousButton);
-	width = (window.devicePixelRatio * document.documentElement.clientWidth) - (window.devicePixelRatio * document.documentElement.clientWidth);
-	height = window.devicePixelRatio * document.documentElement.clientHeight;
-	previousButton.x = width;
-	previousButton.y = height
+	//height = stage.canvas.height / 2 + (window.screen.width * devicePixelRatio) / 2;
+	//width = stage.canvas.width / 2 - (window.screen.height * devicePixelRatio) / 2;
+	height = stage.canvas.height;
+	previousButton.y = height;
+	//previousButton.x = width
 	previousButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let previousUp = new Fade(previousButton);
@@ -338,9 +303,7 @@ function addPreviousButton(){
 		if(previousUp.faded){
 			createjs.Ticker.removeEventListener("tick", fadeUpButton);
 		}
-
 	}
-
 }
 
 function removePreviousButton(){
@@ -355,7 +318,5 @@ function removePreviousButton(){
 		if(!previousDown.faded){
 			createjs.Ticker.removeEventListener("tick", fadeDownButton);
 		}
-
 	}
-
 }

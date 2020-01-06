@@ -48,7 +48,7 @@ function page5(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page5Line1;
+		audio = sounds.getInstance("page5Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -66,7 +66,7 @@ function page5(){
 
 	function playYetiAudio() {
 		createjs.Sound.stop();
-		audio = page5YetiLine1;
+		audio = sounds.getInstance("page5YetiLine1");
 		audio.play();
 
 		if (!audioComplete){
@@ -86,7 +86,7 @@ function page5(){
 
 	function playLine3() {
 		createjs.Sound.stop();
-		audio = page5Line2;
+		audio = sounds.getInstance("page5Line2");
 		audio.play();
 
 		if(!audioComplete){
@@ -139,14 +139,14 @@ function page5(){
 	function playStumble(){
 		stumble.Play();
 		if(audioComplete){
-			stumbleScared04.play();
+			sounds.getInstance("stumbleScared04").play();
 		}
 	}
 
 	function playYeti(){
 		yetiUp.Play();
 		if(audioComplete){
-			yetiHmm.play();
+			sounds.getInstance("yetiHmm").play();
 		}
 	}
 

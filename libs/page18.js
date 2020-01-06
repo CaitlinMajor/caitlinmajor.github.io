@@ -50,7 +50,7 @@ function page18(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page18Line1;
+		audio = sounds.getInstance("page18Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -68,7 +68,7 @@ function page18(){
 
 	function playTheEnd(){
 		createjs.Sound.stop();
-		audio = theEnd;
+		audio = sounds.getInstance("theEnd");
 		audio.play();
 
 		if (!audioComplete){
@@ -136,7 +136,7 @@ function page18(){
 
 	function playHumble(){
 		humble.Play();
-		humbleEating01.play();
+		sounds.getInstance("humbleEating01").play();
 	}
 
 	function playBasket(){
@@ -153,11 +153,11 @@ function page18(){
 	function playStumble(){
 		if (!stumbleEat) {
 			page.page18_stumble_mc.gotoAndPlay("startAnim");
-			stumbleEating01.play();
+			sounds.getInstance("stumbleEating01").play();
 			stumbleEat = true;
 		} else if (stumbleEat) {
 			page.page18_stumble_mc.gotoAndPlay("startAnim2");
-			stumbleEating01.play();
+			sounds.getInstance("stumbleEating01").play();
 			stumbleEat = false;
 		}
 
@@ -166,11 +166,11 @@ function page18(){
 	function playGrumble(){
 		if (!grumbleEat) {
 			page.page18_grumble_mc.gotoAndPlay("startAnim");
-			grumbleEating02.play();
+			sounds.getInstance("grumbleEating02").play();
 			grumbleEat = true;
 		} else if (grumbleEat) {
 			page.page18_grumble_mc.gotoAndPlay("startAnim2");
-			grumbleEating02.play();
+			sounds.getInstance("grumbleEating02").play();
 			grumbleEat = false;
 		}
 
@@ -179,11 +179,11 @@ function page18(){
 	function playYeti(){
 		if (!yetiEat) {
 			page.page18_yeti_mc.gotoAndPlay("startAnim");
-			page18YetiLine1.play();
+			sounds.getInstance("page18YetiLine1").play();
 			yetiEat = true;
 		} else if (yetiEat) {
 			page.page18_yeti_mc.gotoAndPlay("startAnim2");
-			page18YetiLine1.play();
+			sounds.getInstance("page18YetiLine1").play();
 			yetiEat = false;
 		}
 

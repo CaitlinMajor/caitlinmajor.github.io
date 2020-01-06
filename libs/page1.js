@@ -56,7 +56,7 @@ function page1(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page1Line1;
+		audio = sounds.getInstance("page1Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -75,7 +75,7 @@ function page1(){
 
 	function playLine2() {
 		createjs.Sound.stop();
-		audio = page1Line2;
+		audio = sounds.getInstance("page1Line2");
 		audio.play();
 
 		if (!audioComplete){
@@ -93,7 +93,7 @@ function page1(){
 	}
 
 	function playStumbleAudio() {
-		audio = stumbleHappy01;
+		audio = sounds.getInstance("stumbleHappy01");
 		page.page1_stumble_mc.gotoAndPlay("startUpAnim");
 		audio.play();
 		audio.on("complete", playLine3, null, true);
@@ -102,7 +102,7 @@ function page1(){
 
 	function playLine3() {
 		createjs.Sound.stop();
-		audio = page1Line3;
+		audio = sounds.getInstance("page1Line3");
 		audio.play();
 	
 		if (!audioComplete){
@@ -120,7 +120,7 @@ function page1(){
 	}
 
 	function playHumbleAudio() {
-		audio = humbleHappy02;
+		audio = sounds.getInstance("humbleHappy02");
 		page.page1_humble_mc.gotoAndPlay("startUpAnim");
 		audio.play();
 		audio.on("complete", playLine4, null, true);
@@ -129,7 +129,7 @@ function page1(){
 
 	function playLine4() {
 		createjs.Sound.stop();
-		audio = page1Line4;
+		audio = sounds.getInstance("page1Line4");
 		audio.play();
 		
 		if (!audioComplete){
@@ -147,7 +147,7 @@ function page1(){
 	}
 
 	function playGrumbleAudio() {
-		audio = grumbleHappy03;
+		audio = sounds.getInstance("grumbleHappy03");
 		page.page1_grumble_mc.gotoAndPlay("startUpAnim");
 		audio.play();
 		audioComplete = true;

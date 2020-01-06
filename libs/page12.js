@@ -47,7 +47,7 @@ function page12(){
 	//* Handle The Audio *//
 	function playHumbleAudio() {
 		createjs.Sound.stop();
-		audio = page12Humble;
+		audio = sounds.getInstance("page12Humble");
 		audio.play();
 
 		if (!audioComplete){
@@ -67,7 +67,7 @@ function page12(){
 
 	function playLine2() {
 		createjs.Sound.stop();
-		audio = page12Line1;
+		audio = sounds.getInstance("page12Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -86,7 +86,7 @@ function page12(){
 
 	function playYetiAudio() {
 		createjs.Sound.stop();
-		audio = page12YetiLine1;
+		audio = sounds.getInstance("page12YetiLine1");
 		audio.play();
 
 		if (!audioComplete){
@@ -107,7 +107,7 @@ function page12(){
 
 	function playLine4() {
 		createjs.Sound.stop();
-		audio = page12Line2;
+		audio = sounds.getInstance("page12Line2");
 		audio.play();
 
 		if (!audioComplete){
@@ -153,7 +153,7 @@ function page12(){
 	function playHumble(){
 		humble2.Play();
 		if(audioComplete){
-			humbleScared01.play();
+			sounds.getInstance("humbleScared01").play();
 		}
 	}
 
@@ -161,7 +161,7 @@ function page12(){
 		yeti.Play();
 		yetiOL.Play();
 		if(audioComplete){
-			yetiHmm.play();
+			sounds.getInstance("yetiHmm").play();
 		}
 	}
 

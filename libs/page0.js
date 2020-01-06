@@ -27,13 +27,13 @@ function page0(){
 
 	else if(firstTime){
 		page.fade_mc.alpha = 0;
-		setTimeout(onLoad, 500)
+		setTimeout(onLoad, 500);
 	}
 
 	//* Handle the audio *//
 	function onLoad(){
-		coverNarrator.play();
-		coverNarrator.on("complete", done, null, true)
+		sounds.getInstance("coverNarrator").play();
+		sounds.getInstance("coverNarrator").on("complete", done, null, true)
 
 		function done(){
 			audioComplete = true;
@@ -85,7 +85,7 @@ function page0(){
 	}
 
 	 function playTitle(){
-	 	coverNarrator.play();
+	 	sounds.getInstance("coverNarrator").play();
 	}
 
 	function playBee() {
@@ -100,14 +100,14 @@ function page0(){
 	function playGrumble() {
 		grumble.Play();
 		if(audioComplete){
-			grumbleHappy03.play();
+			sounds.getInstance("grumbleHappy03").play();
 		}
 	}
 
 	function playHumble() {
 		humble.Play();
 		if(audioComplete){
-			humbleHappy02.play();
+			sounds.getInstance("humbleHappy02").play();
 		}
 		
 	}
@@ -115,14 +115,14 @@ function page0(){
 	function playStumble() {
 		stumble.Play();
 		if(audioComplete){
-			stumbleHappy01.play();
+			sounds.getInstance("stumbleHappy01").play();
 		}
 	}
 
 	function playYeti() {
 		if (!yetiUp && audioComplete) {
 			page.yeti_mc.gotoAndPlay("startAnimUp");
-			yetiGrr.play();
+			sounds.getInstance("yetiGrr").play();
 			yetiUp = true;
 		} else if (yetiUp && audioComplete) {
 			page.yeti_mc.gotoAndPlay("startAnimDown");

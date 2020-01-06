@@ -43,7 +43,7 @@ function page16(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page16Line1;
+		audio = sounds.getInstance("page16Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -110,13 +110,13 @@ function page16(){
 		if(right && !animPlaying){
 			page.page16_animation_mc.gotoAndPlay("startAnim1");
 			animPlaying = true;
-			grumbleAffirmative06.play();
+			sounds.getInstance("grumbleAffirmative06").play();
 		}
 
 		else if(left && !animPlaying){
 			page.page16_animation_mc.gotoAndPlay("startAnim2");
 			animPlaying = true;
-			grumbleAffirmative06.play();
+			sounds.getInstance("grumbleAffirmative06").play();
 		}
 	}
 

@@ -48,7 +48,7 @@ function page13(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page13Line1;
+		audio = sounds.getInstance("page13Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -99,14 +99,14 @@ function page13(){
 	function playHumble(){
 		humble.Play();
 		if(audioComplete){
-			humbleHappy02.play();
+			sounds.getInstance("humbleHappy02").play();
 		}
 	}
 
 	function playStumble(){
 		stumble.Play();
 		if(audioComplete){
-			stumbleHappyDistant.play();
+			sounds.getInstance("stumbleHappyDistant").play();
 		}
 	}
 

@@ -46,7 +46,7 @@ function page11(){
 	//* Handle The Audio *//
 	function playYetiAudio() {
 		createjs.Sound.stop();
-		audio = page11YetiLine1;
+		audio = sounds.getInstance("page11YetiLine1");
 		audio.play();
 
 		if (!audioComplete){
@@ -67,7 +67,7 @@ function page11(){
 
 	function playLine2() {
 		createjs.Sound.stop();
-		audio = page11Line1;
+		audio = sounds.getInstance("page11Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -108,7 +108,7 @@ function page11(){
 	function playHumble(){
 		humble.Play();
 		if(audioComplete){
-			humbleScared02.play();
+			sounds.getInstance("humbleScared02").play();
 		}
 	}
 
@@ -116,7 +116,7 @@ function page11(){
 		yeti.Play();
 		yetiOL.Play();
 		if(audioComplete){
-			yetiArgh.play();
+			sounds.getInstance("yetiArgh").play();
 		}
 	}
 
@@ -153,7 +153,7 @@ function page11(){
 		if (pageFader.faded){
 			killPage();
 				if (next) {
-					setTimouet(page12, 200);
+					setTimeout(page12, 200);
 				}
 				else if (previous){
 					setTimeout(page10, 200);

@@ -52,7 +52,7 @@ function page2(){
 	//* Handle The Audio *//
 	function playText() {
 		createjs.Sound.stop();
-		audio = page2Line1;
+		audio = sounds.getInstance("page2Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -104,7 +104,7 @@ function page2(){
 
 	function playStumbleAnimation(){
 		if (audioComplete){
-			stumbleAffirmative07.play();
+			sounds.getInstance("stumbleAffirmative07").play();
 		}
 		stumble.Play();
 
@@ -113,7 +113,7 @@ function page2(){
 	function playGrumbleAnimation(){
 		grumble.Play();
 		if (audioComplete){
-			grumbleAffirmative06.play();
+			sounds.getInstance("grumbleAffirmative06").play();
 		}
 		
 
@@ -122,7 +122,7 @@ function page2(){
 	function playHumbleAnimation(){
 		humble.Play();
 		if (audioComplete){
-			humbleAffirmative03.play();
+			sounds.getInstance("humbleAffirmative03").play();
 		}
 		
 

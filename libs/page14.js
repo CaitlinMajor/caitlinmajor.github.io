@@ -42,7 +42,7 @@ function page14(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page14Line1;
+		audio = sounds.getInstance("page14Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -60,7 +60,7 @@ function page14(){
 
 	function playYeti() {
 		createjs.Sound.stop();
-		audio = page14YetiLine1;
+		audio = sounds.getInstance("page14YetiLine1");
 		audio.play();
 
 		if (!audioComplete){
@@ -109,7 +109,7 @@ function page14(){
 	function playGrumble(){
 		grumble.Play();
 		if(audioComplete){
-			grumbleAffirmative06.play();
+			sounds.getInstance("grumbleAffirmative06").play();
 		}
 	}
 
@@ -117,7 +117,7 @@ function page14(){
 		yetiUp.Play();
 		yetiOLUp.Play();
 		if(audioComplete){
-			yetiGrr.play();
+			sounds.getInstance("yetiGrr").play();
 		}
 	}
 

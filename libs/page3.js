@@ -56,7 +56,7 @@ function page3(){
 
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page3Line1;
+		audio = sounds.getInstance("page3Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -74,7 +74,7 @@ function page3(){
 
 	function playLine2() {
 		createjs.Sound.stop();
-		audio = page3Line2;
+		audio = sounds.getInstance("page3Line2");
 		audio.play();
 
 		if (!audioComplete){
@@ -159,17 +159,17 @@ function page3(){
 
 	function playGrumble(){
 		grumbleStanding.Play();
-		grumbleScared07.play();
+		sounds.getInstance("grumbleScared07").play();
 	}
 
 	function playHumble(){
 		humbleStanding.Play();
-		humbleScared01.play();
+		sounds.getInstance("humbleScared01").play();
 	}
 
 	function playStumble(){
 		stumbleStanding.Play();
-		stumbleWow01.play();
+		sounds.getInstance("stumbleWow01").play();
 	}
 
 	function playEyes(){

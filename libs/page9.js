@@ -46,7 +46,7 @@ function page9(){
 	//* Handle The Audio *//
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page9Line1;
+		audio = sounds.getInstance("page9Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -120,7 +120,7 @@ function page9(){
 	function playStumble(){
 		stumble.Play();
 		if(audioComplete){
-			stumblePhew05.play();
+			sounds.getInstance("stumblePhew05").play();
 		}
 	}
 
@@ -163,7 +163,7 @@ function page9(){
 					setTimeout(page10, 200);
 				}
 				else if (previous){
-					setTimouet(page8, 200);
+					setTimeout(page8, 200);
 				}
 			createjs.Ticker.removeEventListener("tick", fadeDown);
 		}

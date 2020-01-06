@@ -49,7 +49,7 @@ function page15(){
 	//* Handle The Audio *//
 	function playGrumble() {
 		createjs.Sound.stop();
-		audio = page15Grumble;
+		audio = sounds.getInstance("page15Grumble");
 		page.page15_grumble_mc.gotoAndPlay("startAnim");
 		audio.play();
 
@@ -69,7 +69,7 @@ function page15(){
 
 	function playLine2() {
 		createjs.Sound.stop();
-		audio = page15Line1;
+		audio = sounds.getInstance("page15Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -88,7 +88,7 @@ function page15(){
 
 	function playYetiAudio() {
 		createjs.Sound.stop();
-		audio = page15YetiLine1;
+		audio = sounds.getInstance("page15YetiLine1");
 		audio.play();
 
 		if (!audioComplete){
@@ -108,7 +108,7 @@ function page15(){
 
 	function playLine4() {
 		createjs.Sound.stop();
-		audio = page15Line2;
+		audio = sounds.getInstance("page15Line2");
 		audio.play();
 
 		if (!audioComplete){
@@ -154,28 +154,28 @@ function page15(){
 	function playStumble(){
 		stumble.Play();
 		if(audioComplete){
-			stumbleScared07.play();
+			sounds.getInstance("stumbleScared07").play();
 		}
 	}
 
 	function playHumble(){
 		humble.Play();
 		if(audioComplete){
-			humbleScared01.play();
+			sounds.getInstance("humbleScared01").play();
 		}
 	}
 
 	function playYeti(){
 		yeti.Play();
 		if(audioComplete){
-			yetiArgh.play();
+			sounds.getInstance("yetiArgh").play();
 		}
 	}
 
 	function playGrumble2(){
 		page.page15_grumble_mc.gotoAndPlay("startAnim2");
 		if(audioComplete){
-			grumbleAffirmative06.play();
+			sounds.getInstance("grumbleAffirmative06").play();
 		}
 	}
 

@@ -51,7 +51,7 @@ function page8(){
 	//* Handle The Audio *//
 	function playYetiAudio1() {
 		createjs.Sound.stop();
-		audio = page8YetiLine1;
+		audio = sounds.getInstance("page8YetiLine1");
 		audio.play();
 
 		if (!audioComplete){
@@ -70,7 +70,7 @@ function page8(){
 
 	function playYetiAudio2() {
 		createjs.Sound.stop();
-		audio = page8YetiLine2;
+		audio = sounds.getInstance("page8YetiLine2");
 		audio.play();
 
 		if (!audioComplete){
@@ -90,7 +90,7 @@ function page8(){
 
 	function playLine1() {
 		createjs.Sound.stop();
-		audio = page8Line1;
+		audio = sounds.getInstance("page8Line1");
 		audio.play();
 
 		if (!audioComplete){
@@ -137,14 +137,14 @@ function page8(){
 	function playStumble(){
 		stumble.Play();
 		if(audioComplete){
-			stumbleScared07.play();
+			sounds.getInstance("stumbleScared07").play();
 		}
 	}
 
 	function playYeti(){
 		yeti.Play();
 		if(audioComplete){
-			yetiHmm.play();
+			sounds.getInstance("yetiHmm").play();
 		}
 	}
 
