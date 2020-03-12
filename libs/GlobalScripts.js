@@ -20,7 +20,7 @@ function getStarted(){
 	page = PageArray[index];
 	stage.addChild(page);
 
-	createjs.Touch.enable(true);
+	createjs.Touch.enable(stage);
 	stage.mouseMoveOutside = true;
 	page.on("mousedown", mouseDownHandler);
 
