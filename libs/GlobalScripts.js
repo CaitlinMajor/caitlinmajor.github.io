@@ -58,7 +58,7 @@ var sounds = {
 		{id:"page11Line2", src:"sounds/page11_line2.mp3"},
 		{id:"page12Line1", src:"sounds/page12_line1.mp3"},
 		{id:"page12Line2", src:"sounds/page12_line2.mp3"},
-		{id:"theEnd", src:"sounds/theend.mp3"}
+		{id:"theEnd", src:"sounds/end.mp3"}
 	]
 }
 
