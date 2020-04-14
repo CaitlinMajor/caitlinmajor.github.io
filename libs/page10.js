@@ -1,55 +1,48 @@
+var previousButtonAdded = false;
+
 function page10(){
 
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page10_mc();
+	nextPage = new lib.page11_preview();
+	previousPage = new lib.page9_preview();
 	pageIndex = 10;
 
 	//define page variables //
-	next = false;
-	previous = false;
 	audioComplete = false;
 
 	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	MEDIABOX.setSaveDataEntry("date", date);
 	MEDIABOX.setSaveDataEntry("page", "10");
-	
-	//*Add the page*//
+
+	//* Add the page *//
 	stage.addChildAt(page, 1);
+
+	//add the next page preview
+	nextPageX = canvas.width;
+	page.addChild(nextPage);
+	nextPage.x = nextPageX;
+
+	//add the previous page preview
+	previousPageX = (0-canvas.width);
+	page.addChild(previousPage);
+	previousPage.x = previousPageX;
+
 	page.text1.alpha = 0;
 	page.text2.alpha = 0;
 	let text1fade = new Fade(page.text1);
 	let text2fade = new Fade(page.text2);
-	let pageFader = new Fade(page.fade_mc);
-	createjs.Ticker.addEventListener("tick", fadeUp);
 
-	function fadeUp() {
-		pageFader.FadeDown();
-		if (!pageFader.faded){
-			createjs.Ticker.removeEventListener("tick", fadeUp);
-						
-			if(!nextButtonAdded){
-				addNextButton();
-				nextButtonAdded = true;
-			}
-			nextButton.addEventListener("click", gotoNextPage);
-			if(!previousButtonAdded){
-				addPreviousButton();
-				previousButtonAdded = true;
-			}
-			previousButton.addEventListener("click", gotoPreviousPage);
+	playLine1();
 
-			playLine1();
-		}
-
-	}
-
+	//* Handle The Audio *//
 	function playLine1() {
 		page.on("mousedown", mouseDownHandler);
 		createjs.Sound.stop();
 		sounds.getInstance("page10Line1").play();
 
 		if(!audioComplete){
-			sounds.getInstance("page10Line1").on("complete", done, null, true);
+			sounds.getInstance("page10Line1").on("complete", playLine2, null, true);
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 		}
 		
@@ -58,11 +51,7 @@ function page10(){
 			if (text1fade.faded){
 				createjs.Ticker.removeEventListener("tick", fadeUpText);
 			}
-		}
-
-		function done(){
-			playLine2();
-		}
+		}		
 	}
 
 	function playLine2() {
@@ -83,71 +72,58 @@ function page10(){
 
 		function done(){
 			audioComplete = true;
-			page.ugly.addEventListener("click", playUgly);
-			page.flowers.addEventListener("click", playFlowers);
 			page.text1.addEventListener("click", playLine1);
 			page.text2.addEventListener("click", playLine2);
 		}
+		
 	}
 
-	// Loop animations //
-	looper = createjs.Ticker.on("tick", loopAnimations);
-	let ugly = new Animations(page.ugly, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let flowers = new Animations(page.flowers, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	
+	//* Loop Animations *//
+	createjs.Ticker.addEventListener("tick", loopAnimations);
+	let rock = new Animations(page.rock, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let mailbox = new Animations(page.mailbox, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let gnomesOL = new Animations(page.gnomesOL, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let gnomes = new Animations(page.gnomes, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let trash = new Animations(page.trash, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let house = new Animations(page.house, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let garage = new Animations(page.garage, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+
 	function loopAnimations(){
-		ugly.Loop();
-		flowers.Loop();
+		rock.Loop();
+		mailbox.Loop();
+		gnomesOL.Loop();
+		gnomes.Loop();
+		trash.Loop();
+		house.Loop();
+		garage.Loop();
 	}
 
-	//page interactions //
-	function playUgly(){
-		ugly.Play();
-	}
+	page.rock.addEventListener("click", playRock);
+	page.mailbox.addEventListener("click", playMailbox);
+	page.gnomesOL.addEventListener("click", playGnomes);
+	page.trash.addEventListener("click", playTrash);
+	page.house.addEventListener("click", playHouse);
+	page.garage.addEventListener("click", playGarage);
 
-	function playFlowers(){
-		flowers.Play();
-	}
+	//* Page Interactions *//
+	function playRock(){rock.Play();}
+	function playMailbox(){mailbox.Play();}
+	function playGnomes(){gnomesOL.Play(); gnomes.Play();}
+	function playTrash(){trash.Play();}
+	function playHouse(){house.Play();}
+	function playGarage(){garage.Play();}
 
-	//Navigation//
-	function gotoNextPage(){
-		nextButton.removeEventListener("click", gotoNextPage);
-		next = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-	}
-
-	function gotoPreviousPage(){
-		previousButton.removeEventListener("click", gotoPreviousPage);
-		previous = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-
-	}
-
+	//* End Of Page*//
 	killPage = function(){
 		createjs.Sound.stop();
-		page.ugly.removeEventListener("click", playUgly);
-		page.flowers.removeEventListener("click", playFlowers);
-		page.text1.removeEventListener("click", playLine1);
-		page.text2.removeEventListener("click", playLine2);
-		createjs.Ticker.off("tick", looper);
-		nextButton.removeEventListener("click", gotoNextPage);
-		previousButton.removeEventListener("click", gotoPreviousPage);
+		createjs.Ticker.removeEventListener("tick", loopAnimations);
+		page.rock.removeEventListener("click", playRock);
+		page.mailbox.removeEventListener("click", playMailbox);
+		page.gnomesOL.removeEventListener("click", playGnomes);
+		page.trash.removeEventListener("click", playTrash);
+		page.house.removeEventListener("click", playHouse);
+		page.garage.removeEventListener("click", playGarage);
 		stage.removeChild(page);
-	}
-
-	function fadeDown() {
-		pageFader.FadeUp();
-		if (pageFader.faded){
-			killPage();
-				if (next) {
-					setTimeout(page11, 200);
-				}
-				else if (previous){
-					setTimeout(page9, 200);
-				}
-			createjs.Ticker.removeEventListener("tick", fadeDown);
-		}
-
 	}
 
 }

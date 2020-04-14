@@ -1,54 +1,48 @@
+var previousButtonAdded = false;
+
 function page6(){
 
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page6_mc();
+	nextPage = new lib.page7_preview();
+	previousPage = new lib.page5_preview();
 	pageIndex = 6;
 
 	//define page variables //
-	next = false;
-	previous = false;
 	audioComplete = false;
 
 	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	MEDIABOX.setSaveDataEntry("date", date);
 	MEDIABOX.setSaveDataEntry("page", "6");
-	
-	//*Add the page*//
+
+	//* Add the page *//
 	stage.addChildAt(page, 1);
+
+	//add the next page preview
+	nextPageX = canvas.width;
+	page.addChild(nextPage);
+	nextPage.x = nextPageX;
+
+	//add the previous page preview
+	previousPageX = (0-canvas.width);
+	page.addChild(previousPage);
+	previousPage.x = previousPageX;
+
 	page.text1.alpha = 0;
+	page.text2.alpha = 0;
 	let text1fade = new Fade(page.text1);
-	let pageFader = new Fade(page.fade_mc);
-	createjs.Ticker.addEventListener("tick", fadeUp);
+	let text2fade = new Fade(page.text2);
+	
+	playLine1();
 
-	function fadeUp() {
-		pageFader.FadeDown();
-		if (!pageFader.faded){
-			createjs.Ticker.removeEventListener("tick", fadeUp);
-						
-			if(!nextButtonAdded){
-				addNextButton();
-				nextButtonAdded = true;
-			}
-			nextButton.addEventListener("click", gotoNextPage);
-			if(!previousButtonAdded){
-				addPreviousButton();
-				previousButtonAdded = true;
-			}
-			previousButton.addEventListener("click", gotoPreviousPage);
-
-			playLine1();
-		}
-
-	}
-
+	//* Handle The Audio *//
 	function playLine1() {
 		page.on("mousedown", mouseDownHandler);
 		createjs.Sound.stop();
 		sounds.getInstance("page6Line1").play();
-		page.fish.addEventListener("click", playFish);
 
 		if(!audioComplete){
-			sounds.getInstance("page6Line1").on("complete", done, null, true);
+			sounds.getInstance("page6Line1").on("complete", playLine2, null, true);
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 		}
 		
@@ -57,112 +51,86 @@ function page6(){
 			if (text1fade.faded){
 				createjs.Ticker.removeEventListener("tick", fadeUpText);
 			}
+		}		
+	}
+
+	function playLine2() {
+		createjs.Sound.stop();
+		sounds.getInstance("page6Line2").play();
+
+		if(!audioComplete){
+			sounds.getInstance("page6Line2").on("complete", done, null, true);
+			createjs.Ticker.addEventListener("tick", fadeUpText);
+		}
+		
+		function fadeUpText() {
+			text2fade.FadeUp();
+			if (text2fade.faded){
+				createjs.Ticker.removeEventListener("tick", fadeUpText);
+			}
 		}
 
 		function done(){
 			audioComplete = true;
-			page.mother.addEventListener("click", playMother);
-			page.duckling1.addEventListener("click", playDuckling1);
-			page.duckling2.addEventListener("click", playDuckling2);
-			page.ugly.addEventListener("click", playUgly);
-			page.turtle.addEventListener("click", playTurtle);
 			page.text1.addEventListener("click", playLine1);
-			
+			page.text2.addEventListener("click", playLine2);
 		}
+		
 	}
 
-	// Loop animations //
-	looper = createjs.Ticker.on("tick", loopAnimations);
-	let mother = new Animations(page.mother, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let duckling1 = new Animations(page.duckling1, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let duckling2 = new Animations(page.duckling2, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let ugly = new Animations(page.ugly, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let turtle = new Animations(page.turtle, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let fish = new Animations(page.fish, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	
+	//* Loop Animations *//
+	createjs.Ticker.addEventListener("tick", loopAnimations);
+	let ball = new Animations(page.ball, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let crayonsUP = new Animations(page.crayons, "endLoop", "startLoop", "startClickAnim");
+	let crayonsDown = new Animations(page.crayons, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
+	let toys = new Animations(page.toys, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let toysOL = new Animations(page.toysOL, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let toybox = new Animations(page.toybox, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let books = new Animations(page.books, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let plant = new Animations(page.plant, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let curtain = new Animations(page.curtain, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+
 	function loopAnimations(){
-		mother.Loop();
-		duckling1.Loop();
-		duckling2.Loop();
-		ugly.Loop();
-		turtle.Loop();
-		fish.Loop();
+		ball.Loop();
+		crayonsUP.Loop();
+		crayonsDown.Loop();
+		toys.Loop();
+		toysOL.Loop();
+		toybox.Loop();
+		books.Loop();
+		plant.Loop();
+		curtain.Loop();
 	}
 
-	//page interactions //
+	page.ball.addEventListener("click", playBall);
+	page.crayons.addEventListener("click", playCrayons);
+	page.toysOL.addEventListener("click", playToys);
+	page.toybox.addEventListener("click", playToybox);
+	page.books.addEventListener("click", playBooks);
+	page.plant.addEventListener("click", playPlant);
+	page.curtain.addEventListener("click", playCurtain);
 
-	function playMother(){
-		setTimeout(quack, 400);
-		mother.Play();
-	}
+	//* Page Interactions *//
+	function playBall(){ball.Play();}
+	function playCrayons(){crayonsUP.Play(); crayonsDown.Play();}
+	function playToys(){toys.Play(); toysOL.Play();}
+	function playToybox(){toybox.Play();}
+	function playBooks(){books.Play();}
+	function playPlant(){plant.Play();}
+	function playCurtain(){curtain.Play();}
 
-	function playDuckling1(){
-		duckling1.Play();
-	}
-
-	function playDuckling2(){
-		duckling2.Play();
-	}
-
-	function playUgly(){
-		ugly.Play();
-	}
-
-	function playTurtle(){
-		turtle.Play();
-	}
-
-	function playFish(){
-		fish.Play();
-	}
-
-	function quack(){
-		sounds.getInstance("mamaDuckQuack").play();
-	}
-
-	//Navigation//
-	function gotoNextPage(){
-		nextButton.removeEventListener("click", gotoNextPage);
-		next = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-	}
-
-	function gotoPreviousPage(){
-		previousButton.removeEventListener("click", gotoPreviousPage);
-		previous = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-
-	}
-
+	//* End Of Page*//
 	killPage = function(){
 		createjs.Sound.stop();
-		page.mother.removeEventListener("click", playMother);
-		page.duckling1.removeEventListener("click", playDuckling1);
-		page.duckling2.removeEventListener("click", playDuckling2);
-		page.ugly.removeEventListener("click", playUgly);
-		page.turtle.removeEventListener("click", playTurtle);
-		page.text1.removeEventListener("click", playLine1);
-		page.fish.removeEventListener("click", playFish);
-		createjs.Ticker.off("tick", looper);
-		nextButton.removeEventListener("click", gotoNextPage);
-		previousButton.removeEventListener("click", gotoPreviousPage);
+		createjs.Ticker.removeEventListener("tick", loopAnimations);
+		page.ball.removeEventListener("click", playBall);
+		page.crayons.removeEventListener("click", playCrayons);
+		page.toysOL.removeEventListener("click", playToys);
+		page.toybox.removeEventListener("click", playToybox);
+		page.books.removeEventListener("click", playBooks);
+		page.plant.removeEventListener("click", playPlant);
+		page.curtain.removeEventListener("click", playCurtain);
 		stage.removeChild(page);
-	}
-
-	function fadeDown() {
-
-		pageFader.FadeUp();
-		if (pageFader.faded){
-			killPage();
-				if (next) {
-					setTimeout(page7, 200);
-				}
-				else if (previous){
-					setTimeout(page5, 200);
-				}
-			createjs.Ticker.removeEventListener("tick", fadeDown);
-		}
-
 	}
 
 }

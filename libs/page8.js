@@ -1,59 +1,48 @@
+var previousButtonAdded = false;
+
 function page8(){
 
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page8_mc();
+	nextPage = new lib.page9_preview();
+	previousPage = new lib.page7_preview();
 	pageIndex = 8;
 
 	//define page variables //
-	next = false;
-	previous = false;
 	audioComplete = false;
 
 	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	MEDIABOX.setSaveDataEntry("date", date);
 	MEDIABOX.setSaveDataEntry("page", "8");
-	
-	//*Add the page*//
+
+	//* Add the page *//
 	stage.addChildAt(page, 1);
+
+	//add the next page preview
+	nextPageX = canvas.width;
+	page.addChild(nextPage);
+	nextPage.x = nextPageX;
+
+	//add the previous page preview
+	previousPageX = (0-canvas.width);
+	page.addChild(previousPage);
+	previousPage.x = previousPageX;
+
 	page.text1.alpha = 0;
 	page.text2.alpha = 0;
-	page.text3.alpha = 0;
 	let text1fade = new Fade(page.text1);
 	let text2fade = new Fade(page.text2);
-	let text3fade = new Fade(page.text3);
-	let pageFader = new Fade(page.fade_mc);
-	createjs.Ticker.addEventListener("tick", fadeUp);
 
-	function fadeUp() {
-		pageFader.FadeDown();
-		if (!pageFader.faded){
-			createjs.Ticker.removeEventListener("tick", fadeUp);
-					
-			if(!nextButtonAdded){
-				addNextButton();
-				nextButtonAdded = true;
-			}
-			nextButton.addEventListener("click", gotoNextPage);
-			if(!previousButtonAdded){
-				addPreviousButton();
-				previousButtonAdded = true;
-			}
-			previousButton.addEventListener("click", gotoPreviousPage);
-
-			playLine1();
-		}
-
-	}
+	playLine1();
 
 	//* Handle The Audio *//
 	function playLine1() {
 		page.on("mousedown", mouseDownHandler);
 		createjs.Sound.stop();
 		sounds.getInstance("page8Line1").play();
-		page.reeds.addEventListener("click", playReeds);
 
 		if(!audioComplete){
-			sounds.getInstance("page8Line1").on("complete", done, null, true);
+			sounds.getInstance("page8Line1").on("complete", playLine2, null, true);
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 		}
 		
@@ -62,11 +51,7 @@ function page8(){
 			if (text1fade.faded){
 				createjs.Ticker.removeEventListener("tick", fadeUpText);
 			}
-		}
-
-		function done(){
-			playLine2();
-		}
+		}		
 	}
 
 	function playLine2() {
@@ -86,95 +71,51 @@ function page8(){
 		}
 
 		function done(){
-			playLine3();
-		}
-	}
-
-	function playLine3() {
-		createjs.Sound.stop();
-		sounds.getInstance("page8Line3").play();
-
-		if(!audioComplete){
-			sounds.getInstance("page8Line3").on("complete", done, null, true);
-			createjs.Ticker.addEventListener("tick", fadeUpText);
-		}
-		
-		function fadeUpText() {
-			text3fade.FadeUp();
-			if (text3fade.faded){
-				createjs.Ticker.removeEventListener("tick", fadeUpText);
-			}
-		}
-
-		function done(){
 			audioComplete = true;
-			page.turtle.addEventListener("click", playTurtle);
 			page.text1.addEventListener("click", playLine1);
 			page.text2.addEventListener("click", playLine2);
-			page.text3.addEventListener("click", playLine3);
 		}
+		
 	}
 
 	//* Loop Animations *//
-	looper = createjs.Ticker.on("tick", loopAnimations);
-	let ugly = new Animations(page.ugly, "endLoop", "startLoop");
-	let turtle = new Animations(page.turtle, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let reeds = new Animations(page.reeds, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	createjs.Ticker.addEventListener("tick", loopAnimations);
+	let plant = new Animations(page.plant2, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let peek = new Animations(page.peek, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let tree = new Animations(page.tree, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let bgHouse = new Animations(page.bgHouse, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let tulips = new Animations(page.tulips, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 
 	function loopAnimations(){
-		ugly.Loop();
-		turtle.Loop();
-		reeds.Loop();
+		plant.Loop();
+		peek.Loop();
+		tree.Loop();
+		bgHouse.Loop();
+		tulips.Loop();
 	}
 
-	//page interactions //
+	page.plant2.addEventListener("click", playPlant);
+	page.peek.addEventListener("click", playPeek);
+	page.tree.addEventListener("click", playTree);
+	page.bgHouse.addEventListener("click", playBGHouse);
+	page.tulips.addEventListener("click", playTulips);
 
-	function playTurtle(){
-		turtle.Play();
-	}
+	//* Page Interactions *//
+	function playPlant(){plant.Play();}
+	function playPeek(){peek.Play();}
+	function playTree(){tree.Play();}
+	function playBGHouse(){bgHouse.Play();}
+	function playTulips(){tulips.Play();}
 
-	function playReeds(){
-		reeds.Play();
-	}
-
-	//Navigation//
-	function gotoNextPage(){
-		nextButton.removeEventListener("click", gotoNextPage);
-		next = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-	}
-
-	function gotoPreviousPage(){
-		previousButton.removeEventListener("click", gotoPreviousPage);
-		previous = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-	}
-
+	//* End Of Page*//
 	killPage = function(){
 		createjs.Sound.stop();
-		page.turtle.removeEventListener("click", playTurtle);
-		page.text1.removeEventListener("click", playLine1);
-		page.text2.removeEventListener("click", playLine2);
-		page.text3.removeEventListener("click", playLine3);
-		createjs.Ticker.off("tick", looper);
-		nextButton.removeEventListener("click", gotoNextPage);
-		previousButton.removeEventListener("click", gotoPreviousPage);
+		createjs.Ticker.removeEventListener("tick", loopAnimations);
+		page.plant2.removeEventListener("click", playPlant);
+		page.peek.removeEventListener("click", playPeek);
+		page.tree.removeEventListener("click", playTree);
+		page.bgHouse.removeEventListener("click", playBGHouse);
+		page.tulips.removeEventListener("click", playTulips);
 		stage.removeChild(page);
 	}
-
-	function fadeDown() {
-	pageFader.FadeUp();
-		if (pageFader.faded){
-			killPage();
-				if (next) {
-					setTimeout(page9, 200);
-				}
-				else if (previous){
-					setTimeout(page7, 200);
-				}
-			createjs.Ticker.removeEventListener("tick", fadeDown);
-		}
-
-	}
-
 }

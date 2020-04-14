@@ -1,57 +1,48 @@
+var previousButtonAdded = false;
+
 function page12(){
 
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page12_mc();
+	nextPage = new lib.page13_preview();
+	previousPage = new lib.page11_preview();
 	pageIndex = 12;
 
 	//define page variables //
-	next = false;
-	previous = false;
 	audioComplete = false;
 
 	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	MEDIABOX.setSaveDataEntry("date", date);
 	MEDIABOX.setSaveDataEntry("page", "12");
-	
-	//*Add the page*//
+
+	//* Add the page *//
 	stage.addChildAt(page, 1);
+
+	//add the next page preview
+	nextPageX = canvas.width;
+	page.addChild(nextPage);
+	nextPage.x = nextPageX;
+
+	//add the previous page preview
+	previousPageX = (0-canvas.width);
+	page.addChild(previousPage);
+	previousPage.x = previousPageX;
+
 	page.text1.alpha = 0;
 	page.text2.alpha = 0;
 	let text1fade = new Fade(page.text1);
 	let text2fade = new Fade(page.text2);
-	let pageFader = new Fade(page.fade_mc);
-	createjs.Ticker.addEventListener("tick", fadeUp);
-
-	function fadeUp() {
-		pageFader.FadeDown();
-		if (!pageFader.faded){
-			createjs.Ticker.removeEventListener("tick", fadeUp);
-						
-			if(!nextButtonAdded){
-				addNextButton();
-				nextButtonAdded = true;
-			}
-			nextButton.addEventListener("click", gotoNextPage);
-			if(!previousButtonAdded){
-				addPreviousButton();
-				previousButtonAdded = true;
-			}
-			previousButton.addEventListener("click", gotoPreviousPage);
-
-			playLine1();
-		}
-
-	}
+	
+	playLine1();
 
 	//* Handle The Audio *//
 	function playLine1() {
 		page.on("mousedown", mouseDownHandler);
 		createjs.Sound.stop();
 		sounds.getInstance("page12Line1").play();
-		page.ripples.addEventListener("click", playRipples);
 
 		if(!audioComplete){
-			sounds.getInstance("page12Line1").on("complete", done, null, true);
+			sounds.getInstance("page12Line1").on("complete", playLine2, null, true);
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 		}
 		
@@ -60,11 +51,7 @@ function page12(){
 			if (text1fade.faded){
 				createjs.Ticker.removeEventListener("tick", fadeUpText);
 			}
-		}
-
-		function done(){
-			playLine2();
-		}
+		}		
 	}
 
 	function playLine2() {
@@ -87,69 +74,50 @@ function page12(){
 			audioComplete = true;
 			page.text1.addEventListener("click", playLine1);
 			page.text2.addEventListener("click", playLine2);
-			
 		}
+		
 	}
 
-	// Loop animations //
-	looper = createjs.Ticker.on("tick", loopAnimations);
-	let mother = new Animations(page.mother, "endLoop", "startLoop");
-	let duckling1 = new Animations(page.duckling1, "endLoop", "startLoop");
-	let duckling2 = new Animations(page.duckling2, "endLoop", "startLoop");
-	let ripples = new Animations(page.ripples, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	//* Loop Animations *//
+	createjs.Ticker.addEventListener("tick", loopAnimations);
+	let curtain = new Animations(page.curtain1, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let toy = new Animations(page.toy, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let hideout = new Animations(page.hideout, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let peeky = new Animations(page.peeky, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let hammock = new Animations(page.hammock, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let curtain2 = new Animations(page.curtain2, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 
 	function loopAnimations(){
-		mother.Loop();
-		duckling1.Loop();
-		duckling2.Loop();
-		ripples.Loop();
+		curtain.Loop();
+		toy.Loop();
+		hideout.Loop();
+		peeky.Loop();
+		hammock.Loop();
+		curtain2.Loop();
 	}
 
-	//page interactions //
+	page.curtain1.addEventListener("click", playCurtain);
+	page.hideout.addEventListener("click", playHideout);
+	page.peeky.addEventListener("click", playPeeky);
+	page.hammock.addEventListener("click", playHammock);
+	page.curtain2.addEventListener("click", playCurtain2);
 
-	function playRipples(){
-		if(audioComplete){
-			sounds.getInstance("frog").play();
-		}
-		ripples.Play();
-	}
+	//* Page Interactions *//
+	function playCurtain(){curtain.Play(); toy.Play();}
+	function playHideout(){hideout.Play();}
+	function playPeeky(){peeky.Play();}
+	function playHammock(){hammock.Play();}
+	function playCurtain2(){curtain2.Play();}
 
-	//Navigation//
-	function gotoNextPage(){
-		nextButton.removeEventListener("click", gotoNextPage);
-		next = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-	}
-
-	function gotoPreviousPage(){
-		previousButton.removeEventListener("click", gotoPreviousPage);
-		previous = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-
-	}
-
+	//* End Of Page*//
 	killPage = function(){
 		createjs.Sound.stop();
-		page.text1.removeEventListener("click", playLine1);
-		page.text2.removeEventListener("click", playLine2);
-		page.ripples.removeEventListener("click", playRipples);
-		createjs.Ticker.off("tick", looper);
-		nextButton.removeEventListener("click", gotoNextPage);
-		previousButton.removeEventListener("click", gotoPreviousPage);
+		createjs.Ticker.removeEventListener("tick", loopAnimations);
+		page.curtain1.removeEventListener("click", playCurtain);
+		page.hideout.removeEventListener("click", playHideout);
+		page.peeky.removeEventListener("click", playPeeky);
+		page.hammock.removeEventListener("click", playHammock);
+		page.curtain2.removeEventListener("click", playCurtain2);
 		stage.removeChild(page);
-	}
-
-	function fadeDown() {
-		pageFader.FadeUp();
-		if (pageFader.faded){
-			killPage();
-				if (next) {
-					setTimeout(page13, 200);
-				}
-				else if (previous){
-					setTimeout(page11, 200);
-				}
-			createjs.Ticker.removeEventListener("tick", fadeDown);
-		}
 	}
 }

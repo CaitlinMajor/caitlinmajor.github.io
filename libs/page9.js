@@ -1,55 +1,50 @@
+var previousButtonAdded = false;
+
 function page9(){
 
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page9_mc();
+	nextPage = new lib.page10_preview();
+	previousPage = new lib.page8_preview();
 	pageIndex = 9;
 
 	//define page variables //
-	next = false;
-	previous = false;
 	audioComplete = false;
+	var sandCat = false;
 
 	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	MEDIABOX.setSaveDataEntry("date", date);
 	MEDIABOX.setSaveDataEntry("page", "9");
-	
-	//*Add the page*//
+
+	//* Add the page *//
 	stage.addChildAt(page, 1);
+
+	//add the next page preview
+	nextPageX = canvas.width;
+	page.addChild(nextPage);
+	nextPage.x = nextPageX;
+
+	//add the previous page preview
+	previousPageX = (0-canvas.width);
+	page.addChild(previousPage);
+	previousPage.x = previousPageX;
+
 	page.text1.alpha = 0;
 	page.text2.alpha = 0;
 	let text1fade = new Fade(page.text1);
 	let text2fade = new Fade(page.text2);
-	let pageFader = new Fade(page.fade_mc);
-	createjs.Ticker.addEventListener("tick", fadeUp);
 
-	function fadeUp() {
-		pageFader.FadeDown();
-		if (!pageFader.faded){
-			createjs.Ticker.removeEventListener("tick", fadeUp);
-						
-			if(!nextButtonAdded){
-				addNextButton();
-				nextButtonAdded = true;
-			}
-			nextButton.addEventListener("click", gotoNextPage);
-			if(!previousButtonAdded){
-				addPreviousButton();
-				previousButtonAdded = true;
-			}
-			previousButton.addEventListener("click", gotoPreviousPage);
-
-			playLine1();
-		}
-	}
+	playLine1();
+	page.roundabout.gotoAndPlay("start");
 
 	//* Handle The Audio *//
 	function playLine1() {
 		page.on("mousedown", mouseDownHandler);
 		createjs.Sound.stop();
 		sounds.getInstance("page9Line1").play();
-
+		
 		if(!audioComplete){
-			sounds.getInstance("page9Line1").on("complete", done, null, true);
+			sounds.getInstance("page9Line1").on("complete", playLine2, null, true);
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 		}
 		
@@ -58,11 +53,7 @@ function page9(){
 			if (text1fade.faded){
 				createjs.Ticker.removeEventListener("tick", fadeUpText);
 			}
-		}
-
-		function done(){
-			playLine2();
-		}
+		}		
 	}
 
 	function playLine2() {
@@ -83,63 +74,66 @@ function page9(){
 
 		function done(){
 			audioComplete = true;
-			page.ugly.addEventListener("click", playUgly);
 			page.text1.addEventListener("click", playLine1);
 			page.text2.addEventListener("click", playLine2);
 		}
+		
 	}
 
-	// Loop animations //
-	looper = createjs.Ticker.on("tick", loopAnimations);
-	let ugly = new Animations(page.ugly, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	//* Loop Animations *//
+	createjs.Ticker.addEventListener("tick", loopAnimations);
+	let roundabout = new Animations(page.roundabout, "endLoop", "startLoop");
+	let meekRound = new Animations(page.roundabout.meekRound, "endMeekLoop", "meekLoop", "endMeekAnim", "startMeekAnim");
+	let swing = new Animations(page.swing, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let sand = new Animations(page.sand, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let sand2 = new Animations(page.sand, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
+	let jungleGym = new Animations(page.jungleGym, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let horse = new Animations(page.horse, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 
 	function loopAnimations(){
-		ugly.Loop();
+		roundabout.Loop();
+		meekRound.Loop();
+		swing.Loop();
+		sand.Loop();
+		sand2.Loop();
+		jungleGym.Loop();
+		horse.Loop();
 	}
 
-	//page interactions //
+	page.roundabout.addEventListener("click", playRoundabout);
+	page.roundabout.meekRound.addEventListener("click", playRoundabout);
+	page.swing.addEventListener("click", playSwing);
+	page.sand.addEventListener("click", playSand);
+	page.jungleGym.addEventListener("click", playJungleGym);
+	page.horse.addEventListener("click", playHorse);
 
-	function playUgly(){
-		ugly.Play();
+	//* Page Interactions *//
+	function playRoundabout(){
+		meekRound.Play();
 	}
 
-	//Navigation//
-	function gotoNextPage(){
-		nextButton.removeEventListener("click", gotoNextPage);
-		next = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-	}
-
-	function gotoPreviousPage(){
-		previousButton.removeEventListener("click", gotoPreviousPage);
-		previous = true;
-		createjs.Ticker.addEventListener("tick", fadeDown);
-
-	}
-
-	killPage = function(){
-		createjs.Sound.stop();
-		createjs.Ticker.off("tick", looper);
-		page.ugly.removeEventListener("click", playUgly);
-		page.text1.removeEventListener("click", playLine1);
-		page.text2.removeEventListener("click", playLine2);
-		nextButton.removeEventListener("click", gotoNextPage);
-		previousButton.removeEventListener("click", gotoPreviousPage);
-		stage.removeChild(page);
-	}
-
-	function fadeDown() {
-		pageFader.FadeUp();
-		if (pageFader.faded){
-			killPage();
-				if (next) {
-					setTimeout(page10, 200);
-				}
-				else if (previous){
-					setTimeout(page8, 200);
-				}
-			createjs.Ticker.removeEventListener("tick", fadeDown);
+	function playSwing(){swing.Play();}
+	function playSand(){
+		if (!sandCat){
+			sand.Play();
+			sandCat = true;
+		}
+		else {
+			 sand2.Play();
 		}
 	}
+	function playJungleGym(){jungleGym.Play();}
+	function playHorse(){horse.Play();}
 
+	//* End Of Page*//
+	killPage = function(){
+		createjs.Sound.stop();
+		createjs.Ticker.removeEventListener("tick", loopAnimations);
+		page.roundabout.removeEventListener("click", playRoundabout);
+		page.swing.removeEventListener("click", playSwing);
+		page.sand.removeEventListener("click", playSand);
+		page.jungleGym.removeEventListener("click", playJungleGym);
+		page.horse.removeEventListener("click", playHorse);
+		stage.removeChild(page);
+	}
 }
