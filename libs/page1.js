@@ -1,14 +1,14 @@
 var previousButtonAdded = false;
 
 function page1(){
-
+	//define page variables //
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page1_mc();
-	nextPage = new lib.page2_preview();
-	previousPage = new lib.page0_preview();
+	//nextPage = new lib.page2_preview();
+	//previousPage = new lib.page0_preview();
 	pageIndex = 1;
-
-	//define page variables //
+	next = false;
+	previous = false;
 	audioComplete = false;
 
 	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -19,26 +19,78 @@ function page1(){
 	stage.addChildAt(page, 1);
 
 	//add the next page preview
-	nextPageX = canvas.width;
-	page.addChild(nextPage);
-	nextPage.x = nextPageX;
+	// nextPageX = canvas.width;
+	// page.addChild(nextPage);
+	// nextPage.x = nextPageX;
 
-	//add the previous page preview
-	previousPageX = (0-canvas.width);
-	page.addChild(previousPage);
-	previousPage.x = previousPageX;
+	// //add the previous page preview
+	// previousPageX = (0-canvas.width);
+	// page.addChild(previousPage);
+	// previousPage.x = previousPageX;
 
 	page.text1.alpha = 0;
 	page.text2.alpha = 0;
+	page.text3.alpha = 0;
+	page.finnyText_mc.alpha = 0;
+	page.sammyText_mc.alpha = 0;
+	page.shellyText_mc.alpha = 0;
+	page.chloeText_mc.alpha = 0;
+	page.oscarText_mc.alpha = 0;
+	page.myrtleText_mc.alpha = 0;
+	page.sandyText_mc.alpha = 0;
+	page.fionaText_mc.alpha = 0;
+	page.leoText_mc.alpha = 0;
 	let text1fade = new Fade(page.text1);
 	let text2fade = new Fade(page.text2);
+	let text3fade = new Fade(page.text3);
+	let finnyTextFade = new Fade(page.finnyText_mc);
+	let sammyTextFade = new Fade(page.sammyText_mc);
+	let shellyTextFade = new Fade(page.shellyText_mc);
+	let chloeTextFade = new Fade(page.chloeText_mc);
+	let oscarTextFade = new Fade(page.oscarText_mc);
+	let myrtleTextFade = new Fade(page.myrtleText_mc);
+	let sandyTextFade = new Fade(page.sandyText_mc);
+	let fionaTextFade = new Fade(page.fionaText_mc);
+	let leoTextFade = new Fade(page.leoText_mc);
+	let pageFader = new Fade(page.fade_mc);
+	
+	//handle navigation
+	if(navButtonPressed){
+		createjs.Ticker.addEventListener("tick", fadeUp);
+		navButtonPressed = false;
+	} else {
+		page.fade_mc.alpha = 0;
+		addNavButtons();
+		playLine1();
+	}
 
-	playLine1();
+	function addNavButtons(){
+		if(!nextButtonAdded){
+				addNextButton();
+				nextButtonAdded = true;
+			}
+			nextButton.addEventListener("click", gotoNextPage);
+			if(!previousButtonAdded){
+				addPreviousButton();
+				previousButtonAdded = true;
+			}
+			previousButton.addEventListener("click", gotoPreviousPage);
+
+	}
+
+	function fadeUp() {
+		pageFader.FadeDown();
+		if (!pageFader.faded){
+			createjs.Ticker.removeEventListener("tick", fadeUp);
+			addNavButtons();
+			playLine1();
+		}
+	}
 
 	//* Handle The Audio *//
 	function playLine1() {
-		page.on("mousedown", mouseDownHandler);
-		createjs.Sound.stop();
+		navButtonPressed = false;
+		//page.on("mousedown", mouseDownHandler);
 		sounds.getInstance("page1Line1").play();
 
 		if(!audioComplete){
@@ -55,17 +107,42 @@ function page1(){
 	}
 
 	function playLine2() {
-		createjs.Sound.stop();
 		sounds.getInstance("page1Line2").play();
 
 		if(!audioComplete){
-			sounds.getInstance("page1Line2").on("complete", done, null, true);
+			sounds.getInstance("page1Line2").on("complete", playLine3, null, true);
 			createjs.Ticker.addEventListener("tick", fadeUpText);
 		}
 		
 		function fadeUpText() {
 			text2fade.FadeUp();
+			finnyTextFade.FadeUp();
+			sammyTextFade.FadeUp();
+			shellyTextFade.FadeUp();
+			chloeTextFade.FadeUp();
+			oscarTextFade.FadeUp();
+			myrtleTextFade.FadeUp();
+			sandyTextFade.FadeUp();
+			fionaTextFade.FadeUp();
+			leoTextFade.FadeUp();
 			if (text2fade.faded){
+				createjs.Ticker.removeEventListener("tick", fadeUpText);
+			}
+		}
+		
+	}
+
+	function playLine3() {
+		sounds.getInstance("page1Line3").play();
+
+		if(!audioComplete){
+			sounds.getInstance("page1Line3").on("complete", done, null, true);
+			createjs.Ticker.addEventListener("tick", fadeUpText);
+		}
+		
+		function fadeUpText() {
+			text3fade.FadeUp();
+			if (text3fade.faded){
 				createjs.Ticker.removeEventListener("tick", fadeUpText);
 			}
 		}
@@ -74,50 +151,136 @@ function page1(){
 			audioComplete = true;
 			page.text1.addEventListener("click", playLine1);
 			page.text2.addEventListener("click", playLine2);
+			page.text3.addEventListener("click", playLine3);
+			page.finnyText_mc.addEventListener("click", playFinny);
+			page.sammyText_mc.addEventListener("click", playSammy);
+			page.shellyText_mc.addEventListener("click", playShelly);
+			page.chloeText_mc.addEventListener("click", playChloe);
+			page.oscarText_mc.addEventListener("click", playOscar);
+			page.myrtleText_mc.addEventListener("click", playMyrtle);
+			page.sandyText_mc.addEventListener("click", playSandy);
+			page.fionaText_mc.addEventListener("click", playFiona);
+			page.leoText_mc.addEventListener("click", playLeo);
 		}
 		
 	}
 
 	//* Loop Animations *//
 	createjs.Ticker.addEventListener("tick", loopAnimations);
-	let frame = new Animations(page.frame, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let fishbowl = new Animations(page.fishbowl, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let cushions = new Animations(page.cushions, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let couch = new Animations(page.couch, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-	let plant = new Animations(page.plant, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
-
+	let finny = new Animations(page.finny_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let sammy = new Animations(page.sammy_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let sandy = new Animations(page.sandy_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let fiona = new Animations(page.fiona_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let leo = new Animations(page.leo_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let shelly = new Animations(page.shelly_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let chloe = new Animations(page.chloe_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let oscar = new Animations(page.oscar_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	let myrtle = new Animations(page.myrtle_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
+	
 	function loopAnimations(){
-		frame.Loop();
-		fishbowl.Loop();
-		cushions.Loop();
-		couch.Loop();
-		plant.Loop();
+		finny.Loop();
+		sammy.Loop();
+		sandy.Loop();
+		fiona.Loop();
+		leo.Loop();
+		shelly.Loop();
+		chloe.Loop();
+		oscar.Loop();
+		myrtle.Loop();
 	}
 
-	page.frame.addEventListener("click", playFrame);
-	page.fishbowl.addEventListener("click", playFishbowl);
-	page.cushions.addEventListener("click", playCushions);
-	page.couch.addEventListener("click", playCouch);
-	page.plant.addEventListener("click", playPlant);
+	page.finny_mc.addEventListener("click", playFinny);
+	page.sammy_mc.addEventListener("click", playSammy);
+	page.sandy_mc.addEventListener("click", playSandy);
+	page.fiona_mc.addEventListener("click", playFiona);
+	page.leo_mc.addEventListener("click", playLeo);
+	page.shelly_mc.addEventListener("click", playShelly);
+	page.chloe_mc.addEventListener("click", playChloe);
+	page.oscar_mc.addEventListener("click", playOscar);
+	page.myrtle_mc.addEventListener("click", playMyrtle);
 
 	//* Page Interactions *//
+	function playFinny(){finny.Play(); if (audioComplete){sounds.getInstance("finny").play();}}
+	function playSammy(){sammy.Play(); if (audioComplete){sounds.getInstance("sammy").play();}}
+	function playSandy(){sandy.Play(); if (audioComplete){sounds.getInstance("sandy").play();}}
+	function playFiona(){fiona.Play(); if (audioComplete){sounds.getInstance("fiona").play();}}
+	function playLeo(){leo.Play(); if (audioComplete){sounds.getInstance("leo").play();}}
+	function playShelly(){shelly.Play(); if (audioComplete){sounds.getInstance("shelly").play();}}
+	function playChloe(){chloe.Play(); if (audioComplete){sounds.getInstance("chloe").play();}}
+	function playOscar(){oscar.Play(); if (audioComplete){sounds.getInstance("oscar").play();}}
+	function playMyrtle(){myrtle.Play(); if (audioComplete){sounds.getInstance("myrtle").play();}}
+	
+	//* Navigation *//
+	function gotoNextPage(){
+		console.log("page 1 going to page 6")
+		nextButton.removeEventListener("click", gotoNextPage);
+		next = true;
+		navButtonPressed = true;
+		createjs.Ticker.addEventListener("tick", fadeDown);
+	}
 
-	function playFrame(){frame.Play();}
-	function playFishbowl(){fishbowl.Play();}
-	function playCushions(){cushions.Play();}
-	function playCouch(){couch.Play();}
-	function playPlant(){plant.Play();}
+	function gotoPreviousPage(){
+		console.log("page 1 going to page 0")
+		previousButton.removeEventListener("click", gotoPreviousPage);
+		previous = true;
+		navButtonPressed = true;
+		createjs.Ticker.addEventListener("tick", fadeDown);
+		removePreviousButton();
+	}
+
+	function fadeDown() {
+		pageFader.FadeUp();
+		if (pageFader.faded){
+			killPage();
+				if (next) {
+					setTimeout(page6, 200);
+				}
+				else if (previous){
+					setTimeout(page0, 200);
+				}
+			createjs.Ticker.removeEventListener("tick", fadeDown);
+		}
+
+	}
 
 	//* End Of Page*//
-	
 	killPage = function(){
-		createjs.Sound.stop();
+		sounds.getInstance("page1Line1").stop();
+		sounds.getInstance("page1Line2").stop();
+		sounds.getInstance("page1Line3").stop();
+		sounds.getInstance("finnyGiggle").stop();
+		sounds.getInstance("sammyWahoo").stop();
+		sounds.getInstance("sandyGiggle").stop();
+		sounds.getInstance("fionaGiggle").stop();
+		sounds.getInstance("leoYeah").stop();
+		sounds.getInstance("shellyGiggle").stop();
+		sounds.getInstance("chloeGiggle").stop();
+		sounds.getInstance("oscarWoohoo").stop();
+		sounds.getInstance("myrtleGiggle").stop();
+		sounds.getInstance("finny").stop();
+		sounds.getInstance("sammy").stop();
+		sounds.getInstance("sandy").stop();
+		sounds.getInstance("fiona").stop();
+		sounds.getInstance("leo").stop();
+		sounds.getInstance("shelly").stop();
+		sounds.getInstance("chloe").stop();
+		sounds.getInstance("oscar").stop();
+		sounds.getInstance("myrtle").stop();
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
-		page.frame.removeEventListener("click", playFrame);
-		page.fishbowl.removeEventListener("click", playFishbowl);
-		page.cushions.removeEventListener("click", playCushions);
-		page.couch.removeEventListener("click", playCouch);
-		page.plant.removeEventListener("click", playPlant);
+		page.finny_mc.removeEventListener("click", playFinny);
+		page.sammy_mc.removeEventListener("click", playSammy);
+		page.sandy_mc.removeEventListener("click", playSandy);
+		page.fiona_mc.removeEventListener("click", playFiona);
+		page.leo_mc.removeEventListener("click", playLeo);
+		page.shelly_mc.removeEventListener("click", playShelly);
+		page.chloe_mc.removeEventListener("click", playChloe);
+		page.oscar_mc.removeEventListener("click", playOscar);
+		page.myrtle_mc.removeEventListener("click", playMyrtle);
+		page.text1.removeEventListener("click", playLine1);
+		page.text2.removeEventListener("click", playLine2);
+		page.text3.removeEventListener("click", playLine3);
+		nextButton.removeEventListener("click", gotoNextPage);
+		previousButton.removeEventListener("click", gotoPreviousPage);
 		stage.removeChild(page);
 	}
 

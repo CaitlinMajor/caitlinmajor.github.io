@@ -1,6 +1,7 @@
 var soundsLoaded = false;
 var firstTime = true;
 var nextButtonAdded = false;
+var navButtonPressed = false;
 
 var dragRightTolerance = 500;
 var dragLeftTolerance = -500;
@@ -33,32 +34,39 @@ var sounds = {
 		return false;
 	},
 	library:[
-		{id:"page0Title", src:"sounds/page0_title.mp3"},
-		{id:"page1Line1", src:"sounds/page1_line1.mp3"},
-		{id:"page1Line2", src:"sounds/page1_line2.mp3"},
-		{id:"page2Line1", src:"sounds/page2_line1.mp3"},
-		{id:"page2Line2", src:"sounds/page2_line2.mp3"},
-		{id:"page3Line1", src:"sounds/page3_line1.mp3"},
-		{id:"page3Line2", src:"sounds/page3_line2.mp3"},
-		{id:"page4Line1", src:"sounds/page4_line1.mp3"},
-		{id:"page4Line2", src:"sounds/page4_line2.mp3"},
-		{id:"page5Line1", src:"sounds/page5_line1.mp3"},
-		{id:"page5Line2", src:"sounds/page5_line2.mp3"},
-		{id:"page6Line1", src:"sounds/page6_line1.mp3"},
-		{id:"page6Line2", src:"sounds/page6_line2.mp3"},
-		{id:"page7Line1", src:"sounds/page7_line1.mp3"},
-		{id:"page7Line2", src:"sounds/page7_line2.mp3"},
-		{id:"page8Line1", src:"sounds/page8_line1.mp3"},
-		{id:"page8Line2", src:"sounds/page8_line2.mp3"},
-		{id:"page9Line1", src:"sounds/page9_line1.mp3"},
-		{id:"page9Line2", src:"sounds/page9_line2.mp3"},
-		{id:"page10Line1", src:"sounds/page10_line1.mp3"},
-		{id:"page10Line2", src:"sounds/page10_line2.mp3"},
-		{id:"page11Line1", src:"sounds/page11_line1.mp3"},
-		{id:"page11Line2", src:"sounds/page11_line2.mp3"},
-		{id:"page12Line1", src:"sounds/page12_line1.mp3"},
-		{id:"page12Line2", src:"sounds/page12_line2.mp3"},
-		{id:"theEnd", src:"sounds/end.mp3"}
+		{id:"title", src:"sounds/title.mp3"},
+		{id:"page1Line1", src:"sounds/page1line1.mp3"},
+		{id:"page1Line2", src:"sounds/page1line2.mp3"},
+		{id:"page1Line3", src:"sounds/page1line3.mp3"},
+		{id:"foundChloe", src:"sounds/found-chloe.mp3"},
+		{id:"chloe", src:"sounds/chloe.mp3"},
+		{id:"chloeGiggle", src:"sounds/chloe-giggle.mp3"},
+		{id:"foundFinny", src:"sounds/found-finny.mp3"},
+		{id:"finny", src:"sounds/finny.mp3"},
+		{id:"finnyGiggle", src:"sounds/finny-giggle.mp3"},
+		{id:"foundFiona", src:"sounds/found-fiona.mp3"},
+		{id:"fionaGiggle", src:"sounds/fiona-giggle.mp3"},
+		{id:"fiona", src:"sounds/fiona.mp3"},
+		{id:"foundLeo", src:"sounds/found-leo.mp3"},
+		{id:"leo", src:"sounds/leo.mp3"},
+		{id:"leoYeah", src:"sounds/leo-yeah.mp3"},
+		{id:"foundMyrtle", src:"sounds/found-myrtle.mp3"},
+		{id:"myrtle", src:"sounds/myrtle.mp3"},
+		{id:"myrtleGiggle", src:"sounds/myrtle-giggle.mp3"},
+		{id:"foundOscar", src:"sounds/found-oscar.mp3"},
+		{id:"oscarWoohoo", src:"sounds/oscar-woohoo.mp3"},
+		{id:"oscar", src:"sounds/oscar.mp3"},
+		{id:"foundSammy", src:"sounds/found-sammy.mp3"},
+		{id:"sammy", src:"sounds/sammy.mp3"},
+		{id:"sammyWahoo", src:"sounds/sammy-wahoo.mp3"},
+		{id:"foundSandy", src:"sounds/found-sandy.mp3"},
+		{id:"sandy", src:"sounds/sandy.mp3"},
+		{id:"sandyGiggle", src:"sounds/sandy-giggle.mp3"},
+		{id:"foundShelly", src:"sounds/found-shelly.mp3"},
+		{id:"shelly", src:"sounds/shelly.mp3"},
+		{id:"shellyGiggle", src:"sounds/shelly-giggle.mp3"},
+		{id:"foundEveryone", src:"sounds/found-everyone.mp3"},
+		{id:"music", src:"sounds/music-loop.mp3"}
 	]
 }
 
@@ -81,7 +89,7 @@ function getStarted(){
 		soundsLoaded = true;
 
 		// load page according to cookie number
-		MEDIABOX.onLoadingFinished();
+		setTimeout(MEDIABOX.onLoadingFinished, 800);
 		var savedDate = MEDIABOX.getSaveDataEntry("date");
 
 		if (savedDate != currentDate){
@@ -91,12 +99,15 @@ function getStarted(){
 		pageIndex = MEDIABOX.getSaveDataEntry("page");
 		
 		if(pageIndex != null){
-			PageArray = [page0, page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11, page12, page13];
+			PageArray = [page0, page1, page6, page10, page11];
 			PageArray[pageIndex]();
 			pageTotal = PageArray.length-1;
 		} else {
 			page0();
 		}
+
+		sounds.getInstance("music").play({loop:-1});
+		sounds.getInstance("music").volume = 0.3;
 	}
 
 	stage.on("stagemousedown", function(event){
@@ -232,6 +243,78 @@ class Fade{
 			if (this.faded) {
 				this.faded = false;
 			}
+		}
+	}
+}
+
+function addNextButton(){
+
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	nextButton = new lib.nextbutton_mc();
+
+	stage.addChild(nextButton);
+	nextButton.x = canvas.width * (1 + MEDIABOX.visibleDocumentSize.width) * 0.5;
+	nextButton.y = canvas.height * (1 + MEDIABOX.visibleDocumentSize.height) * 0.5;
+	nextButton.alpha = 0;
+	createjs.Ticker.addEventListener("tick", fadeUpButton)
+	let nextUp = new Fade(nextButton);
+	
+	function fadeUpButton() {
+		nextUp.FadeUp();
+		if(nextUp.faded){
+			createjs.Ticker.removeEventListener("tick", fadeUpButton);
+		}
+	}
+}
+
+
+function removeNextButton(){
+
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	createjs.Ticker.addEventListener("tick", fadeDownButton)
+	let nextDown = new Fade(nextButton);
+	nextButtonAdded = false;
+	
+	function fadeDownButton() {
+		nextDown.FadeDown();
+		if(!nextDown.faded){
+			createjs.Ticker.removeEventListener("tick", fadeDownButton);
+		}
+	}
+}
+
+
+function addPreviousButton(){
+
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	previousButton = new lib.previousbutton_mc();
+
+	stage.addChild(previousButton);
+	previousButton.y = canvas.height * (1 + MEDIABOX.visibleDocumentSize.height) * 0.5;
+	previousButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
+	previousButton.alpha = 0;
+	createjs.Ticker.addEventListener("tick", fadeUpButton);
+	let previousUp = new Fade(previousButton);
+	
+	function fadeUpButton() {
+		previousUp.FadeUp();
+		if(previousUp.faded){
+			createjs.Ticker.removeEventListener("tick", fadeUpButton);
+		}
+	}
+}
+
+function removePreviousButton(){
+
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	createjs.Ticker.addEventListener("tick", fadeDownButton)
+	let previousDown = new Fade(previousButton);
+	previousButtonAdded = false;
+	
+	function fadeDownButton() {
+		previousDown.FadeDown();
+		if(!previousDown.faded){
+			createjs.Ticker.removeEventListener("tick", fadeDownButton);
 		}
 	}
 }
