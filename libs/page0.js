@@ -8,12 +8,7 @@ function page0(){
 	audioComplete = false;
 	
 	//* Add the page *//
-	stage.addChildAt(page, 1);
-
-	//add the next page preview
-	// nextPageX = canvas.width;
-	// page.addChild(nextPage);
-	// nextPage.x = nextPageX;
+	stage.addChildAt(page, 0);
 
 	MEDIABOX.setSaveDataEntry("page", "0");
 	
@@ -24,34 +19,29 @@ function page0(){
 		previousButtonAdded = false;
 	}
 
-	if (!firstTime || navButtonPressed){
-		createjs.Ticker.addEventListener("tick", fadeUp);
+	createjs.Ticker.addEventListener("tick", fadeUp);
 
-		function fadeUp() {
-			fader.FadeDown();
-			if (!fader.faded){
-				setTimeout(onLoad, 500)
-				createjs.Ticker.removeEventListener("tick", fadeUp);
-				firstTime = true;
-			}
+	function fadeUp() {
+		fader.FadeDown();
+		if (!fader.faded){
+			setTimeout(onLoad, 500)
+			createjs.Ticker.removeEventListener("tick", fadeUp);
+			firstTime = true;
 		}
-	}
-
-	else{
-		page.fade_mc.alpha=0;
-		setTimeout(onLoad, 500);
 	}
 
 	//* Handle the audio *//
 	function onLoad(){
+		setInterval(intervalHeartbeat, 1000);
 		navButtonPressed = false;
 		sounds.getInstance("title").play();
 
-		if (!audioComplete){
-			sounds.getInstance("title").on("complete", done, null, true);
-		}
+		if (!audioComplete){sounds.getInstance("title").on("complete", done, null, true);}
 
 		function done(){
+
+			pageLoaded = true;
+
 			audioComplete = true;
 
 			//* Add the next button *//	
@@ -61,9 +51,16 @@ function page0(){
 			}
 			nextButton.addEventListener("click", gotoNextPage);
 
+			if(!musicButtonAdded){
+				addMusicButton();
+				musicButtonAdded = true;
+			}
+			musicButton.addEventListener("click", toggleMusic);
+
 			//* Add Interaction *//
 			//page.on("mousedown", mouseDownHandler);
 			page.text1.addEventListener("click", playTitle);
+
 		}
 	}
 
@@ -81,13 +78,16 @@ function page0(){
 	 	sounds.getInstance("title").play();
 	}
 
-	function playFinny(){finnyAnim.Play(); if (audioComplete){sounds.getInstance("finnyGiggle").play();}}
+	function playFinny(){
+		finnyAnim.Play(); 
+		if (audioComplete){sounds.getInstance("finnyGiggle").play();}
+		setTimeout(gotoNextPage, 2000);
+	}
 
 	//Go to the next page//
 	function gotoNextPage(){
 		console.log("page 0 going to page 1")
 		next = true;
-		navButtonPressed = true;
 		nextButton.removeEventListener("click", gotoNextPage);
 		createjs.Ticker.addEventListener("tick", fadeDown);
 	}

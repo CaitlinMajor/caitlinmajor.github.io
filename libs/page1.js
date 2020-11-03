@@ -18,16 +18,6 @@ function page1(){
 	//* Add the page *//
 	stage.addChildAt(page, 1);
 
-	//add the next page preview
-	// nextPageX = canvas.width;
-	// page.addChild(nextPage);
-	// nextPage.x = nextPageX;
-
-	// //add the previous page preview
-	// previousPageX = (0-canvas.width);
-	// page.addChild(previousPage);
-	// previousPage.x = previousPageX;
-
 	page.text1.alpha = 0;
 	page.text2.alpha = 0;
 	page.text3.alpha = 0;
@@ -54,15 +44,8 @@ function page1(){
 	let leoTextFade = new Fade(page.leoText_mc);
 	let pageFader = new Fade(page.fade_mc);
 	
-	//handle navigation
-	if(navButtonPressed){
-		createjs.Ticker.addEventListener("tick", fadeUp);
-		navButtonPressed = false;
-	} else {
-		page.fade_mc.alpha = 0;
-		addNavButtons();
-		playLine1();
-	}
+
+	createjs.Ticker.addEventListener("tick", fadeUp);
 
 	function addNavButtons(){
 		if(!nextButtonAdded){
@@ -75,6 +58,11 @@ function page1(){
 				previousButtonAdded = true;
 			}
 			previousButton.addEventListener("click", gotoPreviousPage);
+			if(!musicButtonAdded){
+				addMusicButton();
+				musicButtonAdded = true;
+			}
+			musicButton.addEventListener("click", toggleMusic);
 
 	}
 
@@ -92,6 +80,15 @@ function page1(){
 		navButtonPressed = false;
 		//page.on("mousedown", mouseDownHandler);
 		sounds.getInstance("page1Line1").play();
+		page.finny_mc.gotoAndPlay("startLoop");
+		page.sammy_mc.gotoAndPlay("startLoop");
+		page.sandy_mc.gotoAndPlay("startLoop");
+		page.fiona_mc.gotoAndPlay("startLoop");
+		page.leo_mc.gotoAndPlay("startLoop");
+		page.shelly_mc.gotoAndPlay("startLoop");
+		page.chloe_mc.gotoAndPlay("startLoop");
+		page.oscar_mc.gotoAndPlay("startLoop");
+		page.myrtle_mc.gotoAndPlay("startLoop");
 
 		if(!audioComplete){
 			sounds.getInstance("page1Line1").on("complete", playLine2, null, true);
@@ -108,6 +105,16 @@ function page1(){
 
 	function playLine2() {
 		sounds.getInstance("page1Line2").play();
+		page.finny_mc.gotoAndPlay("startAudio");
+		page.sammy_mc.gotoAndPlay("startAudio");
+		page.sandy_mc.gotoAndPlay("startAudio");
+		page.fiona_mc.gotoAndPlay("startAudio");
+		page.leo_mc.gotoAndPlay("startAudio");
+		page.shelly_mc.gotoAndPlay("startAudio");
+		page.chloe_mc.gotoAndPlay("startAudio");
+		page.oscar_mc.gotoAndPlay("startAudio");
+		page.myrtle_mc.gotoAndPlay("startAudio");
+
 
 		if(!audioComplete){
 			sounds.getInstance("page1Line2").on("complete", playLine3, null, true);
@@ -167,6 +174,12 @@ function page1(){
 
 	//* Loop Animations *//
 	createjs.Ticker.addEventListener("tick", loopAnimations);
+	let finnyStart = new Animations(page.finny_mc, "end", "start");
+	let sammyStart = new Animations(page.sammy_mc, "end", "start");
+	let sandyStart = new Animations(page.sandy_mc, "end", "start");
+	let fionaStart = new Animations(page.fiona_mc, "end", "start");
+	let leoStart = new Animations(page.leo_mc, "end", "start");
+	let myrtleStart = new Animations(page.myrtle_mc, "end", "start");
 	let finny = new Animations(page.finny_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 	let sammy = new Animations(page.sammy_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 	let sandy = new Animations(page.sandy_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
@@ -178,6 +191,11 @@ function page1(){
 	let myrtle = new Animations(page.myrtle_mc, "endLoop", "startLoop", "endClickAnim", "startClickAnim");
 	
 	function loopAnimations(){
+		finnyStart.Loop();
+		sammyStart.Loop();
+		sandyStart.Loop();
+		fionaStart.Loop();
+		myrtleStart.Loop();
 		finny.Loop();
 		sammy.Loop();
 		sandy.Loop();
@@ -212,10 +230,9 @@ function page1(){
 	
 	//* Navigation *//
 	function gotoNextPage(){
-		console.log("page 1 going to page 6")
+		console.log("page 1 going to page 2")
 		nextButton.removeEventListener("click", gotoNextPage);
 		next = true;
-		navButtonPressed = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
 	}
 
@@ -223,7 +240,6 @@ function page1(){
 		console.log("page 1 going to page 0")
 		previousButton.removeEventListener("click", gotoPreviousPage);
 		previous = true;
-		navButtonPressed = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
 		removePreviousButton();
 	}
@@ -233,7 +249,7 @@ function page1(){
 		if (pageFader.faded){
 			killPage();
 				if (next) {
-					setTimeout(page6, 200);
+					setTimeout(page2, 200);
 				}
 				else if (previous){
 					setTimeout(page0, 200);

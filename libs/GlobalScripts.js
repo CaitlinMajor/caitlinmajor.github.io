@@ -1,13 +1,19 @@
 var soundsLoaded = false;
 var firstTime = true;
 var nextButtonAdded = false;
-var navButtonPressed = false;
-
-var dragRightTolerance = 500;
-var dragLeftTolerance = -500;
-var transitionDelay = 350;
-var transitionEase = createjs.Ease.quintOut;
-
+var previousButtonAdded = false;
+var musicButtonAdded = false;
+var zoomButtonAdded = false;
+var musicOn = true;
+var zoom = false;
+var locked = false;
+var lastInterval = getTime();
+var pageLoaded = false;
+var scaleValue = 1.50
+var pageWidth = 2436;
+var pageHeight = 1500;
+var scaledWidth = pageWidth*scaleValue;
+var scaledHeight = pageHeight*scaleValue;
 var today = new Date();
 var currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
@@ -66,7 +72,8 @@ var sounds = {
 		{id:"shelly", src:"sounds/shelly.mp3"},
 		{id:"shellyGiggle", src:"sounds/shelly-giggle.mp3"},
 		{id:"foundEveryone", src:"sounds/found-everyone.mp3"},
-		{id:"music", src:"sounds/music-loop.mp3"}
+		{id:"music", src:"sounds/music-loop.mp3"},
+		{id:"theEnd", src:"sounds/theend.mp3"}
 	]
 }
 
@@ -93,23 +100,18 @@ function getStarted(){
 		var savedDate = MEDIABOX.getSaveDataEntry("date");
 
 		if (savedDate != currentDate){
-			MEDIABOX.setSaveDataEntry("page", "0");
+		MEDIABOX.setSaveDataEntry("page", "0");
 		}
 		
 		pageIndex = MEDIABOX.getSaveDataEntry("page");
-		
-		if(pageIndex != null){
-			PageArray = [page0, page1, page6, page10, page11];
-			PageArray[pageIndex]();
-			pageTotal = PageArray.length-1;
-		} else {
-			page0();
-		}
+		PageArray = [page0, page1, page2, page3, page4];
+		PageArray[pageIndex]();
 
-		sounds.getInstance("music").play({loop:-1});
-		sounds.getInstance("music").volume = 0.3;
+		sounds.getInstance("music").play({loop:-1})
+		sounds.getInstance("music").volume = 0.25;
 	}
 
+	//add clicker dot
 	stage.on("stagemousedown", function(event){
 		stage.addChild(clicker);
 		var p = this.globalToLocal(event.stageX, event.stageY);
@@ -125,57 +127,6 @@ function getStarted(){
 		}
 	}
 }
-
-function mouseDownHandler(e){
-	e.currentTarget.pressedX = e.currentTarget.x;
-	e.currentTarget.pressed = true;
-	e.currentTarget.offsetX = (e.stageX / stage.scaleX) - e.currentTarget.x;
-	e.currentTarget.on("pressmove", pressMoveHandler);
-	stage.addEventListener("stagemouseup", swipe);
-};
-
-function pressMoveHandler(e){
-	e.currentTarget.dragDistance = page.x - e.currentTarget.pressedX;
-	e.currentTarget.x = (e.stageX / stage.scaleX) - e.currentTarget.offsetX;		
-};
-
-function swipe(){
-	if (pageIndex < pageTotal && page.dragDistance <= dragLeftTolerance){
-		createjs.Tween.get(page).to({x:-(canvas.width / stage.scaleX)}, transitionDelay, transitionEase).call(goToNextPage)
-	}
-
-	else if (pageIndex > 0 && page.dragDistance >= dragRightTolerance){
-		createjs.Tween.get(page).to({x:(canvas.width / stage.scaleX)}, transitionDelay, transitionEase).call(goToPrevPage)
-	} 
-
-	else {
-		createjs.Tween.get(page).to({x:0}, transitionDelay, transitionEase);
-	}
-
-	page.off("pressmove", pressMoveHandler);
-	stage.off("stagemouseup", swipe);
-	page.pressed = false;
-}
-
-function goToNextPage(){
-	killPage();
-	page.off("mousedown", mouseDownHandler);
-	if (pageIndex <= pageTotal){
-			pageIndex++
-		}
-		console.log("page index " + pageIndex);
-	PageArray[pageIndex]();
-}
-
-function goToPrevPage(){
-	killPage();
-	page.off("mousedown", mouseDownHandler);
-	if (pageIndex >= 0){
-			pageIndex--
-		} 
-	PageArray[pageIndex]();
-}
-
 
 class Animations{
 
@@ -248,7 +199,6 @@ class Fade{
 }
 
 function addNextButton(){
-
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	nextButton = new lib.nextbutton_mc();
 
@@ -269,7 +219,6 @@ function addNextButton(){
 
 
 function removeNextButton(){
-
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	createjs.Ticker.addEventListener("tick", fadeDownButton)
 	let nextDown = new Fade(nextButton);
@@ -285,7 +234,6 @@ function removeNextButton(){
 
 
 function addPreviousButton(){
-
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	previousButton = new lib.previousbutton_mc();
 
@@ -305,7 +253,6 @@ function addPreviousButton(){
 }
 
 function removePreviousButton(){
-
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	createjs.Ticker.addEventListener("tick", fadeDownButton)
 	let previousDown = new Fade(previousButton);
@@ -318,3 +265,168 @@ function removePreviousButton(){
 		}
 	}
 }
+
+function addMusicButton(){
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	musicButton = new lib.music_mc();
+
+	stage.addChild(musicButton);
+	musicButton.gotoAndStop("musicOn");
+	musicButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
+	musicButton.y = canvas.height * (1 - MEDIABOX.visibleDocumentSize.height) * 0.5;
+	musicButton.alpha = 0;
+	createjs.Ticker.addEventListener("tick", fadeUpButton);
+	let musicUp = new Fade(musicButton);
+
+	function fadeUpButton() {
+		musicUp.FadeUp();
+		if(musicUp.faded){
+			createjs.Ticker.removeEventListener("tick", fadeUpButton);
+		}
+	}
+}
+
+function addZoomButton(){
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	zoomButton = new lib.zoom_mc();
+	zoomButtonAdded = false;
+
+	stage.addChild(zoomButton);
+	zoomButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
+	zoomButton.y = canvas.height * (1 - MEDIABOX.visibleDocumentSize.height) * 0.5;
+	zoomButton.alpha = 0;
+	createjs.Ticker.addEventListener("tick", fadeUpButton);
+	let zoomUp = new Fade(zoomButton);
+
+	function fadeUpButton() {
+		zoomUp.FadeUp();
+		if(zoomUp.faded){
+			createjs.Ticker.removeEventListener("tick", fadeUpButton);
+		}
+	}
+}
+
+function removeZoomButton(){
+
+	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
+	createjs.Ticker.addEventListener("tick", fadeDownButton)
+	let zoomDown = new Fade(zoomButton);
+	zoomButtonAdded = false;
+	
+	function fadeDownButton() {
+		zoomDown.FadeDown();
+		if(!zoomDown.faded){
+			createjs.Ticker.removeEventListener("tick", fadeDownButton);
+		}
+	}
+}
+
+function toggleMusic(){
+	if (musicOn){
+		//createjs.Ticker.addEventListener("tick", fadeMusicDown);
+		sounds.getInstance("music").volume = 0;
+		if(musicButtonAdded){musicButton.gotoAndStop("musicOff");}
+		musicOn = false
+	}
+
+	else if (!musicOn){
+		sounds.getInstance("music").play({loop:-1})
+		sounds.getInstance("music").volume = 0.25;
+		if(musicButtonAdded){musicButton.gotoAndStop("musicOn");}
+		musicOn = true;
+	}	
+}
+
+//** Turn music off when device is locked **//
+function getTime() {
+    return (new Date()).getTime();
+}
+
+function intervalHeartbeat() {
+    var now = getTime();
+    var diff = now - lastInterval;
+    var offBy = diff - 1000; // 1000 = the 1 second delay I was expecting
+    lastInterval = now;
+
+    if(offBy > 100 && !locked && pageLoaded) { // don't trigger on small stutters less than 100ms
+		locked = true;
+		sounds.getInstance("music").volume = 0;
+		// console.log("unlocked screen going to locked screen turning off music");
+		// console.log('interval heartbeat - off by ' + offBy + 'ms');
+    }
+
+    else if (offBy < 100 && locked && pageLoaded){
+    	locked = false;
+    	sounds.getInstance("music").play({loop:-1})
+		sounds.getInstance("music").volume = 0.25;
+		// console.log("locked screen going to unlocked screen turning on music");
+		// console.log('interval heartbeat - off by ' + offBy + 'ms');
+    }
+}
+
+//** Zoom in on the page **//
+function toggleZoom(){
+	if(!zoom){
+		createjs.Tween.get(page).to({x:-(canvas.width / 4),y:-(canvas.height / 4),scaleX:scaleValue,scaleY:scaleValue}, 1000, createjs.Ease.quintOut)
+		zoom = true;
+		page.on("mousedown", mouseDownHandler);
+	}
+
+	else if(zoom){
+		createjs.Tween.get(page).to({x:1,y:1,scaleX:1,scaleY:1}, 1000, createjs.Ease.quintOut)
+		zoom = false;
+		page.off("mousedown", mouseDownHandler);
+	}
+}
+
+function mouseDownHandler(e){
+	if(zoom){
+		e.currentTarget.pressedX = e.currentTarget.x;
+		e.currentTarget.pressedY = e.currentTarget.y;
+		e.currentTarget.offsetX = e.stageX - e.currentTarget.x;
+		e.currentTarget.offsetY = e.stageY - e.currentTarget.y;
+		page.on("pressmove", pressMoveHandler);
+		stage.on("stagemouseup", turnOff);
+	}
+};
+
+function pressMoveHandler(e){
+	if (zoom){
+		var minX = 1;
+		var maxX = (pageWidth - scaledWidth) + 1;
+		var minY = 1;
+		var maxY = (pageHeight - scaledHeight) + 1;
+
+		e.currentTarget.x = e.stageX - e.currentTarget.offsetX;
+		if (page.x > minX){
+			e.currentTarget.x = minX;
+		}
+		if (page.x < maxX){
+			e.currentTarget.x = maxX;
+		}
+		e.currentTarget.y = e.stageY - e.currentTarget.offsetY;
+		if (page.y > minY){
+			e.currentTarget.y = minY;
+		}
+		if (page.y < maxY){
+			e.currentTarget.y = maxY;
+		}
+	}
+};
+
+function turnOff(){
+	page.off("pressmove", pressMoveHandler);
+	page.off("mousedown", mouseDownHandler);
+	stage.off("stagemouseup", turnOff);
+}
+
+// function fadeMusicDown(){
+// 	console.log("volume " + sounds.getInstance("music").volume);
+// 	if (sounds.getInstance("music").volume >= 0) {
+// 		sounds.getInstance("music").volume -= 0.0075;
+// 	}
+
+// 	if (sounds.getInstance("music").volume <= 0) {
+// 		createjs.Ticker.removeEventListener("tick", fadeMusicDown);
+// 	}
+// }
