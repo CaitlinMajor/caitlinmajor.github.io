@@ -14,8 +14,6 @@ var pageWidth = 2436;
 var pageHeight = 1500;
 var scaledWidth = pageWidth*scaleValue;
 var scaledHeight = pageHeight*scaleValue;
-var today = new Date();
-var currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
 var sounds = {
 	preloadFiles: function(){
@@ -95,20 +93,10 @@ function getStarted(){
 		if (!soundsLoaded) sounds.preloadFiles();
 		soundsLoaded = true;
 
-		// load page according to cookie number
-		setTimeout(MEDIABOX.onLoadingFinished, 800);
-		var savedDate = MEDIABOX.getSaveDataEntry("date");
-
-		if (savedDate != currentDate){
-		MEDIABOX.setSaveDataEntry("page", "0");
-		}
-		
-		pageIndex = MEDIABOX.getSaveDataEntry("page");
-		PageArray = [page0, page1, page2, page3, page4];
-		PageArray[pageIndex]();
+		page0();
 
 		sounds.getInstance("music").play({loop:-1})
-		sounds.getInstance("music").volume = 0.25;
+		sounds.getInstance("music").volume = 0.15;
 	}
 
 	//add clicker dot
@@ -331,7 +319,7 @@ function toggleMusic(){
 
 	else if (!musicOn){
 		sounds.getInstance("music").play({loop:-1})
-		sounds.getInstance("music").volume = 0.25;
+		sounds.getInstance("music").volume = 0.15;
 		if(musicButtonAdded){musicButton.gotoAndStop("musicOn");}
 		musicOn = true;
 	}	
@@ -358,7 +346,7 @@ function intervalHeartbeat() {
     else if (offBy < 100 && locked && pageLoaded){
     	locked = false;
     	sounds.getInstance("music").play({loop:-1})
-		sounds.getInstance("music").volume = 0.25;
+		sounds.getInstance("music").volume = 0.15;
 		// console.log("locked screen going to unlocked screen turning on music");
 		// console.log('interval heartbeat - off by ' + offBy + 'ms');
     }
@@ -419,14 +407,3 @@ function turnOff(){
 	page.off("mousedown", mouseDownHandler);
 	stage.off("stagemouseup", turnOff);
 }
-
-// function fadeMusicDown(){
-// 	console.log("volume " + sounds.getInstance("music").volume);
-// 	if (sounds.getInstance("music").volume >= 0) {
-// 		sounds.getInstance("music").volume -= 0.0075;
-// 	}
-
-// 	if (sounds.getInstance("music").volume <= 0) {
-// 		createjs.Ticker.removeEventListener("tick", fadeMusicDown);
-// 	}
-// }

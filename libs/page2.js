@@ -4,9 +4,6 @@ function page2(){
 	//define page variables //
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page2_mc();
-	//nextPage = new lib.page2_preview();
-	//previousPage = new lib.page0_preview();
-	pageIndex = 2;
 	next = false;
 	previous = false;
 	finnyFound = false;
@@ -20,22 +17,8 @@ function page2(){
 	sammyFound = false;
 	everyoneFound = false;
 
-	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-	MEDIABOX.setSaveDataEntry("date", date);
-	MEDIABOX.setSaveDataEntry("page", "2");
-
 	//* Add the page *//
 	stage.addChildAt(page, 1);
-
-	//add the next page preview
-	// nextPageX = canvas.width;
-	// page.addChild(nextPage);
-	// nextPage.x = nextPageX;
-
-	// //add the previous page preview
-	// previousPageX = (0-canvas.width);
-	// page.addChild(previousPage);
-	// previousPage.x = previousPageX;
 
 	let pageFader = new Fade(page.fade_mc);
 
@@ -82,11 +65,17 @@ function page2(){
 	let finnyFoundAnim = new Animations(page.finny_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let finnyFoundAnimOL = new Animations(page.finny_ol_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let chloeStart = new Animations(page.chloe_mc, "endLoop", "startLoop");
+	let chloeStartOL = new Animations(page.chloe_ol_mc, "endLoop", "startLoop");
 	let chloeFoundAnim = new Animations(page.chloe_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
+	let chloeFoundAnimOL = new Animations(page.chloe_ol_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let oscarStart = new Animations(page.oscar_mc, "endLoop", "startLoop");
+	let oscarStartOL = new Animations(page.oscar_ol_mc, "endLoop", "startLoop");
 	let oscarFoundAnim = new Animations(page.oscar_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
+	let oscarFoundAnimOL = new Animations(page.oscar_ol_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let fionaStart = new Animations(page.fiona_mc, "endLoop", "startLoop");
+	let fionaStartOL = new Animations(page.fiona_ol_mc, "endLoop", "startLoop");
 	let fionaFoundAnim = new Animations(page.fiona_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
+	let fionaFoundAnimOL = new Animations(page.fiona_ol_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let shellyStart = new Animations(page.shelly_mc, "endLoop", "startLoop");
 	let shellyFoundAnim = new Animations(page.shelly_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let myrtleStart = new Animations(page.myrtle_mc, "endLoop", "startLoop");
@@ -98,7 +87,9 @@ function page2(){
 	let sandyStart = new Animations(page.sandy_mc, "endLoop", "startLoop");
 	let sandyFoundAnim = new Animations(page.sandy_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let sammyStart = new Animations(page.sammy_mc, "endLoop", "startLoop");
+	let sammyStartOL = new Animations(page.sammy_ol_mc, "endLoop", "startLoop");
 	let sammyFoundAnim = new Animations(page.sammy_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
+	let sammyFoundAnimOL = new Animations(page.sammy_ol_mc, "endLoop2", "startLoop2", "endClickAnim2", "startClickAnim2");
 	let textStart = new Animations(page.text_mc, "endLoop", "startLoop");
 	let everyoneStart = new Animations(page.everyone_banner, "endLoop", "startLoop");
 	let everyoneOn = new Animations(page.everyone_banner, "endLoop2", "startLoop2");
@@ -118,11 +109,17 @@ function page2(){
 		finnyFoundAnim.Loop();
 		finnyFoundAnimOL.Loop();
 		chloeStart.Loop();
+		chloeStartOL.Loop();
 		chloeFoundAnim.Loop();
+		chloeFoundAnimOL.Loop();
 		oscarStart.Loop();
+		oscarStartOL.Loop();
 		oscarFoundAnim.Loop();
+		oscarFoundAnimOL.Loop();
 		fionaStart.Loop();
+		fionaStartOL.Loop();
 		fionaFoundAnim.Loop();
+		fionaFoundAnimOL.Loop();
 		shellyStart.Loop();
 		shellyFoundAnim.Loop();
 		myrtleStart.Loop();
@@ -134,7 +131,9 @@ function page2(){
 		sandyStart.Loop();
 		sandyFoundAnim.Loop();
 		sammyStart.Loop();
+		sammyStartOL.Loop();
 		sammyFoundAnim.Loop();
+		sammyFoundAnimOL.Loop();
 		textStart.Loop();
 		everyoneStart.Loop();
 		everyoneOn.Loop();
@@ -170,14 +169,18 @@ function page2(){
 	page.finny_mc.addEventListener("click", youFoundFinny);
 	page.finny_ol_mc.addEventListener("click", youFoundFinny);
 	page.chloe_mc.addEventListener("click", youFoundChloe);
+	page.chloe_ol_mc.addEventListener("click", youFoundChloe);
 	page.oscar_mc.addEventListener("click", youFoundOscar);
+	page.oscar_ol_mc.addEventListener("click", youFoundOscar);
 	page.fiona_mc.addEventListener("click", youFoundFiona);
+	page.fiona_ol_mc.addEventListener("click", youFoundFiona);
 	page.shelly_mc.addEventListener("click", youFoundShelly);
 	page.myrtle_mc.addEventListener("click", youFoundMyrtle);
 	page.myrtle_ol_mc.addEventListener("click", youFoundMyrtle);
 	page.leo_mc.addEventListener("click", youFoundLeo);
 	page.sandy_mc.addEventListener("click", youFoundSandy);
 	page.sammy_mc.addEventListener("click", youFoundSammy);
+	page.sammy_ol_mc.addEventListener("click", youFoundSammy);
 	page.text_mc.addEventListener("click", clickText);
 
 	//* Page Interactions *//
@@ -202,12 +205,14 @@ function page2(){
 		if (!chloeFound){
 			chloeFound = true;
 			page.chloe_mc.gotoAndPlay("startClickAnim");
+			page.chloe_ol_mc.gotoAndPlay("startClickAnim");
 			sounds.getInstance("foundChloe").play();
 			page.text_mc.gotoAndStop("chloe");
 			activateBubbles();
 		}
 		else if (chloeFound){
 			chloeFoundAnim.Play();
+			chloeFoundAnimOL.Play();
 			sounds.getInstance("chloeGiggle").play();
 			page.text_mc.gotoAndStop("chloe");
 		}
@@ -217,12 +222,14 @@ function page2(){
 		if (!oscarFound){
 			oscarFound = true;
 			page.oscar_mc.gotoAndPlay("startClickAnim");
+			page.oscar_ol_mc.gotoAndPlay("startClickAnim");
 			sounds.getInstance("foundOscar").play();
 			page.text_mc.gotoAndStop("oscar");
 			activateBubbles();
 		}
 		else if (oscarFound){
 			oscarFoundAnim.Play();
+			oscarFoundAnimOL.Play();
 			sounds.getInstance("oscarWoohoo").play();
 			page.text_mc.gotoAndStop("oscar");
 		}
@@ -232,12 +239,14 @@ function page2(){
 		if (!fionaFound){
 			fionaFound = true;
 			page.fiona_mc.gotoAndPlay("startClickAnim");
+			page.fiona_ol_mc.gotoAndPlay("startClickAnim");
 			sounds.getInstance("foundFiona").play();
 			page.text_mc.gotoAndStop("fiona");
 			activateBubbles();
 		}
 		else if (fionaFound){
 			fionaFoundAnim.Play();
+			fionaFoundAnimOL.Play();
 			sounds.getInstance("fionaGiggle").play();
 			page.text_mc.gotoAndStop("fiona");
 		}
@@ -309,12 +318,14 @@ function page2(){
 		if (!sammyFound){
 			sammyFound = true;
 			page.sammy_mc.gotoAndPlay("startClickAnim");
+			page.sammy_ol_mc.gotoAndPlay("startClickAnim");
 			sounds.getInstance("foundSammy").play();
 			page.text_mc.gotoAndStop("sammy");
 			activateBubbles();
 		}
 		else if (sammyFound){
 			sammyFoundAnim.Play();
+			sammyFoundAnimOL.Play();
 			sounds.getInstance("sammyWahoo").play();
 			page.text_mc.gotoAndStop("sammy");
 		}
@@ -424,14 +435,12 @@ function page2(){
 	
 	//* Navigation *//
 	function gotoNextPage(){
-		console.log("page 2 going to page 3")
 		nextButton.removeEventListener("click", gotoNextPage);
 		next = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
 	}
 
 	function gotoPreviousPage(){
-		console.log("page 2 going to page 1")
 		previousButton.removeEventListener("click", gotoPreviousPage);
 		previous = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
@@ -456,7 +465,6 @@ function page2(){
 	//* End Of Page*//
 	killPage = function(){
 		removeEveryone();
-		clearInterval(bubbleInterval);
 		sounds.getInstance("foundFinny").stop();
 		sounds.getInstance("finnyGiggle").stop();
 		sounds.getInstance("foundChloe").stop();
@@ -477,17 +485,22 @@ function page2(){
 		sounds.getInstance("foundEveryone").stop();
 		createjs.Ticker.removeEventListener("tick", loopAnimations);
 		createjs.Ticker.removeEventListener("tick", checkEveryone);
+		clearInterval(bubbleInterval);
 		page.finny_mc.removeEventListener("click", youFoundFinny);
 		page.finny_ol_mc.removeEventListener("click", youFoundFinny);
 		page.chloe_mc.removeEventListener("click", youFoundChloe);
+		page.chloe_ol_mc.removeEventListener("click", youFoundChloe);
 		page.oscar_mc.removeEventListener("click", youFoundOscar);
+		page.oscar_ol_mc.removeEventListener("click", youFoundOscar);
 		page.fiona_mc.removeEventListener("click", youFoundFiona);
+		page.fiona_ol_mc.removeEventListener("click", youFoundFiona);
 		page.shelly_mc.removeEventListener("click", youFoundShelly);
 		page.myrtle_mc.removeEventListener("click", youFoundMyrtle);
 		page.myrtle_ol_mc.removeEventListener("click", youFoundMyrtle);
 		page.leo_mc.removeEventListener("click", youFoundLeo);
 		page.sandy_mc.removeEventListener("click", youFoundSandy);
 		page.sammy_mc.removeEventListener("click", youFoundSammy);
+		page.sammy_ol_mc.removeEventListener("click", youFoundSammy);
 		page.text_mc.removeEventListener("click", clickText);
 		zoomButton.removeEventListener("click", toggleZoom);
 		nextButton.removeEventListener("click", gotoNextPage);

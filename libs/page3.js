@@ -4,9 +4,6 @@ function page3(){
 	//define page variables //
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page3_mc();
-	//nextPage = new lib.page2_preview();
-	//previousPage = new lib.page0_preview();
-	pageIndex = 3;
 	next = false;
 	previous = false;
 	finnyFound = false;
@@ -20,22 +17,8 @@ function page3(){
 	sammyFound = false;
 	everyoneFound = false;
 
-	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-	MEDIABOX.setSaveDataEntry("date", date);
-	MEDIABOX.setSaveDataEntry("page", "3");
-
 	//* Add the page *//
 	stage.addChildAt(page, 1);
-
-	//add the next page preview
-	// nextPageX = canvas.width;
-	// page.addChild(nextPage);
-	// nextPage.x = nextPageX;
-
-	// //add the previous page preview
-	// previousPageX = (0-canvas.width);
-	// page.addChild(previousPage);
-	// previousPage.x = previousPageX;
 
 	let pageFader = new Fade(page.fade_mc);
 
@@ -423,14 +406,14 @@ function page3(){
 	
 	//* Navigation *//
 	function gotoNextPage(){
-		console.log("page 3 going to page 4")
 		nextButton.removeEventListener("click", gotoNextPage);
 		next = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
+		removeNextButton();
+		removeZoomButton();
 	}
 
 	function gotoPreviousPage(){
-		console.log("page 3 going to page 2")
 		previousButton.removeEventListener("click", gotoPreviousPage);
 		previous = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
