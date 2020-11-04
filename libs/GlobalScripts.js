@@ -191,8 +191,8 @@ function addNextButton(){
 	nextButton = new lib.nextbutton_mc();
 
 	stage.addChild(nextButton);
-	nextButton.x = canvas.width * (1 + MEDIABOX.visibleDocumentSize.width) * 0.5;
-	nextButton.y = canvas.height * (1 + MEDIABOX.visibleDocumentSize.height) * 0.5;
+	nextButton.x = canvas.width;
+	nextButton.y = canvas.height;
 	nextButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton)
 	let nextUp = new Fade(nextButton);
@@ -226,8 +226,8 @@ function addPreviousButton(){
 	previousButton = new lib.previousbutton_mc();
 
 	stage.addChild(previousButton);
-	previousButton.y = canvas.height * (1 + MEDIABOX.visibleDocumentSize.height) * 0.5;
-	previousButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
+	previousButton.y = canvas.height;
+	previousButton.x = 0;
 	previousButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let previousUp = new Fade(previousButton);
@@ -260,8 +260,8 @@ function addMusicButton(){
 
 	stage.addChild(musicButton);
 	musicButton.gotoAndStop("musicOn");
-	musicButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
-	musicButton.y = canvas.height * (1 - MEDIABOX.visibleDocumentSize.height) * 0.5;
+	musicButton.x = 0;
+	musicButton.y = 0;
 	musicButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let musicUp = new Fade(musicButton);
@@ -280,8 +280,8 @@ function addZoomButton(){
 	zoomButtonAdded = false;
 
 	stage.addChild(zoomButton);
-	zoomButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
-	zoomButton.y = canvas.height * (1 - MEDIABOX.visibleDocumentSize.height) * 0.5;
+	zoomButton.x = 0;
+	zoomButton.y = 0;
 	zoomButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let zoomUp = new Fade(zoomButton);
