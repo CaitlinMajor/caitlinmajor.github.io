@@ -4,16 +4,9 @@ function page1(){
 	//define page variables //
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page1_mc();
-	//nextPage = new lib.page2_preview();
-	//previousPage = new lib.page0_preview();
-	pageIndex = 1;
 	next = false;
 	previous = false;
 	audioComplete = false;
-
-	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-	MEDIABOX.setSaveDataEntry("date", date);
-	MEDIABOX.setSaveDataEntry("page", "1");
 
 	//* Add the page *//
 	stage.addChildAt(page, 1);
@@ -216,8 +209,6 @@ function page1(){
 		myrtle.Loop();
 	}
 
-
-
 	//* Page Interactions *//
 	function playFinny(){finny.Play(); if (audioComplete){sounds.getInstance("finny").play();}}
 	function playSammy(){sammy.Play(); if (audioComplete){sounds.getInstance("sammy").play();}}
@@ -231,14 +222,12 @@ function page1(){
 	
 	//* Navigation *//
 	function gotoNextPage(){
-		console.log("page 1 going to page 2")
 		nextButton.removeEventListener("click", gotoNextPage);
 		next = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
 	}
 
 	function gotoPreviousPage(){
-		console.log("page 1 going to page 0")
 		previousButton.removeEventListener("click", gotoPreviousPage);
 		previous = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);

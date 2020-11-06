@@ -21,9 +21,6 @@
 <script type='text/javascript' src='libs/page2.js'></script>
 <script type='text/javascript' src='libs/page3.js'></script>
 <script type='text/javascript' src='libs/page4.js'></script>
-<script type='text/javascript' src='libs/page5.js'></script>
-<script type='text/javascript' src='libs/page6.js'></script>
-<script type='text/javascript' src='libs/page7.js'></script>
 <script>
 var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
 function init() {
@@ -52,7 +49,7 @@ function handleComplete(evt,comp) {
 	for(i=0; i<ssMetadata.length; i++) {
 		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
 	}
-	exportRoot = new lib.FindFinnyPart1_Storybook_V10();
+	exportRoot = new lib.FindFinnyPart1_Storybook_Website_V01();
 	stage = new lib.Stage(canvas);	
 	//Registers the "tick" event listener.
 	fnStartAnimation = function() {
@@ -61,7 +58,7 @@ function handleComplete(evt,comp) {
 		createjs.Ticker.addEventListener("tick", stage);
 	}	    
 	//Code to support hidpi screens and responsive scaling.
-	AdobeAn.makeResponsive(false,'both',false,1,[canvas,anim_container,dom_overlay_container]);	
+	AdobeAn.makeResponsive(true,'both',true,1,[canvas,anim_container,dom_overlay_container]);	
 	AdobeAn.compositionLoaded(lib.properties.id);
 	fnStartAnimation();
 }

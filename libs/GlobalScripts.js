@@ -14,9 +14,6 @@ var pageWidth = 2436;
 var pageHeight = 1500;
 var scaledWidth = pageWidth*scaleValue;
 var scaledHeight = pageHeight*scaleValue;
-var today = new Date();
-var currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-console.log("current date " + currentDate);
 
 var sounds = {
 	preloadFiles: function(){
@@ -96,17 +93,7 @@ function getStarted(){
 		if (!soundsLoaded) sounds.preloadFiles();
 		soundsLoaded = true;
 
-		// load page according to cookie number
-		setTimeout(MEDIABOX.onLoadingFinished, 800);
-		var savedDate = MEDIABOX.getSaveDataEntry("date");
-
-		if (savedDate != currentDate){
-		MEDIABOX.setSaveDataEntry("page", "0");
-		}
-		
-		pageIndex = MEDIABOX.getSaveDataEntry("page");
-		PageArray = [page0, page1, page2, page3, page4, page5, page6, page7];
-		PageArray[pageIndex]();
+		page0();
 
 		sounds.getInstance("music").play({loop:-1})
 		sounds.getInstance("music").volume = 0.15;
@@ -204,8 +191,8 @@ function addNextButton(){
 	nextButton = new lib.nextbutton_mc();
 
 	stage.addChild(nextButton);
-	nextButton.x = canvas.width * (1 + MEDIABOX.visibleDocumentSize.width) * 0.5;
-	nextButton.y = canvas.height * (1 + MEDIABOX.visibleDocumentSize.height) * 0.5;
+	nextButton.x = canvas.width;
+	nextButton.y = canvas.height;
 	nextButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton)
 	let nextUp = new Fade(nextButton);
@@ -239,8 +226,8 @@ function addPreviousButton(){
 	previousButton = new lib.previousbutton_mc();
 
 	stage.addChild(previousButton);
-	previousButton.y = canvas.height * (1 + MEDIABOX.visibleDocumentSize.height) * 0.5;
-	previousButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
+	previousButton.y = canvas.height;
+	previousButton.x = 0;
 	previousButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let previousUp = new Fade(previousButton);
@@ -273,8 +260,8 @@ function addMusicButton(){
 
 	stage.addChild(musicButton);
 	musicButton.gotoAndStop("musicOn");
-	musicButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
-	musicButton.y = canvas.height * (1 - MEDIABOX.visibleDocumentSize.height) * 0.5;
+	musicButton.x = 0;
+	musicButton.y = 0;
 	musicButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let musicUp = new Fade(musicButton);
@@ -293,8 +280,8 @@ function addZoomButton(){
 	zoomButtonAdded = false;
 
 	stage.addChild(zoomButton);
-	zoomButton.x = canvas.width * (1 - MEDIABOX.visibleDocumentSize.width) * 0.5;
-	zoomButton.y = canvas.height * (1 - MEDIABOX.visibleDocumentSize.height) * 0.5;
+	zoomButton.x = 0;
+	zoomButton.y = 0;
 	zoomButton.alpha = 0;
 	createjs.Ticker.addEventListener("tick", fadeUpButton);
 	let zoomUp = new Fade(zoomButton);
@@ -420,14 +407,3 @@ function turnOff(){
 	page.off("mousedown", mouseDownHandler);
 	stage.off("stagemouseup", turnOff);
 }
-
-// function fadeMusicDown(){
-// 	console.log("volume " + sounds.getInstance("music").volume);
-// 	if (sounds.getInstance("music").volume >= 0) {
-// 		sounds.getInstance("music").volume -= 0.0075;
-// 	}
-
-// 	if (sounds.getInstance("music").volume <= 0) {
-// 		createjs.Ticker.removeEventListener("tick", fadeMusicDown);
-// 	}
-// }
