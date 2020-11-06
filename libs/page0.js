@@ -3,10 +3,14 @@ function page0(){
 	//* Define page variables *//
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page0_mc();
+	//nextPage = new lib.page1_preview();
+	pageIndex = 0;
 	audioComplete = false;
 	
 	//* Add the page *//
 	stage.addChildAt(page, 0);
+
+	MEDIABOX.setSaveDataEntry("page", "0");
 	
 	let fader = new Fade(page.fade_mc);
 
@@ -82,6 +86,7 @@ function page0(){
 
 	//Go to the next page//
 	function gotoNextPage(){
+		console.log("page 0 going to page 1")
 		next = true;
 		nextButton.removeEventListener("click", gotoNextPage);
 		createjs.Ticker.addEventListener("tick", fadeDown);

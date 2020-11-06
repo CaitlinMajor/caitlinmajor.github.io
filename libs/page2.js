@@ -4,6 +4,9 @@ function page2(){
 	//define page variables //
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	page = new lib.page2_mc();
+	//nextPage = new lib.page2_preview();
+	//previousPage = new lib.page0_preview();
+	pageIndex = 2;
 	next = false;
 	previous = false;
 	finnyFound = false;
@@ -17,8 +20,22 @@ function page2(){
 	sammyFound = false;
 	everyoneFound = false;
 
+	date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	MEDIABOX.setSaveDataEntry("date", date);
+	MEDIABOX.setSaveDataEntry("page", "2");
+
 	//* Add the page *//
 	stage.addChildAt(page, 1);
+
+	//add the next page preview
+	// nextPageX = canvas.width;
+	// page.addChild(nextPage);
+	// nextPage.x = nextPageX;
+
+	// //add the previous page preview
+	// previousPageX = (0-canvas.width);
+	// page.addChild(previousPage);
+	// previousPage.x = previousPageX;
 
 	let pageFader = new Fade(page.fade_mc);
 
@@ -435,12 +452,14 @@ function page2(){
 	
 	//* Navigation *//
 	function gotoNextPage(){
+		console.log("page 2 going to page 1")
 		nextButton.removeEventListener("click", gotoNextPage);
 		next = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
 	}
 
 	function gotoPreviousPage(){
+		console.log("page 2 going to page 3")
 		previousButton.removeEventListener("click", gotoPreviousPage);
 		previous = true;
 		createjs.Ticker.addEventListener("tick", fadeDown);
