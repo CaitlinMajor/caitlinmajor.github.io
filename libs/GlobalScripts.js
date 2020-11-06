@@ -189,6 +189,7 @@ class Fade{
 function addNextButton(){
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	nextButton = new lib.nextbutton_mc();
+	console.log("next button added");
 
 	stage.addChild(nextButton);
 	nextButton.x = 2436;
@@ -224,6 +225,7 @@ function removeNextButton(){
 function addPreviousButton(){
 	lib = AdobeAn.getComposition(AdobeAn.bootcompsLoaded[0]).getLibrary();
 	previousButton = new lib.previousbutton_mc();
+	console.log("previous button added")
 
 	stage.addChild(previousButton);
 	previousButton.y = 1500;
